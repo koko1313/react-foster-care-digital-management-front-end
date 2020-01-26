@@ -6,3 +6,15 @@ $font-family-serif: Georgia, 'Times New Roman', Times, serif;
 $font-family-monospace: Menlo, Monaco, Consolas, 'Liberation Mono',
 'Courier New', monospace;
 $font-family-base: $font-family-sans-serif;
+
+$theme-colors: (
+    "primary": #6a89fd,
+    "primary-dark": #5968cb,
+    "action": #ffd900,
+    "secondary": #687b86,
+    "action-secondary": #ff8f2b,
+    "dark-overlay": #292d29,
+    "title": #666666,
+    "border-light": #e6e6e6,
+    "border-ultra-light": #f1f1f1,
+);
