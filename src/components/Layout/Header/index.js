@@ -9,7 +9,7 @@ import {
 } from 'reactstrap';
 
 import {NavLink as RRNavLink} from 'react-router-dom';
-import Container from "../../../node_modules/reactstrap/lib/Container";
+import Container from "../../../../node_modules/reactstrap/lib/Container";
 
 class Header extends Component {
     
