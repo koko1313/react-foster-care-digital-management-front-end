@@ -43,7 +43,7 @@ class Header extends Component {
                             <NavLink tag={RRNavLink} exact to="/" activeClassName="active">Начало</NavLink>
                         </NavItem>
                         <NavItem>
-                            <NavLink tag={RRNavLink} exact to="/gallery" activeClassName="active">Gallery</NavLink>
+                            <NavLink tag={RRNavLink} exact to="/Login" activeClassName="active">Вход</NavLink>
                         </NavItem>
                     </Nav>
                 </Collapse>

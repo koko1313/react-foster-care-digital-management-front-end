@@ -1,16 +1,25 @@
 import React from 'react';
+
+import { createStore, applyMiddleware } from "redux";
+import { Provider }  from "react-redux";
+import reducers from "./redux/reducers";
+import thunk from 'redux-thunk';
+
 import {
   BrowserRouter as Router,
   Switch,
   Route
 } from "react-router-dom";
 import Header from './components/Layout/Header';
+import Login from './components/User/Login';
+
+const store = createStore(reducers, applyMiddleware(thunk));
 
 const Layout = props => (
   <>
       <Header/>
       <div className="container mt-5">
-          {props.children}
+        {props.children}
       </div>
   </>
 );
@@ -24,10 +33,10 @@ const routes = [
       </Layout>
   },
   {
-    path: '/gallery',
+    path: '/Login',
     exact: true,
     main: () => <Layout>
-        ga
+        <Login />
     </Layout>
   },
 ];
@@ -42,11 +51,13 @@ const getRoutes = () => {
 
 function App() {
   return (
-    <Router>
-      <Switch>
-        {getRoutes()}
-      </Switch>
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <Switch>
+          {getRoutes()}
+        </Switch>
+      </Router>
+    </Provider>
   );
 }
 
