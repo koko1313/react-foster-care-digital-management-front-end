@@ -11,7 +11,8 @@ import {
   Route
 } from "react-router-dom";
 import Header from './components/Layout/Header';
-import Login from './components/User/Login';
+import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
 
 const store = createStore(reducers, applyMiddleware(thunk));
 
@@ -29,14 +30,14 @@ const routes = [
       path: '/',
       exact: true,
       main: () => <Layout>
-          asd
+          <HomePage />
       </Layout>
   },
   {
     path: '/Login',
     exact: true,
     main: () => <Layout>
-        <Login />
+        <LoginPage />
     </Layout>
   },
 ];

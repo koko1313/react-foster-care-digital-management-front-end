@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { Alert } from 'reactstrap';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import * as actions from "../../../redux/actions";
 
 // import server simulation
@@ -14,8 +14,6 @@ const Login = () => {
 
     const [alert, setAlert] = useState();
     const [visible, openAlert] = useState(true);
-
-    const u = useSelector(state => state.loggedUser); // get the logged user
 
     const dispatch = useDispatch();
 
