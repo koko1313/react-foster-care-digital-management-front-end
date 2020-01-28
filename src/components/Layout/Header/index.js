@@ -44,6 +44,12 @@ const Header = () => {
             roles: {},
             showWhenLogged: true,
         },
+        {
+            exact: true,
+            to: "/protected",
+            label: "Protected",
+            roles: {},
+        },
     ];
 
     const renderNavItems = () => {

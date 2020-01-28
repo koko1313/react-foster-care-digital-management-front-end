@@ -1,15 +1,18 @@
 import React from 'react';
 
 import { createStore, applyMiddleware } from "redux";
-import { Provider }  from "react-redux";
+import { Provider, useSelector }  from "react-redux";
 import reducers from "./redux/reducers";
 import thunk from 'redux-thunk';
+import routeConditionTypes from './routeConditionTypes';
 
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route,
+  Redirect
 } from "react-router-dom";
+
 import Header from './components/Layout/Header';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
@@ -40,14 +43,56 @@ const routes = [
         <LoginPage />
     </Layout>
   },
+  {
+    path: '/protected',
+    exact: true,
+    condition: routeConditionTypes.IS_AUTHENTICATED,
+    main: () => <Layout>
+        <h1>asdasdsa</h1>
+    </Layout>
+  },
 ];
 
 const getRoutes = () => {
   return routes.map((route, index) => {
-      return <Route key={index} exact={route.exact} path={route.path}>
+      if(route.condition === undefined) {
+        return <Route key={index} exact={route.exact} path={route.path}>
           {route.main}
-      </Route>;
+        </Route>;
+      } else {
+        return <PrivateRoute key={index} path={route.path} condition={route.condition}>
+          <h1>asdasdsa</h1>
+        </PrivateRoute>
+      }
   });
+}
+
+const PrivateRoute = ({ children, ...rest }) => {
+  const loggedUser = useSelector(state => state.loggedUser);
+
+  let condition;
+  if({...rest}.condition === routeConditionTypes.IS_AUTHENTICATED) {
+    condition = Object.entries(loggedUser).length !== 0;
+  }
+
+  return (
+    <Route
+      {...rest}
+      render={({ location }) =>
+        condition ? 
+          (children) 
+          : 
+          (
+            <Redirect
+              to={{
+                pathname: "/login",
+                state: { from: location }
+              }}
+            />
+          )
+      }
+    />
+  );
 }
 
 function App() {
