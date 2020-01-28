@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {useState} from "react";
 import {
     Collapse,
     Navbar,
@@ -11,45 +11,36 @@ import {
 import {NavLink as RRNavLink} from 'react-router-dom';
 import Container from "../../../../node_modules/reactstrap/lib/Container";
 
-class Header extends Component {
+const Header = () => {
     
-    constructor(props) {
-        super(props);
-        this.state = {
-            isOpen: false
-        }
+    const [isOpen, setIsOpen] = useState(false);
+
+    const toggleIsOpen = () => {
+        setIsOpen(!isOpen);
     }
 
-    toggleIsOpen = () => {
-        this.setState({
-            isOpen: !this.state.isOpen
-        });
-    }
-
-    render() {
-        return <Navbar color="primary" dark expand="md">
-            <Container>
-                <NavLink
-                    tag={RRNavLink}
-                    className="navbar-brand"
-                    exact to="/">
-                    <i className="fa fa-cubes mr-3"></i>
-                    <span className="project-name">Software Technologies</span>
-                </NavLink>
-                <NavbarToggler onClick={this.toggleIsOpen} />
-                <Collapse isOpen={this.state.isOpen} navbar>
-                    <Nav className="ml-auto" navbar>
-                        <NavItem>
-                            <NavLink tag={RRNavLink} exact to="/" activeClassName="active">Начало</NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink tag={RRNavLink} exact to="/Login" activeClassName="active">Вход</NavLink>
-                        </NavItem>
-                    </Nav>
-                </Collapse>
-            </Container>
-        </Navbar>
-    }
+    return <Navbar color="primary" dark expand="md">
+        <Container>
+            <NavLink
+                tag={RRNavLink}
+                className="navbar-brand"
+                exact to="/">
+                <i className="fa fa-cubes mr-3"></i>
+                <span className="project-name">Software Technologies</span>
+            </NavLink>
+            <NavbarToggler onClick={toggleIsOpen} />
+            <Collapse isOpen={isOpen} navbar>
+                <Nav className="ml-auto" navbar>
+                    <NavItem>
+                        <NavLink tag={RRNavLink} exact to="/" activeClassName="active">Начало</NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink tag={RRNavLink} exact to="/Login" activeClassName="active">Вход</NavLink>
+                    </NavItem>
+                </Nav>
+            </Collapse>
+        </Container>
+    </Navbar>
 
 }
 
