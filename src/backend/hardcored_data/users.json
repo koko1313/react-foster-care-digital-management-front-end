@@ -4,5 +4,11 @@
         "email": "admin@admin.com",
         "password": "1234",
         "roles": ["ROLE_ADMIN"]
+    },
+    {
+        "id": "2",
+        "email": "admin-montana@admin.com",
+        "password": "1234",
+        "roles": ["ROLE_ADMIN", "ROLE_REGIONAL_ADMIN"]
     }
 ]

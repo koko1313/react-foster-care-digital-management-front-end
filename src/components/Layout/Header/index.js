@@ -7,6 +7,7 @@ import {
     NavItem,
     NavLink
 } from 'reactstrap';
+import { objectIsEmpty } from '../../../helpers';
 
 import {NavLink as RRNavLink} from 'react-router-dom';
 import Container from "../../../../node_modules/reactstrap/lib/Container";
@@ -54,12 +55,12 @@ const Header = () => {
 
     const renderNavItems = () => {
         const navButtons = buttons.map((button, index) => {
-            if(!button.showWhenLogged && Object.entries(loggedUser).length === 0) {
+            if(!button.showWhenLogged && objectIsEmpty(loggedUser)) {
                 return <NavItem key={index}>
                     <NavLink tag={RRNavLink} exact={button.exact} to={button.to} activeClassName="active">{button.label}</NavLink>
                 </NavItem>
             } 
-            else if(button.showWhenLogged && Object.entries(loggedUser).length !== 0) {
+            else if(button.showWhenLogged && !objectIsEmpty(loggedUser)) {
                 return <NavItem key={index}>
                     <NavLink tag={RRNavLink} exact={button.exact} to={button.to} activeClassName="active">{button.label}</NavLink>
                 </NavItem>

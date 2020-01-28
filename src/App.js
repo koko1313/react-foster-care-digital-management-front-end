@@ -5,6 +5,7 @@ import { Provider, useSelector }  from "react-redux";
 import reducers from "./redux/reducers";
 import thunk from 'redux-thunk';
 import routeConditionTypes from './routeConditionTypes';
+import { objectIsEmpty } from './helpers';
 
 import {
   BrowserRouter as Router,
@@ -72,7 +73,7 @@ const PrivateRoute = ({ children, ...rest }) => {
 
   let condition;
   if({...rest}.condition === routeConditionTypes.IS_AUTHENTICATED) {
-    condition = Object.entries(loggedUser).length !== 0;
+    condition = !objectIsEmpty(loggedUser);
   }
 
   return (

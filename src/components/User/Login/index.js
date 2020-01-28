@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import { Alert } from 'reactstrap';
+import { objectIsEmpty } from '../../../helpers';
 
 import { useDispatch } from 'react-redux';
 import * as actions from "../../../redux/actions";
@@ -18,9 +19,9 @@ const Login = () => {
     const dispatch = useDispatch();
 
     const login = () => {
-        const authenticatedUser = Server.login(email, password);
-        if(Object.entries(authenticatedUser).length !== 0) {
-            dispatch(actions.setLoggedUser(authenticatedUser));
+        const loggedUser = Server.login(email, password);
+        if(!objectIsEmpty(loggedUser)) {
+            dispatch(actions.setLoggedUser(loggedUser));
         } else {
             setAlert("Грешен email или парола!");
         }
