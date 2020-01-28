@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { Alert } from 'reactstrap';
 
 import { useSelector, useDispatch } from 'react-redux';
 import * as actions from "../../../redux/actions";
@@ -11,7 +12,10 @@ const Login = () => {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
 
-    const u = useSelector(state => state.loggedUser);
+    const [alert, setAlert] = useState();
+    const [visible, openAlert] = useState(true);
+
+    const u = useSelector(state => state.loggedUser); // get the logged user
 
     const dispatch = useDispatch();
 
@@ -20,12 +24,21 @@ const Login = () => {
         if(Object.entries(authenticatedUser).length !== 0) {
             dispatch(actions.setLoggedUser(authenticatedUser));
         } else {
-            alert("Грешен email или парола!");
+            setAlert("Грешен email или парола!");
         }
     }
 
-    return (
-        <>
+    const showAlert = () => {
+        if(alert) {
+            return <Alert color="danger" isOpen={visible} toggle={() => {openAlert(false)}}>
+                {alert}
+            </Alert>
+        }
+    }
+
+    return <>
+        {showAlert()}
+
         <form>
             <div className="form-group">
                 <label htmlFor="email">Email address</label>
@@ -37,8 +50,7 @@ const Login = () => {
             </div>
             <button type="button" className="btn btn-primary" onClick={login}>Вход</button>
         </form>
-        </>
-    );
+    </>;
 
 }
 
