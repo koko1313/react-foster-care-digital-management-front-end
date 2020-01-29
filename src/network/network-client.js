@@ -11,20 +11,20 @@ export default {
             failure,
         });
     },
-    post(url, data, success, failure) {
+    post(url, params, success, failure) {
         return this.request({
             method: 'post',
             url,
-            data,
+            params,
             success,
             failure,
         });
     },
-    put(url, data, success, failure) {
+    put(url, params, success, failure) {
         return this.request({
             method: 'put',
             url,
-            data,
+            params,
             success,
             failure,
         });
@@ -52,24 +52,19 @@ export default {
         data.params = Object.assign({}, options.params);
 
         return new Promise((resolve, reject) => {
-
             axios(data)
                 .then((response) => {
                     if (options.success) {
                         options.success(response.data);
-
                     }
                     resolve(response.data);
                 })
-
                 .catch((error) => {
                     if (options.failure) {
                         options.failure(error);
                     }
                     reject(error);
                 });
-
-        })
-
+        });
     },
 };

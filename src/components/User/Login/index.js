@@ -2,11 +2,8 @@ import React, {useState} from 'react';
 import { Alert } from 'reactstrap';
 import { objectIsEmpty } from '../../../helpers';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as actions from "../../../redux/actions";
-
-// import server simulation
-import * as Server from '../../../backend/server/users';
 
 const Login = () => {
 
@@ -16,14 +13,16 @@ const Login = () => {
     const [alert, setAlert] = useState();
     const [visible, openAlert] = useState(true);
 
+    const loggedUser = useSelector(state => state.loggedUser);
+
     const dispatch = useDispatch();
 
     const login = () => {
-        const loggedUser = Server.login(email, password);
-        if(!objectIsEmpty(loggedUser)) {
-            dispatch(actions.setLoggedUser(loggedUser));
-        } else {
+        dispatch(actions.getLoggedUser(email, password));
+
+        if(objectIsEmpty(loggedUser)) {
             setAlert("Грешен email или парола!");
+            openAlert(true);
         }
     }
 

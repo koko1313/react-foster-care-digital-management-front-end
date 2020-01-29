@@ -1,4 +1,5 @@
 export default {
+    SET_ERROR: 'SET_ERROR',
     SET_LOGGED_USER: 'SET_LOGGED_USER',
     SET_CHILDREN: 'SET_CHILDREN',
 };
