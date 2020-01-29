@@ -38,7 +38,7 @@ const routes = [
       </Layout>
   },
   {
-    path: '/Login',
+    path: '/login',
     exact: true,
     main: () => <Layout>
         <LoginPage />
