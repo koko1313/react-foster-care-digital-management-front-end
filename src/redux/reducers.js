@@ -10,4 +10,13 @@ function loggedUser(state = {}, action) {
     }
 }
 
-export default combineReducers({loggedUser});
+function children(state = [], action) {
+    switch (action.type) {
+        case types.SET_CHILDREN: {
+            return [...action.payload];
+        }
+        default: return state;
+    }
+}
+
+export default combineReducers({loggedUser, children});

@@ -33,6 +33,12 @@ const Header = () => {
         },
         {
             exact: true,
+            to: "/children",
+            label: "Деца",
+            roles: {},
+        },
+        {
+            exact: true,
             to: "/login",
             label: "Вход",
             roles: {},

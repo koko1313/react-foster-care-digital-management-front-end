@@ -17,31 +17,40 @@ import {
 import Header from './components/Layout/Header';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
+import ChildrenListPage from './pages/ChildrenListPage';
 
 const store = createStore(reducers, applyMiddleware(thunk));
 
 const Layout = props => (
   <>
-      <Header/>
-      <div className="container mt-5">
-        {props.children}
-      </div>
+    <Header/>
+    <div className="container mt-5">
+      {props.children}
+    </div>
   </>
 );
 
 const routes = [
   {
-      path: '/',
-      exact: true,
-      main: () => <Layout>
-          <HomePage />
-      </Layout>
+    path: '/',
+    exact: true,
+    main: () => <Layout>
+      <HomePage />
+    </Layout>
+  },
+  {
+    path: '/children',
+    exact: true,
+    //condition: routeConditionTypes.IS_AUTHENTICATED,
+    main: () => <Layout>
+      <ChildrenListPage />
+    </Layout>
   },
   {
     path: '/login',
     exact: true,
     main: () => <Layout>
-        <LoginPage />
+      <LoginPage />
     </Layout>
   },
   {
@@ -49,22 +58,22 @@ const routes = [
     exact: true,
     condition: routeConditionTypes.IS_AUTHENTICATED,
     main: () => <Layout>
-        <h1>asdasdsa</h1>
+      <h1>asdasdsa</h1>
     </Layout>
   },
 ];
 
 const getRoutes = () => {
   return routes.map((route, index) => {
-      if(route.condition === undefined) {
-        return <Route key={index} exact={route.exact} path={route.path}>
-          {route.main}
-        </Route>;
-      } else {
-        return <PrivateRoute key={index} path={route.path} condition={route.condition}>
-          <h1>asdasdsa</h1>
-        </PrivateRoute>
-      }
+    if(route.condition === undefined) {
+      return <Route key={index} exact={route.exact} path={route.path}>
+        {route.main}
+      </Route>;
+    } else {
+      return <PrivateRoute key={index} path={route.path} condition={route.condition}>
+        <h1>asdasdsa</h1>
+      </PrivateRoute>
+    }
   });
 }
 
