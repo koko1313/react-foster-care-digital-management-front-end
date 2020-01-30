@@ -81,8 +81,12 @@ const PrivateRoute = ({ children, ...rest }) => {
   const loggedUser = useSelector(state => state.loggedUser);
 
   let condition;
-  if({...rest}.condition === routeConditionTypes.IS_AUTHENTICATED) {
-    condition = !objectIsEmpty(loggedUser);
+
+  switch(rest.condition) {
+    case routeConditionTypes.IS_AUTHENTICATED: {
+      condition = !objectIsEmpty(loggedUser);
+      break;
+    }
   }
 
   return (
