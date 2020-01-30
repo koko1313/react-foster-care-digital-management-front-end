@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { Alert } from 'reactstrap';
 import { objectIsEmpty } from '../../../helpers';
+import networkClient from '../../../network/network-client';
 
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from "../../../redux/actions";
@@ -18,12 +19,17 @@ const Login = () => {
     const dispatch = useDispatch();
 
     const login = () => {
-        dispatch(actions.getLoggedUser(email, password));
-
-        if(objectIsEmpty(loggedUser)) {
-            setAlert("Грешен email или парола!");
-            openAlert(true);
-        }
+        networkClient.post("login", {email: email, password: password},
+            // success
+            (loggedUser) => {
+                dispatch(actions.setLoggedUser(loggedUser));
+            },
+            // fail
+            () => {
+                setAlert("Грешен email или парола!");
+                openAlert(true);
+            }
+        );
     }
 
     const showAlert = () => {

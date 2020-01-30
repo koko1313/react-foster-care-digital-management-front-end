@@ -11,15 +11,6 @@ export function setLoggedUser (user) {
     return {type: types.SET_LOGGED_USER, payload: user};
 }
 
-export const getLoggedUser = (email, password) => async dispatch => {
-    try {
-        const res = await networkClient.post("login", {email: email, password: password});
-        dispatch(setLoggedUser(res));
-    } catch(ex) {
-        dispatch(setError({message: 'There was an error!'}));
-    }
-};
-
 // #######################
 
 export function setChildren (children) {
