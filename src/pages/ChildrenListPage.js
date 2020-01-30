@@ -12,10 +12,8 @@ const ChildrenListPage = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if(children.length === 0) {
-            dispatch(actions.getChildren());
-        }
-    });
+        dispatch(actions.getChildren());
+    }, []); // passing an empty array as second argument triggers the callback in useEffect only after the initial render thus replicating `componentDidMount` lifecycle behaviour
     
     const renderChildrenList = () => {
         if(objectIsEmpty(loggedUser)) return null;
