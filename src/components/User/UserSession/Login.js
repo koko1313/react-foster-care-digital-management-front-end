@@ -23,7 +23,8 @@ const Login = () => {
         //         dispatch(actions.setLoggedUser(loggedUser));
         //     },
         //     // fail
-        //     () => {
+        //     (error) => {
+        //         console.log(error.status); // TODO така можем да си вземем статуса на error, или с error.response.status ддз
         //         setAlert("Грешен email или парола!");
         //         openAlert(true);
         //     }
