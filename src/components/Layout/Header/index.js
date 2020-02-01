@@ -43,19 +43,23 @@ const Header = () => {
             to: "/login",
             label: "Вход",
             roles: [role.GUEST],
-            showWhenLogged: false,
         },
         {
             exact: true,
             to: "/profile",
             label: loggedUser.email,
             roles: [role.ADMIN],
-            showWhenLogged: true,
         },
         {
             exact: true,
             to: "/protected",
             label: "Protected",
+            roles: [role.ADMIN],
+        },
+        {
+            exact: true,
+            to: "/logout",
+            label: "Изход",
             roles: [role.ADMIN],
         },
     ];

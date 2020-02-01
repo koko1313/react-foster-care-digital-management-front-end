@@ -14,6 +14,7 @@ import LoginPage from './pages/LoginPage';
 import ChildrenListPage from './pages/ChildrenListPage';
 import role from './roles';
 import { objectIsEmpty } from './helpers';
+import Logout from './components/User/UserSession/Logout';
 
 const Router = () => {
 
@@ -40,7 +41,7 @@ const Router = () => {
         {
             path: '/children',
             exact: true,
-            roles: [role.ALL],
+            roles: [role.ADMIN],
             main: () => <Layout>
                 <ChildrenListPage />
             </Layout>
@@ -54,9 +55,17 @@ const Router = () => {
             </Layout>
         },
         {
+            path: '/logout',
+            exact: true,
+            roles: [role.ALL],
+            main: () => <Layout>
+                <Logout />
+            </Layout>
+        },
+        {
             path: '/protected',
             exact: true,
-            roles: [role.ADMIN],
+            roles: [role.ALL],
             main: () => <Layout>
                 <h1>asdasdsa</h1>
             </Layout>
