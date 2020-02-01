@@ -68,7 +68,7 @@ const Router = () => {
     const getRoutes = () => {
         return routes.map((route, index) => {
             if(route.path === '*') {
-                return <Redirect to='/' />;
+                return <Redirect key={index} to='/' />;
             }
             // all roles
             else if(route.roles.includes(role.ALL)) {
