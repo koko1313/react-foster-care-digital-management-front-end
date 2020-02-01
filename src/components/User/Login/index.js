@@ -1,9 +1,8 @@
 import React, {useState} from 'react';
 import { Alert } from 'reactstrap';
-import { objectIsEmpty } from '../../../helpers';
 import networkClient from '../../../network/network-client';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import * as actions from "../../../redux/actions";
 
 const Login = () => {
@@ -14,11 +13,10 @@ const Login = () => {
     const [alert, setAlert] = useState();
     const [visible, openAlert] = useState(true);
 
-    const loggedUser = useSelector(state => state.loggedUser);
-
     const dispatch = useDispatch();
 
     const login = () => {
+        // CALL BACKEND
         networkClient.post("login", {email: email, password: password},
             // success
             (loggedUser) => {
@@ -30,6 +28,13 @@ const Login = () => {
                 openAlert(true);
             }
         );
+
+        // HARDCORE LOGGED USER
+        // const loggedUser = {
+        //     email: "admin@admin.com",
+        //     roles: ["ROLE_ADMIN"],
+        // }
+        // dispatch(actions.setLoggedUser(loggedUser));
     }
 
     const showAlert = () => {
