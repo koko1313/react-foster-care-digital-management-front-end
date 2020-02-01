@@ -4,7 +4,11 @@
  */
 
 export default {
+    // front-end roles
     ALL: 'ROLE_ALL',
-    ADMIN: 'ROLE_ADMIN',
     GUEST: 'ROLE_GUEST',
+    LOGGED: 'ROLE_LOGGED',
+
+    // roles from back-end
+    ADMIN: 'ROLE_ADMIN',
 };

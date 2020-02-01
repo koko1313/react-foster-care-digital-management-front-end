@@ -41,7 +41,7 @@ const Router = () => {
         {
             path: '/children',
             exact: true,
-            roles: [role.ADMIN],
+            roles: [role.LOGGED],
             main: () => <Layout>
                 <ChildrenListPage />
             </Layout>
@@ -49,7 +49,7 @@ const Router = () => {
         {
             path: '/profile',
             exact: true,
-            roles: [role.ADMIN],
+            roles: [role.LOGGED],
             main: () => <Layout>
                 Тук ще има профил страница
             </Layout>
@@ -65,7 +65,7 @@ const Router = () => {
         {
             path: '/logout',
             exact: true,
-            roles: [role.ADMIN],
+            roles: [role.LOGGED],
             main: () => <Layout>
                 <Logout />
             </Layout>
@@ -89,6 +89,12 @@ const Router = () => {
             }
             // all roles
             else if(route.roles.includes(role.ALL)) {
+                return <Route key={index} exact={route.exact} path={route.path}>
+                    {route.main}
+                </Route>;
+            }
+            // role logged
+            else if(route.roles.includes(role.LOGGED) && !objectIsEmpty(loggedUser)) {
                 return <Route key={index} exact={route.exact} path={route.path}>
                     {route.main}
                 </Route>;

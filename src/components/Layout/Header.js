@@ -36,7 +36,7 @@ const Header = () => {
             exact: true,
             to: "/children",
             label: "Деца",
-            roles: [role.ADMIN],
+            roles: [role.LOGGED],
         },
         {
             exact: true,
@@ -48,7 +48,7 @@ const Header = () => {
             exact: true,
             to: "/profile",
             label: loggedUser.email,
-            roles: [role.ADMIN],
+            roles: [role.LOGGED],
         },
         {
             exact: true,
@@ -60,13 +60,19 @@ const Header = () => {
             exact: true,
             to: "/logout",
             label: "Изход",
-            roles: [role.ADMIN],
+            roles: [role.LOGGED],
         },
     ];
 
     const renderNavItems = () => {
         const navButtons = buttons.map((button, index) => {
             if(button.roles.includes(role.ALL)) {
+                return <NavItem key={index}>
+                    <NavLink tag={RRNavLink} exact={button.exact} to={button.to} activeClassName="active">{button.label}</NavLink>
+                </NavItem>
+            }
+            // role logged
+            else if(button.roles.includes(role.LOGGED) && !objectIsEmpty(loggedUser)) {
                 return <NavItem key={index}>
                     <NavLink tag={RRNavLink} exact={button.exact} to={button.to} activeClassName="active">{button.label}</NavLink>
                 </NavItem>
