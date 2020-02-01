@@ -47,6 +47,7 @@ export default {
         const data = Object.assign({
             method: 'get',
             baseURL: "http://127.0.0.1:8000/",
+            //withCredentials: true,
         }, options);
 
         data.params = Object.assign({}, options.params);

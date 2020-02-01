@@ -17,25 +17,34 @@ const Login = () => {
 
     const login = () => {
         // CALL BACKEND
-        // networkClient.post("login", {email: email, password: password},
-        //     // success
-        //     (loggedUser) => {
-        //         dispatch(actions.setLoggedUser(loggedUser));
-        //     },
-        //     // fail
-        //     (error) => {
-        //         console.log(error.status); // TODO така можем да си вземем статуса на error, или с error.response.status ддз
-        //         setAlert("Грешен email или парола!");
-        //         openAlert(true);
-        //     }
-        // );
+        networkClient.post("login", {email: email, password: password},
+            // success
+            (loggedUser) => {
+                dispatch(actions.setLoggedUser(loggedUser));
+            },
+            // fail
+            (error) => {
+                if(error.response) {
+                    switch(error.response.status) {
+                        case 401: {
+                            setAlert("Грешен email или парола!");
+                            openAlert(true);
+                            break;
+                        }
+                    }
+                } else {
+                    setAlert("Нещо се обърка!");
+                    openAlert(true);
+                }
+            }
+        );
 
         // HARDCORE LOGGED USER
-        const loggedUser = {
-            email: "admin@admin.com",
-            roles: ["ROLE_ADMIN"],
-        }
-        dispatch(actions.setLoggedUser(loggedUser));
+        // const loggedUser = {
+        //     email: "admin@admin.com",
+        //     roles: ["ROLE_ADMIN"],
+        // }
+        // dispatch(actions.setLoggedUser(loggedUser));
     }
 
     const showAlert = () => {

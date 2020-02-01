@@ -24,9 +24,6 @@ const HomePage = () => {
     }
 
     return <>
-        email: {loggedUser.email}<br />
-        роли: {loggedUser.roles}
-
         {onlyAdminCanSeeThis()}
         {onlyRegionalAdminsCanSeeThis()}
 

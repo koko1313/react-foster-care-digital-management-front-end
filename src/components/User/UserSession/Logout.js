@@ -12,23 +12,23 @@ const Logout = () => {
 
     const logout = () => {
         // CALL BACKEND
-        // networkClient.post("logout", null,
-        //     // success
-        //     (loggedUser) => {
-        //         // remove logged user from redux
-        //         dispatch(actions.setLoggedUser({}));
-        //         history.push("/");
-        //     },
-        //     // fail
-        //     () => {
-        //         alert("Неуспешно излизане!");
-        //         history.goBack();
-        //     }
-        // );
+        networkClient.post("logout", null,
+            // success
+            (loggedUser) => {
+                // remove logged user from redux
+                dispatch(actions.setLoggedUser({}));
+                history.push("/");
+            },
+            // fail
+            () => {
+                alert("Неуспешно излизане!");
+                history.goBack();
+            }
+        );
 
         // HARDCORED LOGOUT
-        dispatch(actions.setLoggedUser({}));
-        history.push("/");
+        // dispatch(actions.setLoggedUser({}));
+        // history.push("/");
     }
 
     return <>
