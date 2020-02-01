@@ -47,6 +47,14 @@ const Router = () => {
             </Layout>
         },
         {
+            path: '/profile',
+            exact: true,
+            roles: [role.ADMIN],
+            main: () => <Layout>
+                Тук ще има профил страница
+            </Layout>
+        },
+        {
             path: '/login',
             exact: true,
             roles: [role.GUEST],
@@ -57,7 +65,7 @@ const Router = () => {
         {
             path: '/logout',
             exact: true,
-            roles: [role.ALL],
+            roles: [role.ADMIN],
             main: () => <Layout>
                 <Logout />
             </Layout>
@@ -65,7 +73,7 @@ const Router = () => {
         {
             path: '/protected',
             exact: true,
-            roles: [role.ALL],
+            roles: [role.ADMIN],
             main: () => <Layout>
                 <h1>asdasdsa</h1>
             </Layout>

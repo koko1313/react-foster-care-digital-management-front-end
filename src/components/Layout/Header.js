@@ -7,11 +7,11 @@ import {
     NavItem,
     NavLink
 } from 'reactstrap';
-import { objectIsEmpty } from '../../../helpers';
-import role from '../../../roles';
+import { objectIsEmpty } from '../../helpers';
+import role from '../../roles';
 
 import {NavLink as RRNavLink} from 'react-router-dom';
-import Container from "../../../../node_modules/reactstrap/lib/Container";
+import Container from "../../../node_modules/reactstrap/lib/Container";
 
 import { useSelector } from 'react-redux';
 
