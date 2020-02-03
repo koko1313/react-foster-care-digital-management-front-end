@@ -12,6 +12,7 @@ const AdminPage = () => {
     return (
         <>
             <button className="btn btn-link" onClick={()=>goTo("/user/register")}>Регистрация на потребител</button>
+            <button className="btn btn-link" onClick={()=>goTo("/user/all")}>Потребители</button>
         </>
     );
 

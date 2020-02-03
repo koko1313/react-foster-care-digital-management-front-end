@@ -18,8 +18,9 @@ import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import ChildrenListPage from './pages/ChildrenListPage';
 import Logout from './components/User/UserSession/Logout';
-import RegisterUserPage from './pages/RegisterUserPage';
-import AdminPage from './pages/AdminPage';
+import RegisterUserPage from './pages/Admin/RegisterUserPage';
+import AdminPage from './pages/Admin/AdminPage';
+import UsersListPage from './pages/Admin/UsersListPage';
 
 const Router = () => {
 
@@ -98,6 +99,14 @@ const Router = () => {
             roles: [role.ADMIN],
             main: () => <Layout>
                 <RegisterUserPage />
+            </Layout>
+        },
+        {
+            path: '/user/all',
+            exact: true,
+            roles: [role.ADMIN],
+            main: () => <Layout>
+                <UsersListPage />
             </Layout>
         },
         // path if non of above are reached
