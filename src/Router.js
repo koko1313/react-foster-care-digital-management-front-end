@@ -19,6 +19,7 @@ import LoginPage from './pages/LoginPage';
 import ChildrenListPage from './pages/ChildrenListPage';
 import Logout from './components/User/UserSession/Logout';
 import RegisterUserPage from './pages/RegisterUserPage';
+import AdminPage from './pages/AdminPage';
 
 const Router = () => {
 
@@ -81,6 +82,14 @@ const Router = () => {
             roles: [role.LOGGED],
             main: () => <Layout>
                 <Logout />
+            </Layout>
+        },
+        {
+            path: '/admin-panel',
+            exact: true,
+            roles: [role.ADMIN],
+            main: () => <Layout>
+                <AdminPage />
             </Layout>
         },
         {
