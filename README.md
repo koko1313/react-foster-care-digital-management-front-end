@@ -10,3 +10,6 @@
 - react-redux
 - redux-thunk
 - axios
+
+### Notes
+- When we use CORS, if back-end and front-end are on different addresses (localhost != 127.0.0.1), the session cookie will not set.

@@ -9,11 +9,13 @@ import {
 import { useSelector } from 'react-redux';
   
 import Header from './components/Layout/Header';
+import role from './roles';
+import { objectIsEmpty } from './helpers';
+
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import ChildrenListPage from './pages/ChildrenListPage';
-import role from './roles';
-import { objectIsEmpty } from './helpers';
+import ProtectedPage from './pages/ProtectedPage';
 import Logout from './components/User/UserSession/Logout';
 
 const Router = () => {
@@ -75,7 +77,7 @@ const Router = () => {
             exact: true,
             roles: [role.ADMIN],
             main: () => <Layout>
-                <h1>asdasdsa</h1>
+                <ProtectedPage />
             </Layout>
         },
         // path if non of above are reached
