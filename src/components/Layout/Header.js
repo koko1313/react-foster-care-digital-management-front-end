@@ -52,8 +52,8 @@ const Header = () => {
         },
         {
             exact: true,
-            to: "/protected",
-            label: "Protected",
+            to: "/user/register",
+            label: "Регистрация на потребител",
             roles: [role.ADMIN],
         },
         {

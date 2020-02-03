@@ -11,4 +11,5 @@ export default {
 
     // roles from back-end
     ADMIN: 'ROLE_ADMIN',
+    OEPG: 'ROLE_OEPG',
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     BrowserRouter,
     Switch,
@@ -6,7 +6,9 @@ import {
     Redirect,
   } from "react-router-dom";
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import * as actions from "./redux/actions";
+import networkClient from './network/network-client';
   
 import Header from './components/Layout/Header';
 import role from './roles';
@@ -15,8 +17,8 @@ import { objectIsEmpty } from './helpers';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import ChildrenListPage from './pages/ChildrenListPage';
-import ProtectedPage from './pages/ProtectedPage';
 import Logout from './components/User/UserSession/Logout';
+import RegisterUserPage from './pages/RegisterUserPage';
 
 const Router = () => {
 
@@ -28,6 +30,15 @@ const Router = () => {
             </div>
         </>
     );
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        // check if there is logged user
+        networkClient.get("/user/logged", null, (loggedUser) => {
+            dispatch(actions.setLoggedUser(loggedUser));
+        });
+    }, []);
 
     const loggedUser = useSelector(state => state.loggedUser);
 
@@ -73,11 +84,11 @@ const Router = () => {
             </Layout>
         },
         {
-            path: '/protected',
+            path: '/user/register',
             exact: true,
             roles: [role.ADMIN],
             main: () => <Layout>
-                <ProtectedPage />
+                <RegisterUserPage />
             </Layout>
         },
         // path if non of above are reached
