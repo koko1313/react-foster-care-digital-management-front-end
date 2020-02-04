@@ -7,7 +7,7 @@ import {
     NavItem,
     NavLink
 } from 'reactstrap';
-import { objectIsEmpty } from '../../helpers';
+import { objectIsEmpty, userHasRole } from '../../helpers';
 import role from '../../roles';
 
 import {NavLink as RRNavLink} from 'react-router-dom';
@@ -84,7 +84,7 @@ const Header = () => {
                 </NavItem>
             }
             // role admin
-            else if(button.roles.includes(role.ADMIN) && !objectIsEmpty(loggedUser) && loggedUser.roles.includes(role.ADMIN)) {
+            else if(button.roles.includes(role.ADMIN) && !objectIsEmpty(loggedUser) && userHasRole(loggedUser, role.ADMIN)) {
                 return <NavItem key={index}>
                     <NavLink tag={RRNavLink} exact={button.exact} to={button.to} activeClassName="active">{button.label}</NavLink>
                 </NavItem>

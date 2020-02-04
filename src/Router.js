@@ -12,7 +12,7 @@ import networkClient from './network/network-client';
   
 import Header from './components/Layout/Header';
 import role from './roles';
-import { objectIsEmpty } from './helpers';
+import { objectIsEmpty, userHasRole } from './helpers';
 
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
@@ -137,7 +137,7 @@ const Router = () => {
                 </Route>;
             }
             // role admin
-            else if(route.roles.includes(role.ADMIN) && !objectIsEmpty(loggedUser) && loggedUser.roles.includes(role.ADMIN)) {
+            else if(route.roles.includes(role.ADMIN) && !objectIsEmpty(loggedUser) && userHasRole(loggedUser, role.ADMIN)) {
                 return <Route key={index} exact={route.exact} path={route.path}>
                     {route.main}
                 </Route>;

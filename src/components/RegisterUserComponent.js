@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import networkClient from '../network/network-client';
-import roles from '../roles';
 import { Alert } from 'reactstrap';
+import RegionsSelect from './base-components/Select/RegionsSelect';
+import SubRegionsSelect from './base-components/Select/SubRegionsSelect';
+import CitiesSelect from './base-components/Select/CitiesSelect';
+import PositionsSelect from './base-components/Select/PositionsSelect';
 
 const RegisterUserComponent = () => {
 
@@ -19,14 +22,6 @@ const RegisterUserComponent = () => {
     const [alertMessage, _setAlertMessage] = useState();
     const [alertType, _setAlertType] = useState();
     const [visible, openAlert] = useState(true);
-
-    const [positionsFromServer, setPositionsFromServer] = useState();
-
-    useEffect(() => {
-        networkClient.get("/position/all", null, (positions) => {
-            setPositionsFromServer(positions);
-        });
-    }, []);
 
     const setAlert = (type, message) => {
         _setAlertType(type);
@@ -63,7 +58,7 @@ const RegisterUserComponent = () => {
                 region: region,
                 subRegion: subRegion,
                 city: city,
-                roles: [position],
+                positionId: position,
             },
             // success
             (response) => {
@@ -88,26 +83,13 @@ const RegisterUserComponent = () => {
         );
     }
 
-    const renderPositions = () => {
-        if(!positionsFromServer) return null;
-
-        return positionsFromServer.map((position) => {
-            return <option key={position.id} value={position.role.name}>{position.name}</option>
-        });
-    }
-
     return (
         <>
             {showAlert()}
 
             <form>
-                <div className="form-group">
-                    <label htmlFor="position">Позиция</label>
-                    <select id="position" className="form-control" onChange={(e) => setPosition(e.target.value)}>
-                        <option defaultValue>Избери позиция ...</option>
-                        {renderPositions()}
-                    </select>
-                </div>
+                <PositionsSelect label="Позиция" placeholder="Избери позиция ..." onChange={(e) => setPosition(e.target.value)} />
+
                 <div className="form-group">
                     <label htmlFor="email">Email</label>
                     <input type="email" className="form-control" id="email" aria-describedby="emailHelp" placeholder="Email ..." onChange={(e) => setEmail(e.target.value)} />
@@ -132,27 +114,13 @@ const RegisterUserComponent = () => {
                     <label htmlFor="lastName">Фамилия</label>
                     <input type="text" className="form-control" id="lastName" placeholder="Фамилия ..." onChange={(e) => setLastName(e.target.value)} />
                 </div>
-                <div className="form-group">
-                    <label htmlFor="region">Област</label>
-                    <select id="region" className="form-control" onChange={(e) => setRegion(e.target.value)}>
-                        <option defaultValue>Избери област ...</option>
-                        <option value="Монтана">Монтана</option>
-                    </select>
-                </div>
-                <div className="form-group">
-                    <label htmlFor="subRegion">Община</label>
-                    <select id="subRegion" className="form-control" onChange={(e) => setSubRegion(e.target.value)}>
-                        <option defaultValue>Избери община ...</option>
-                        <option value="Лом">Лом</option>
-                    </select>
-                </div>
-                <div className="form-group">
-                    <label htmlFor="city">Град</label>
-                    <select id="city" className="form-control" onChange={(e) => setCity(e.target.value)}>
-                        <option defaultValue>Избери град ...</option>
-                        <option value="Лом">Лом</option>
-                    </select>
-                </div>
+
+                <RegionsSelect label="Област" placeholder="Избери област ..." onChange={(e) => setRegion(e.target.value)} />
+
+                <SubRegionsSelect label="Община" placeholder="Избери община ..." onChange={(e) => setSubRegion(e.target.value)} />
+
+                <CitiesSelect label="Град" placeholder="Избери град ..." onChange={(e) => setCity(e.target.value)} />
+
                 <button type="button" className="btn btn-primary" onClick={registerUser}>Регистрирай</button>
             </form>
         </>
