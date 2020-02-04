@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import networkClient from '../network/network-client';
 import roles from '../roles';
 import { Alert } from 'reactstrap';
@@ -20,12 +20,19 @@ const RegisterUserComponent = () => {
     const [alertType, _setAlertType] = useState();
     const [visible, openAlert] = useState(true);
 
+    const [positionsFromServer, setPositionsFromServer] = useState();
+
+    useEffect(() => {
+        networkClient.get("/position/all", null, (positions) => {
+            setPositionsFromServer(positions);
+        });
+    }, []);
+
     const setAlert = (type, message) => {
         _setAlertType(type);
         _setAlertMessage(message);
         openAlert(true);
     }
-
 
     const showAlert = () => {
         let color;
@@ -81,6 +88,14 @@ const RegisterUserComponent = () => {
         );
     }
 
+    const renderPositions = () => {
+        if(!positionsFromServer) return null;
+
+        return positionsFromServer.map((position) => {
+            return <option key={position.id} value={position.role.name}>{position.name}</option>
+        });
+    }
+
     return (
         <>
             {showAlert()}
@@ -90,7 +105,7 @@ const RegisterUserComponent = () => {
                     <label htmlFor="position">Позиция</label>
                     <select id="position" className="form-control" onChange={(e) => setPosition(e.target.value)}>
                         <option defaultValue>Избери позиция ...</option>
-                        <option value={roles.OEPG}>ОЕПГ</option>
+                        {renderPositions()}
                     </select>
                 </div>
                 <div className="form-group">
