@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import networkClient from '../../../network/network-client';
+import networkClient from '../../../../network/network-client';
 import Select from './Select';
 
 const CitiesSelect = (props) => {

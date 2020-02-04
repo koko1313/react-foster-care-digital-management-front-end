@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import networkClient from '../network/network-client';
 import { Alert } from 'reactstrap';
-import RegionsSelect from './base-components/Select/RegionsSelect';
-import SubRegionsSelect from './base-components/Select/SubRegionsSelect';
-import CitiesSelect from './base-components/Select/CitiesSelect';
-import PositionsSelect from './base-components/Select/PositionsSelect';
+import Input from './base-components/Form/Input';
+import RegionsSelect from './base-components/Form/Select/RegionsSelect';
+import SubRegionsSelect from './base-components/Form/Select/SubRegionsSelect';
+import CitiesSelect from './base-components/Form/Select/CitiesSelect';
+import PositionsSelect from './base-components/Form/Select/PositionsSelect';
 
 const RegisterUserComponent = () => {
 
@@ -90,30 +91,17 @@ const RegisterUserComponent = () => {
             <form>
                 <PositionsSelect label="Позиция" placeholder="Избери позиция ..." onChange={(e) => setPosition(e.target.value)} />
 
-                <div className="form-group">
-                    <label htmlFor="email">Email</label>
-                    <input type="email" className="form-control" id="email" aria-describedby="emailHelp" placeholder="Email ..." onChange={(e) => setEmail(e.target.value)} />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="password">Парола</label>
-                    <input type="password" className="form-control" id="password" placeholder="Парола ..." onChange={(e) => setPassword(e.target.value)} />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="rePassword">Повтори парола</label>
-                    <input type="password" className="form-control" id="rePassword" placeholder="Повтори парола ..." onChange={(e) => setRePassword(e.target.value)} />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="firstName">Име</label>
-                    <input type="text" className="form-control" id="firstName" placeholder="Име ..." onChange={(e) => setFirstName(e.target.value)} />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="secondName">Презиме</label>
-                    <input type="text" className="form-control" id="secondName" placeholder="Презиме ..." onChange={(e) => setSecondName(e.target.value)} />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="lastName">Фамилия</label>
-                    <input type="text" className="form-control" id="lastName" placeholder="Фамилия ..." onChange={(e) => setLastName(e.target.value)} />
-                </div>
+                <Input id="email" label="Email" type="email" placeholder="Email ..." onChange={(e) => setEmail(e.target.value)} />
+
+                <Input id="password" label="Парола" type="password" placeholder="Парола ..." onChange={(e) => setPassword(e.target.value)} />
+
+                <Input id="rePassword" label="Повтори парола" type="password" placeholder="Повтори парола ..." onChange={(e) => setRePassword(e.target.value)} />
+
+                <Input id="firstName" label="Име" type="text" placeholder="Име ..." onChange={(e) => setFirstName(e.target.value)} />
+
+                <Input id="secondName" label="Презиме" type="text" placeholder="Презиме ..." onChange={(e) => setSecondName(e.target.value)} />
+
+                <Input id="lastName" label="Фамилия" type="text" placeholder="Фамилия ..." onChange={(e) => setLastName(e.target.value)} />
 
                 <RegionsSelect label="Област" placeholder="Избери област ..." onChange={(e) => setRegion(e.target.value)} />
 

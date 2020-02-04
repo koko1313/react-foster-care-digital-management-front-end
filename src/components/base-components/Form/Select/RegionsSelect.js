@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Select from './Select';
-import networkClient from '../../../network/network-client';
+import networkClient from '../../../../network/network-client';
 
 const RegionsSelect = (props) => {
 
