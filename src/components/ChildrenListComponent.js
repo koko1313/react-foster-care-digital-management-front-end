@@ -23,7 +23,7 @@ const ChildrenListComponent = () => {
                 <tr key={index}>
                     <td>{child.egn}</td>
                     <td>{child.first_name} {child.second_name} {child.last_name}</td>
-                    <td>{child.sex}</td>
+                    <td>{child.gender}</td>
                 </tr>
             )
         });
