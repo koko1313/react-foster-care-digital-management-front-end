@@ -1,0 +1,9 @@
+@import '../../../assets/styles/styles.scss';
+
+.loader {
+    text-align: center;
+}
+
+.loader div * {
+    background-color: theme-color('primary');
+}

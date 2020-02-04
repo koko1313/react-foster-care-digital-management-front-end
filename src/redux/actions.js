@@ -5,6 +5,10 @@ export function setError (error) {
     return { type: types.SET_ERROR, payload: error };
 }
 
+export function setLoading(isLoading) {
+    return {type: types.LOADING, payload: isLoading}
+}
+
 // #######################
 
 export function setLoggedUser (user) {

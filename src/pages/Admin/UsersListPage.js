@@ -1,30 +1,38 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import networkClient from '../../network/network-client';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from "../../redux/actions";
+import Loader from '../../components/base-components/Loader';
 
 const UsersListPage = () => {
 
-    //const [users, setUsers] = useState();
+    const isLoading = useSelector(state => state.loading);
     const users = useSelector(state => state.users);
 
     const dispatch = useDispatch();
 
     useEffect(()=> {
+        dispatch(actions.setLoading(true));
+        
         networkClient.get('/user/all', null, (users) => {
             dispatch(actions.setUsers(users));
+        })
+        .finally(() => {
+            dispatch(actions.setLoading(false));
         });
     }, []);
 
     const deleteUser = (id) => {
+        dispatch(actions.setLoading(true));
+        
         networkClient.delete('/user/delete', {userId: id}, 
         // success
-        () => {
-            dispatch(actions.deleteUser(id));
-        },
+        () => { dispatch(actions.deleteUser(id)) },
         // error
-        () => {
-            console.log("err");
+        () => { console.log("err") })
+        // finally
+        .finally(() => { 
+            dispatch(actions.setLoading(false)) 
         });
     }
     
@@ -69,6 +77,8 @@ const UsersListPage = () => {
                     {renderUsersList()}
                 </tbody>
             </table>
+
+            <Loader loading={isLoading} />
         </>
     );
 
