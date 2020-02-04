@@ -25,3 +25,13 @@ export const getChildren = () => async dispatch => {
         dispatch(setError({message: 'There was an error!'}));
     }
 };
+
+// #######################
+
+export function setUsers (users) {
+    return {type: types.SET_USERS, payload: users};
+}
+
+export function deleteUser(id) {
+    return {type: types.DELETE_USER, payload: id};
+}

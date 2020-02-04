@@ -1,15 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import networkClient from '../../network/network-client';
+import { useDispatch, useSelector } from 'react-redux';
+import * as actions from "../../redux/actions";
 
 const UsersListPage = () => {
 
-    const [users, setUsers] = useState();
+    //const [users, setUsers] = useState();
+    const users = useSelector(state => state.users);
+
+    const dispatch = useDispatch();
 
     useEffect(()=> {
         networkClient.get('/user/all', null, (users) => {
-            setUsers(users);
+            dispatch(actions.setUsers(users));
         });
     }, []);
+
+    const deleteUser = (id) => {
+        networkClient.delete('/user/delete', {userId: id}, 
+        // success
+        () => {
+            dispatch(actions.deleteUser(id));
+        },
+        // error
+        () => {
+            console.log("err");
+        });
+    }
     
     const renderUsersList = () => {
         if(!users) return null;
@@ -17,8 +34,18 @@ const UsersListPage = () => {
         return users.map((user) => {
             return (
                 <tr key={user.id}>
-                    <td>{`${user.firstName} ${user.secondName} ${user.lastName}`}</td>
+                    <td>{`${user.first_name} ${user.second_name} ${user.last_name}`}</td>
                     <td>{user.email}</td>
+                    <td>{user.position ? user.position.name : null}</td>
+                    <td>
+                        {user.city ? user.city.name + ", " : null}
+                        {user.sub_region ? user.sub_region.name + ", " : null}
+                        {user.region ? user.region.name : null}
+                    </td>
+                    <td>
+                        <button 
+                            type="button" className="btn btn-danger" onClick={() => { deleteUser(user.id) }}><i className="fa fa-trash"></i></button>
+                    </td>
                 </tr>
             );
         });
@@ -33,7 +60,9 @@ const UsersListPage = () => {
                     <tr>
                         <th scope="col">Име</th>
                         <th scope="col">Email</th>
-                        <th scope="col">Пол</th>
+                        <th scope="col">Позиция</th>
+                        <th scope="col">Адрес</th>
+                        <th scope="col">Действия</th>
                     </tr>
                 </thead>
                 <tbody>

@@ -19,4 +19,16 @@ function children(state = [], action) {
     }
 }
 
-export default combineReducers({loggedUser, children});
+function users(state = [], action) {
+    switch(action.type) {
+        case types.SET_USERS: {
+            return [...action.payload];
+        }
+        case types.DELETE_USER: {
+            return state.filter(item => item.id !== action.payload);
+        }
+        default: return state;
+    }
+}
+
+export default combineReducers({loggedUser, children, users});

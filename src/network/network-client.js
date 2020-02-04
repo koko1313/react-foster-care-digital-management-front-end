@@ -29,10 +29,11 @@ export default {
             failure,
         });
     },
-    delete(url, success, failure) {
+    delete(url, params, success, failure) {
         return this.request({
             method: 'delete',
             url,
+            params,
             success,
             failure,
         });
