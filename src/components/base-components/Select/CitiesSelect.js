@@ -16,7 +16,7 @@ const CitiesSelect = (props) => {
         if(!citiesFromServer) return null;
 
         return citiesFromServer.map((city) => {
-            return <option key={city.id} value={city.name}>{city.name}</option>
+            return <option key={city.id} value={city.id}>{city.name}</option>
         });
     }
 

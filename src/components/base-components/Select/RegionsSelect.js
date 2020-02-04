@@ -16,7 +16,7 @@ const RegionsSelect = (props) => {
         if(!regionsFromServer) return null;
 
         return regionsFromServer.map((region) => {
-            return <option key={region.id} value={region.name}>{region.name}</option>
+            return <option key={region.id} value={region.id}>{region.name}</option>
         });
     }
 

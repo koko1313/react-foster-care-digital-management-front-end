@@ -16,7 +16,7 @@ const SubRegionsSelect = (props) => {
         if(!subRegionsFromServer) return null;
 
         return subRegionsFromServer.map((subRegion) => {
-            return <option key={subRegion.id} value={subRegion.name}>{subRegion.name}</option>
+            return <option key={subRegion.id} value={subRegion.id}>{subRegion.name}</option>
         });
     }
 

@@ -55,9 +55,9 @@ const RegisterUserComponent = () => {
                 firstName: firstName,
                 secondName: secondName,
                 lastName: lastName,
-                region: region,
-                subRegion: subRegion,
-                city: city,
+                regionId: region,
+                subRegionId: subRegion,
+                cityId: city,
                 positionId: position,
             },
             // success
