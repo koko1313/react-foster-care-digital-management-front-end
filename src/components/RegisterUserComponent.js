@@ -52,6 +52,10 @@ const RegisterUserComponent = () => {
                             setAlert({color: "danger", message: "Вече съществува потребител с този email адрес!"});
                             break;
                         }
+                        case 400: {
+                            setAlert({color: "danger", message: "Не са попълнени всички полета!"});
+                            break;
+                        }
                         default: {
                             setAlert({color: "danger", message: "Възникна грешка!"});
                         }
