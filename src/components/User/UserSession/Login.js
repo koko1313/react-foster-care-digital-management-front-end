@@ -31,6 +31,10 @@ const Login = () => {
                             openAlert(true);
                             break;
                         }
+                        default: {
+                            setAlert("Нещо се обърка!");
+                            openAlert(true);
+                        }
                     }
                 } else {
                     setAlert("Нещо се обърка!");
