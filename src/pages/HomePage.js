@@ -26,8 +26,6 @@ const HomePage = () => {
     return <>
         {onlyAdminCanSeeThis()}
         {onlyRegionalAdminsCanSeeThis()}
-
-        {console.log(loggedUser)}
     </>;
 }
 
