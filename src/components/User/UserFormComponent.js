@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import networkClient from '../network/network-client';
+import networkClient from '../../network/network-client';
 import { Alert } from 'reactstrap';
-import Input from './base-components/Form/Input';
-import RegionsSelect from './base-components/Form/Select/RegionsSelect';
-import SubRegionsSelect from './base-components/Form/Select/SubRegionsSelect';
-import CitiesSelect from './base-components/Form/Select/CitiesSelect';
-import PositionsSelect from './base-components/Form/Select/PositionsSelect';
+import Input from '../base-components/Form/Input';
+import RegionsSelect from '../base-components/Form/Select/RegionsSelect';
+import SubRegionsSelect from '../base-components/Form/Select/SubRegionsSelect';
+import CitiesSelect from '../base-components/Form/Select/CitiesSelect';
+import PositionsSelect from '../base-components/Form/Select/PositionsSelect';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import * as actions from '../redux/actions';
-import Loader from './base-components/Loader';
+import * as actions from '../../redux/actions';
+import Loader from '../base-components/Loader';
 
 const RegisterUserComponent = () => {
 
