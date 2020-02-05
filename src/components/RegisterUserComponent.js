@@ -82,11 +82,11 @@ const RegisterUserComponent = () => {
 
                 <Input id="lastName" label="Фамилия" type="text" placeholder="Фамилия ..." onChange={(e) => setLastName(e.target.value)} />
 
-                <RegionsSelect label="Област" placeholder="Избери област ..." onChange={(e) => setRegion(e.target.value)} />
+                <RegionsSelect id="region" label="Област" placeholder="Избери област ..." onChange={(e) => setRegion(e.target.value)} />
 
-                <SubRegionsSelect label="Община" placeholder="Избери община ..." onChange={(e) => setSubRegion(e.target.value)} />
+                <SubRegionsSelect id="subRegion" label="Община" placeholder="Избери община ..." onChange={(e) => setSubRegion(e.target.value)} />
 
-                <CitiesSelect label="Град" placeholder="Избери град ..." onChange={(e) => setCity(e.target.value)} />
+                <CitiesSelect id="city" label="Град" placeholder="Избери град ..." onChange={(e) => setCity(e.target.value)} />
 
                 <button type="button" className="btn btn-primary" onClick={registerUser}>Регистрирай</button>
             </form>
