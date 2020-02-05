@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import networkClient from '../network/network-client';
-import { Alert } from 'reactstrap';
+import Alert from './base-components/Alert';
 import Input from './base-components/Form/Input';
 import RegionsSelect from './base-components/Form/Select/RegionsSelect';
 import SubRegionsSelect from './base-components/Form/Select/SubRegionsSelect';
@@ -8,6 +8,8 @@ import CitiesSelect from './base-components/Form/Select/CitiesSelect';
 import PositionsSelect from './base-components/Form/Select/PositionsSelect';
 
 const RegisterUserComponent = () => {
+
+    const [alert, setAlert] = useState({color: null, message: null})
 
     const [position, setPosition] = useState();
     const [email, setEmail] = useState();
@@ -20,32 +22,9 @@ const RegisterUserComponent = () => {
     const [subRegion, setSubRegion] = useState();
     const [city, setCity] = useState();
 
-    const [alertMessage, _setAlertMessage] = useState();
-    const [alertType, _setAlertType] = useState();
-    const [visible, openAlert] = useState(true);
-
-    const setAlert = (type, message) => {
-        _setAlertType(type);
-        _setAlertMessage(message);
-        openAlert(true);
-    }
-
-    const showAlert = () => {
-        let color;
-
-        if(alertType === "SUCCESS") color = "success";
-        else if(alertType === "ERROR") color = "danger";
-        
-        if(alertMessage) {
-            return <Alert color={color} isOpen={visible} toggle={() => {openAlert(false)}}>
-                {alertMessage}
-            </Alert>
-        }
-    }
-
     const registerUser = () => {
         if(password !== rePassword) {
-            setAlert("ERROR", "Паролите не съвпадат!");
+            setAlert({color: "danger", message: "Паролите не съвпадат!"});
             return null;
         }
 
@@ -63,22 +42,22 @@ const RegisterUserComponent = () => {
             },
             // success
             (response) => {
-                setAlert("SUCCESS", "Успешно регистриран потребител!");
+                setAlert({color: "success", message: "Успешно регистриран потребител!"});
             },
             // error
             (error) => {
                 if(error.response) {
                     switch(error.response.status) {
                         case 409: {
-                            setAlert("ERROR", "Вече съществува потребител с този email адрес!");
+                            setAlert({color: "danger", message: "Вече съществува потребител с този email адрес!"});
                             break;
                         }
                         default: {
-                            setAlert("ERROR", "Грешка при регистрирането на потребителя!");
+                            setAlert({color: "danger", message: "Възникна грешка!"});
                         }
                     }
                 } else {
-                    setAlert("ERROR", "Грешка при регистрирането на потребителя!");
+                    setAlert({color: "danger", message: "Възникна грешка!"});
                 }
             }
         );
@@ -86,7 +65,7 @@ const RegisterUserComponent = () => {
 
     return (
         <>
-            {showAlert()}
+            <Alert color={alert.color} message={alert.message} /> 
 
             <form>
                 <PositionsSelect label="Позиция" placeholder="Избери позиция ..." onChange={(e) => setPosition(e.target.value)} />
