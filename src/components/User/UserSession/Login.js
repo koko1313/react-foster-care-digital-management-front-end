@@ -14,7 +14,9 @@ const Login = () => {
 
     const dispatch = useDispatch();
 
-    const login = () => {
+    const login = (e) => {
+        e.preventDefault();
+        
         networkClient.post("login", {email: email, password: password},
             // success
             (loggedUser) => {
@@ -42,7 +44,7 @@ const Login = () => {
     return <>
         <Alert color={alert.color} message={alert.message} /> 
 
-        <form>
+        <form onSubmit={login}>
             <div className="form-group">
                 <label htmlFor="email">Email address</label>
                 <input type="email" className="form-control" id="email" onChange={(e) => {setEmail(e.target.value)}} />
@@ -51,7 +53,7 @@ const Login = () => {
                 <label htmlFor="password">Password</label>
                 <input type="password" className="form-control" id="password" onChange={(e) => {setPassword(e.target.value);}} />
             </div>
-            <button type="button" className="btn btn-primary" onClick={login}>Вход</button>
+            <button type="submit" className="btn btn-primary" >Вход</button>
         </form>
     </>;
 
