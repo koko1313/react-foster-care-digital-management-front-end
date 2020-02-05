@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import networkClient from '../network/network-client';
-import Alert from './base-components/Alert';
+import { Alert } from 'reactstrap';
 import Input from './base-components/Form/Input';
 import RegionsSelect from './base-components/Form/Select/RegionsSelect';
 import SubRegionsSelect from './base-components/Form/Select/SubRegionsSelect';
@@ -14,6 +14,8 @@ import Loader from './base-components/Loader';
 const RegisterUserComponent = () => {
 
     const [alert, setAlert] = useState({color: null, message: null});
+    const onDismiss = () => setAlert({color: null, message: null});
+
     const isLoading = useSelector(state => state.loading);
 
     const [isEditingUser, setIsEditingUser] = useState(false);
@@ -144,7 +146,9 @@ const RegisterUserComponent = () => {
 
     return (
         <>
-            <Alert color={alert.color} message={alert.message} /> 
+            <Alert color={alert.color} isOpen={alert.message ? true : false} toggle={onDismiss}>
+                {alert.message}
+            </Alert>
 
             <form>
                 <PositionsSelect label="Позиция" placeholder="Избери позиция ..." onChange={(e) => setPosition(e.target.value)} value={position} />

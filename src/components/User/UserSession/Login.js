@@ -3,11 +3,12 @@ import networkClient from '../../../network/network-client';
 
 import { useDispatch } from 'react-redux';
 import * as actions from "../../../redux/actions";
-import Alert from '../../base-components/Alert';
+import { Alert } from 'reactstrap';
 
 const Login = () => {
 
     const [alert, setAlert] = useState({color: null, message: null});
+    const onDismiss = () => setAlert({color: null, message: null});
 
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
@@ -42,7 +43,9 @@ const Login = () => {
     }
 
     return <>
-        <Alert color={alert.color} message={alert.message} /> 
+        <Alert color={alert.color} isOpen={alert.message ? true : false} toggle={onDismiss}>
+            {alert.message}
+        </Alert>
 
         <form onSubmit={login}>
             <div className="form-group">
