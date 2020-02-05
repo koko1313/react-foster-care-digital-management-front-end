@@ -1,22 +1,20 @@
 import React, {useState} from 'react';
-import { Alert } from 'reactstrap';
 import networkClient from '../../../network/network-client';
 
 import { useDispatch } from 'react-redux';
 import * as actions from "../../../redux/actions";
+import Alert from '../../base-components/Alert';
 
 const Login = () => {
+
+    const [alert, setAlert] = useState({color: null, message: null});
 
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
 
-    const [alert, setAlert] = useState();
-    const [visible, openAlert] = useState(true);
-
     const dispatch = useDispatch();
 
     const login = () => {
-        // CALL BACKEND
         networkClient.post("login", {email: email, password: password},
             // success
             (loggedUser) => {
@@ -27,40 +25,22 @@ const Login = () => {
                 if(error.response) {
                     switch(error.response.status) {
                         case 401: {
-                            setAlert("Грешен email или парола!");
-                            openAlert(true);
+                            setAlert({color: "danger", message: "Грешен email или парола!"});
                             break;
                         }
                         default: {
-                            setAlert("Нещо се обърка!");
-                            openAlert(true);
+                            setAlert({color: "danger", message: "Нещо се обърка!"});
                         }
                     }
                 } else {
-                    setAlert("Нещо се обърка!");
-                    openAlert(true);
+                    setAlert({color: "danger", message: "Нещо се обърка!"});
                 }
             }
         );
-
-        // HARDCORE LOGGED USER
-        // const loggedUser = {
-        //     email: "admin@admin.com",
-        //     roles: ["ROLE_ADMIN"],
-        // }
-        // dispatch(actions.setLoggedUser(loggedUser));
-    }
-
-    const showAlert = () => {
-        if(alert) {
-            return <Alert color="danger" isOpen={visible} toggle={() => {openAlert(false)}}>
-                {alert}
-            </Alert>
-        }
     }
 
     return <>
-        {showAlert()}
+        <Alert color={alert.color} message={alert.message} /> 
 
         <form>
             <div className="form-group">
