@@ -32,7 +32,7 @@ const RegionsSelect = (props) => {
     }
 
     return (
-        <Select id={props.id} label={props.label} placeholder={props.placeholder} onChange={props.onChange} loading={isLoading}>
+        <Select id={props.id} label={props.label} placeholder={props.placeholder} onChange={props.onChange} loading={isLoading} value={props.value}>
             {renderRegions()}
         </Select>
     );

@@ -102,6 +102,14 @@ const Router = () => {
             </Layout>
         },
         {
+            path: '/user/edit/:id',
+            exact: true,
+            roles: [role.ADMIN],
+            main: () => <Layout>
+                <RegisterUserPage />
+            </Layout>
+        },
+        {
             path: '/user/all',
             exact: true,
             roles: [role.ADMIN],

@@ -6,6 +6,7 @@ import RegionsSelect from './base-components/Form/Select/RegionsSelect';
 import SubRegionsSelect from './base-components/Form/Select/SubRegionsSelect';
 import CitiesSelect from './base-components/Form/Select/CitiesSelect';
 import PositionsSelect from './base-components/Form/Select/PositionsSelect';
+import { useParams } from 'react-router-dom';
 
 const RegisterUserComponent = () => {
 
@@ -21,6 +22,10 @@ const RegisterUserComponent = () => {
     const [region, setRegion] = useState();
     const [subRegion, setSubRegion] = useState();
     const [city, setCity] = useState();
+
+    const { id } = useParams(); // get parameter from url
+
+    console.log(id); // TODO
 
     const registerUser = () => {
         if(password !== rePassword) {
@@ -72,25 +77,25 @@ const RegisterUserComponent = () => {
             <Alert color={alert.color} message={alert.message} /> 
 
             <form>
-                <PositionsSelect label="Позиция" placeholder="Избери позиция ..." onChange={(e) => setPosition(e.target.value)} />
+                <PositionsSelect label="Позиция" placeholder="Избери позиция ..." onChange={(e) => setPosition(e.target.value)} value={position} />
 
-                <Input id="email" label="Email" type="email" placeholder="Email ..." onChange={(e) => setEmail(e.target.value)} />
+                <Input id="email" label="Email" type="email" placeholder="Email ..." onChange={(e) => setEmail(e.target.value)} value={email} />
 
                 <Input id="password" label="Парола" type="password" placeholder="Парола ..." onChange={(e) => setPassword(e.target.value)} />
 
                 <Input id="rePassword" label="Повтори парола" type="password" placeholder="Повтори парола ..." onChange={(e) => setRePassword(e.target.value)} />
 
-                <Input id="firstName" label="Име" type="text" placeholder="Име ..." onChange={(e) => setFirstName(e.target.value)} />
+                <Input id="firstName" label="Име" type="text" placeholder="Име ..." onChange={(e) => setFirstName(e.target.value)} value={firstName} />
 
-                <Input id="secondName" label="Презиме" type="text" placeholder="Презиме ..." onChange={(e) => setSecondName(e.target.value)} />
+                <Input id="secondName" label="Презиме" type="text" placeholder="Презиме ..." onChange={(e) => setSecondName(e.target.value)} value={secondName} />
 
-                <Input id="lastName" label="Фамилия" type="text" placeholder="Фамилия ..." onChange={(e) => setLastName(e.target.value)} />
+                <Input id="lastName" label="Фамилия" type="text" placeholder="Фамилия ..." onChange={(e) => setLastName(e.target.value)} value={lastName} />
 
-                <RegionsSelect id="region" label="Област" placeholder="Избери област ..." onChange={(e) => setRegion(e.target.value)} />
+                <RegionsSelect id="region" label="Област" placeholder="Избери област ..." onChange={(e) => setRegion(e.target.value)} value={region} />
 
-                <SubRegionsSelect id="subRegion" label="Община" placeholder="Избери община ..." onChange={(e) => setSubRegion(e.target.value)} />
+                <SubRegionsSelect id="subRegion" label="Община" placeholder="Избери община ..." onChange={(e) => setSubRegion(e.target.value)} value={subRegion} />
 
-                <CitiesSelect id="city" label="Град" placeholder="Избери град ..." onChange={(e) => setCity(e.target.value)} />
+                <CitiesSelect id="city" label="Град" placeholder="Избери град ..." onChange={(e) => setCity(e.target.value)} value={city} />
 
                 <button type="button" className="btn btn-primary" onClick={registerUser}>Регистрирай</button>
             </form>

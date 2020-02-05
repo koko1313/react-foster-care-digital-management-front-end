@@ -5,7 +5,7 @@ const Select = (props) => {
     return (
         <div className="form-group">
             <label htmlFor={props.id}>{props.label}</label>
-            <select id={props.id} className="form-control" onChange={props.onChange}>
+            <select id={props.id} className="form-control" onChange={props.onChange} value={props.value}>
                 {props.loading ?
                         <option defaultValue>Зареждане ...</option>
                     :

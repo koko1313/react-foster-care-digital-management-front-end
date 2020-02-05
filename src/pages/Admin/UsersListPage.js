@@ -3,12 +3,14 @@ import networkClient from '../../network/network-client';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from "../../redux/actions";
 import Loader from '../../components/base-components/Loader';
+import { useHistory } from 'react-router-dom';
 
 const UsersListPage = () => {
 
     const isLoading = useSelector(state => state.loading);
     const users = useSelector(state => state.users);
 
+    const history = useHistory();
     const dispatch = useDispatch();
 
     useEffect(()=> {
@@ -21,6 +23,10 @@ const UsersListPage = () => {
             dispatch(actions.setLoading(false));
         });
     }, []);
+
+    const editUser = (id) => {
+        history.push(`/user/edit/${id}`);
+    }
 
     const deleteUser = (id) => {
         let confirm = window.confirm("Сигурни ли сте?");
@@ -57,8 +63,8 @@ const UsersListPage = () => {
                         {user.region ? user.region.name : null}
                     </td>
                     <td>
-                        <button 
-                            type="button" className="btn btn-danger" onClick={() => { deleteUser(user.id) }}><i className="fa fa-trash"></i></button>
+                        <button type="button" className="btn btn-danger" onClick={() => { deleteUser(user.id) }}><i className="fa fa-trash"></i></button>
+                        <button type="button" className="btn btn-warning" onClick={() => { editUser(user.id) }}><i className="fa fa-trash"></i></button>
                     </td>
                 </tr>
             );
