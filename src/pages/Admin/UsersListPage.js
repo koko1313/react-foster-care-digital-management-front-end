@@ -23,6 +23,12 @@ const UsersListPage = () => {
     }, []);
 
     const deleteUser = (id) => {
+        let confirm = window.confirm("Сигурни ли сте?");
+
+        if(!confirm) {
+            return null;
+        }
+
         dispatch(actions.setLoading(true));
         
         networkClient.delete('/user/delete', {userId: id}, 
