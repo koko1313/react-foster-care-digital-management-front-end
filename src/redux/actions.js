@@ -39,3 +39,23 @@ export function setUsers (users) {
 export function deleteUser(id) {
     return {type: types.DELETE_USER, payload: id};
 }
+
+// #######################
+
+export function setLoadingPositions(isLoading) {
+    return {type: types.LOADING_POSITIONS, payload: isLoading}
+}
+
+export function setLoadingRegions(isLoading) {
+    return {type: types.LOADING_REGIONS, payload: isLoading}
+}
+
+export function setLoadingSubRegions(isLoading) {
+    return {type: types.LOADING_SUB_REGIONS, payload: isLoading}
+}
+
+export function setLoadingCities(isLoading) {
+    return {type: types.LOADING_CITIES, payload: isLoading}
+}
+
+// #######################
