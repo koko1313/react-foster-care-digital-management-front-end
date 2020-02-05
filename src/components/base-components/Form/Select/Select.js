@@ -7,10 +7,10 @@ const Select = (props) => {
             <label htmlFor={props.id}>{props.label}</label>
             <select id={props.id} className="form-control" onChange={props.onChange} value={props.value}>
                 {props.loading ?
-                        <option defaultValue>Зареждане ...</option>
+                        <option defaultValue value="">Зареждане ...</option>
                     :
                     <>
-                        <option defaultValue>{props.placeholder}</option>
+                        <option defaultValue value="">{props.placeholder}</option>
                         {props.children}
                     </>
                 }
