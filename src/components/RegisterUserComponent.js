@@ -9,7 +9,7 @@ import PositionsSelect from './base-components/Form/Select/PositionsSelect';
 
 const RegisterUserComponent = () => {
 
-    const [alert, setAlert] = useState({color: null, message: null})
+    const [alert, setAlert] = useState({color: null, message: null});
 
     const [position, setPosition] = useState();
     const [email, setEmail] = useState();
