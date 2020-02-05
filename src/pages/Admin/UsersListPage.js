@@ -37,7 +37,7 @@ const UsersListPage = () => {
 
         dispatch(actions.setLoading(true));
         
-        networkClient.delete('/user/delete', {userId: id}, 
+        networkClient.delete(`/user/delete/${id}`, null, 
         // success
         () => { dispatch(actions.deleteUser(id)) },
         // error
@@ -63,8 +63,8 @@ const UsersListPage = () => {
                         {user.region ? user.region.name : null}
                     </td>
                     <td>
+                        <button type="button" className="btn btn-warning mr-1" onClick={() => { editUser(user.id) }}><i className="fa fa-edit"></i></button>
                         <button type="button" className="btn btn-danger" onClick={() => { deleteUser(user.id) }}><i className="fa fa-trash"></i></button>
-                        <button type="button" className="btn btn-warning" onClick={() => { editUser(user.id) }}><i className="fa fa-trash"></i></button>
                     </td>
                 </tr>
             );
