@@ -20,7 +20,6 @@ import ChildrenListPage from './pages/Children/ChildrenListPage';
 import FamiliesListPage from './pages/Family/FamiliesListPage';
 import Logout from './components/Session/Logout';
 import UserFormPage from './pages/User/UserFormPage';
-import AdminPage from './pages/AdminPage';
 import UserListPage from './pages/User/UserListPage';
 
 const Router = () => {
@@ -55,7 +54,7 @@ const Router = () => {
             </Layout>
         },
         {
-            path: '/profile',
+            path: '/user/profile',
             exact: true,
             roles: [role.LOGGED],
             main: () => <Layout>
@@ -76,14 +75,6 @@ const Router = () => {
             roles: [role.LOGGED],
             main: () => <Layout>
                 <Logout />
-            </Layout>
-        },
-        {
-            path: '/admin-panel',
-            exact: true,
-            roles: [role.ADMIN],
-            main: () => <Layout>
-                <AdminPage />
             </Layout>
         },
         {
@@ -119,7 +110,7 @@ const Router = () => {
             </Layout>
         },
         {
-            path: '/families',
+            path: '/family/all',
             exact: true,
             roles: [role.OEPG],
             main: () => <Layout>

@@ -34,8 +34,8 @@ const Header = () => {
         },
         {
             exact: true,
-            to: "/admin-panel",
-            label: "Админ панел",
+            to: "/user/all",
+            label: "Потребители",
             roles: [role.ADMIN],
         },
         {
@@ -46,13 +46,13 @@ const Header = () => {
         },
         {
             exact: true,
-            to: "/families",
+            to: "/family/all",
             label: "Семейства",
             roles: [role.OEPG],
         },
         {
             exact: true,
-            to: "/profile",
+            to: "/user/profile",
             label: loggedUser.email,
             roles: [role.LOGGED],
         },
