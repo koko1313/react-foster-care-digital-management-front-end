@@ -86,4 +86,16 @@ function users(state = [], action) {
     }
 }
 
-export default combineReducers({loading, loggedUser, children, users, loadingPositions, loadingRegions, loadingSubRegions, loadingCities});
+function families(state = [], action) {
+    switch(action.type) {
+        case types.SET_FAMILIES: {
+            return [...action.payload];
+        }
+        case types.DELETE_FAMILY: {
+            return state.filter(item => item.id !== action.payload);
+        }
+        default: return state;
+    }
+}
+
+export default combineReducers({loading, loggedUser, children, users, loadingPositions, loadingRegions, loadingSubRegions, loadingCities, families});

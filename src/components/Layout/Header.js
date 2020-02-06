@@ -46,6 +46,12 @@ const Header = () => {
         },
         {
             exact: true,
+            to: "/families",
+            label: "Семейства",
+            roles: [role.OEPG],
+        },
+        {
+            exact: true,
             to: "/profile",
             label: loggedUser.email,
             roles: [role.LOGGED],

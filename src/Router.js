@@ -17,6 +17,7 @@ import { objectIsEmpty, userHasRole } from './helpers';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import ChildrenListPage from './pages/OEPG/ChildrenListPage';
+import FamiliesListPage from './pages/OEPG/FamiliesListPage';
 import Logout from './components/User/UserSession/Logout';
 import RegisterUserPage from './pages/Admin/RegisterUserPage';
 import AdminPage from './pages/Admin/AdminPage';
@@ -115,6 +116,14 @@ const Router = () => {
             roles: [role.OEPG],
             main: () => <Layout>
                 <ChildrenListPage />
+            </Layout>
+        },
+        {
+            path: '/families',
+            exact: true,
+            roles: [role.OEPG],
+            main: () => <Layout>
+                <FamiliesListPage />
             </Layout>
         },
         // path if non of above are reached

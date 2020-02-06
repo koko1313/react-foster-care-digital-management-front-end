@@ -42,6 +42,16 @@ export function deleteUser(id) {
 
 // #######################
 
+export function setFamilies (families) {
+    return {type: types.SET_FAMILIES, payload: families};
+}
+
+export function deleteFamily(id) {
+    return {type: types.DELETE_FAMILY, payload: id};
+}
+
+// #######################
+
 export function setLoadingPositions(isLoading) {
     return {type: types.LOADING_POSITIONS, payload: isLoading}
 }
