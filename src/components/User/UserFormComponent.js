@@ -76,7 +76,7 @@ const RegisterUserComponent = () => {
             // success
             (response) => {
                 setAlert({color: "success", message: "Успешно регистриран потребител!"});
-                history.push("user/all");
+                history.push("/user/all");
             },
             // error
             (error) => {
