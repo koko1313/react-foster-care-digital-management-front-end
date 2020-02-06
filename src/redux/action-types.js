@@ -1,6 +1,5 @@
 export default {
     SET_ERROR: 'SET_ERROR',
-    LOADING: 'LOADING',
     SET_LOGGED_USER: 'SET_LOGGED_USER',
     SET_CHILDREN: 'SET_CHILDREN',
     

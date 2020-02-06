@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import networkClient from '../../network/network-client';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from "../../redux/actions";
@@ -7,20 +7,20 @@ import { useHistory } from 'react-router-dom';
 
 const UserListComponent = () => {
 
-    const isLoading = useSelector(state => state.loading);
+    const [isLoading, setIsLoading] = useState(false);
     const users = useSelector(state => state.users);
 
     const history = useHistory();
     const dispatch = useDispatch();
 
     useEffect(()=> {
-        dispatch(actions.setLoading(true));
+        setIsLoading(true);
         
         networkClient.get('/user/all', null, (users) => {
             dispatch(actions.setUsers(users));
         })
         .finally(() => {
-            dispatch(actions.setLoading(false));
+            setIsLoading(false);
         });
     }, []);
 
@@ -35,7 +35,7 @@ const UserListComponent = () => {
             return null;
         }
 
-        dispatch(actions.setLoading(true));
+        setIsLoading(true);
         
         networkClient.delete(`/user/delete/${id}`, null, 
         // success
@@ -44,7 +44,7 @@ const UserListComponent = () => {
         () => { console.log("err") })
         // finally
         .finally(() => { 
-            dispatch(actions.setLoading(false)) 
+            setIsLoading(false);
         });
     }
     

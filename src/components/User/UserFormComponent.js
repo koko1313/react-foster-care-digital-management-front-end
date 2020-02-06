@@ -7,8 +7,6 @@ import SubRegionsSelect from '../base-components/Form/Select/SubRegionsSelect';
 import CitiesSelect from '../base-components/Form/Select/CitiesSelect';
 import PositionsSelect from '../base-components/Form/Select/PositionsSelect';
 import { useParams, useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import * as actions from '../../redux/actions';
 import Loader from '../base-components/Loader';
 
 const RegisterUserComponent = () => {
@@ -16,7 +14,7 @@ const RegisterUserComponent = () => {
     const [alert, setAlert] = useState({color: null, message: null});
     const onDismiss = () => setAlert({color: null, message: null});
 
-    const isLoading = useSelector(state => state.loading);
+    const [isLoading, setIsLoading] = useState(false);
 
     const [isEditingUser, setIsEditingUser] = useState(false);
 
@@ -32,13 +30,12 @@ const RegisterUserComponent = () => {
     const [city, setCity] = useState("");
 
     const { id } = useParams(); // get parameter from url
-    const dispatch = useDispatch();
     const history = useHistory();
 
     useState(() => {
         if(id) {
             setIsEditingUser(true);
-            dispatch(actions.setLoading(true));
+            setIsLoading(true);
 
             networkClient.get(`user/${id}`, null, (user) => {
                 setPosition(user.position.id);
@@ -49,7 +46,7 @@ const RegisterUserComponent = () => {
                 setRegion(user.region.id);
                 setSubRegion(user.sub_region.id);
                 setCity(user.city.id);
-                dispatch(actions.setLoading(false));
+                setIsLoading(false);
             });
         }
     }, [id]);

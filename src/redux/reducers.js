@@ -1,17 +1,6 @@
 import {combineReducers} from "redux";
 import types from "./action-types";
 
-export function loading(state = false, action) {
-    switch(action.type) {
-        case types.LOADING: {
-            return action.payload;
-        }
-        default: {
-            return state;
-        }
-    }
-}
-
 function loggedUser(state = {}, action) {
     switch (action.type) {
         case types.SET_LOGGED_USER: {
@@ -54,4 +43,4 @@ function families(state = [], action) {
     }
 }
 
-export default combineReducers({loading, loggedUser, children, users, families});
+export default combineReducers({loggedUser, children, users, families});
