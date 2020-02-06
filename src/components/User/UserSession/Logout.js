@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 
 import { useDispatch } from 'react-redux';
 import * as actions from "../../../redux/actions";
+import Loader from '../../base-components/Loader';
 
 const Logout = () => {
 
@@ -11,7 +12,6 @@ const Logout = () => {
     const dispatch = useDispatch();
 
     const logout = () => {
-        // CALL BACKEND
         networkClient.post("logout", null,
             // success
             (loggedUser) => {
@@ -25,16 +25,14 @@ const Logout = () => {
                 history.goBack();
             }
         );
-
-        // HARDCORED LOGOUT
-        // dispatch(actions.setLoggedUser({}));
-        // history.push("/");
     }
 
     return <>
         {logout()}
 
         Излизане...
+
+        <Loader loading={true} />
     </>;
 
 }

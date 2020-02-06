@@ -1,14 +1,17 @@
 import React, {useState} from 'react';
 import networkClient from '../../../network/network-client';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as actions from "../../../redux/actions";
 import { Alert } from 'reactstrap';
+import Loader from '../../base-components/Loader';
 
 const Login = () => {
 
     const [alert, setAlert] = useState({color: null, message: null});
     const onDismiss = () => setAlert({color: null, message: null});
+
+    const isLoading = useSelector(state => state.loading);
 
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
@@ -18,6 +21,7 @@ const Login = () => {
     const login = (e) => {
         e.preventDefault();
         
+        dispatch(actions.setLoading(true));
         networkClient.post("login", {email: email, password: password},
             // success
             (loggedUser) => {
@@ -39,10 +43,15 @@ const Login = () => {
                     setAlert({color: "danger", message: "Нещо се обърка!"});
                 }
             }
-        );
+        )
+        .finally(() => {
+            dispatch(actions.setLoading(false));
+        });
     }
 
     return <>
+        <Loader loading={isLoading} />
+
         <Alert color={alert.color} isOpen={alert.message ? true : false} toggle={onDismiss}>
             {alert.message}
         </Alert>
