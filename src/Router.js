@@ -54,14 +54,6 @@ const Router = () => {
             </Layout>
         },
         {
-            path: '/children',
-            exact: true,
-            roles: [role.LOGGED],
-            main: () => <Layout>
-                <ChildrenListPage />
-            </Layout>
-        },
-        {
             path: '/profile',
             exact: true,
             roles: [role.LOGGED],
@@ -117,6 +109,14 @@ const Router = () => {
                 <UsersListPage />
             </Layout>
         },
+        {
+            path: '/children',
+            exact: true,
+            roles: [role.OEPG],
+            main: () => <Layout>
+                <ChildrenListPage />
+            </Layout>
+        },
         // path if non of above are reached
         { path: '*' },
     ];
@@ -146,6 +146,12 @@ const Router = () => {
             }
             // role admin
             else if(route.roles.includes(role.ADMIN) && !objectIsEmpty(loggedUser) && userHasRole(loggedUser, role.ADMIN)) {
+                return <Route key={index} exact={route.exact} path={route.path}>
+                    {route.main}
+                </Route>;
+            }
+            // role OEPG
+            else if(route.roles.includes(role.OEPG) && !objectIsEmpty(loggedUser) && userHasRole(loggedUser, role.OEPG)) {
                 return <Route key={index} exact={route.exact} path={route.path}>
                     {route.main}
                 </Route>;

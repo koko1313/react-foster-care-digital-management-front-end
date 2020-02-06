@@ -34,15 +34,15 @@ const Header = () => {
         },
         {
             exact: true,
-            to: "/children",
-            label: "Деца",
-            roles: [role.LOGGED],
+            to: "/admin-panel",
+            label: "Админ панел",
+            roles: [role.ADMIN],
         },
         {
             exact: true,
-            to: "/login",
-            label: "Вход",
-            roles: [role.GUEST],
+            to: "/children",
+            label: "Деца",
+            roles: [role.OEPG],
         },
         {
             exact: true,
@@ -52,9 +52,9 @@ const Header = () => {
         },
         {
             exact: true,
-            to: "/admin-panel",
-            label: "Админ панел",
-            roles: [role.ADMIN],
+            to: "/login",
+            label: "Вход",
+            roles: [role.GUEST],
         },
         {
             exact: true,
@@ -85,6 +85,12 @@ const Header = () => {
             }
             // role admin
             else if(button.roles.includes(role.ADMIN) && !objectIsEmpty(loggedUser) && userHasRole(loggedUser, role.ADMIN)) {
+                return <NavItem key={index}>
+                    <NavLink tag={RRNavLink} exact={button.exact} to={button.to} activeClassName="active">{button.label}</NavLink>
+                </NavItem>
+            }
+            // role OEPG
+            else if(button.roles.includes(role.OEPG) && !objectIsEmpty(loggedUser) && userHasRole(loggedUser, role.OEPG)) {
                 return <NavItem key={index}>
                     <NavLink tag={RRNavLink} exact={button.exact} to={button.to} activeClassName="active">{button.label}</NavLink>
                 </NavItem>
