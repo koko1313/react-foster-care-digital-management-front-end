@@ -42,11 +42,10 @@ const Login = () => {
                 } else {
                     setAlert({color: "danger", message: "Нещо се обърка!"});
                 }
+
+                setIsLoading(false);
             }
-        )
-        .finally(() => {
-            setIsLoading(false);
-        });
+        );
     }
 
     return <>

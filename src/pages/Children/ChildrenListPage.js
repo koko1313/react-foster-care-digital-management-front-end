@@ -3,7 +3,7 @@ import React from 'react';
 const ChildrenListPage = () => {
 
     return (
-        null
+        <div></div>
     );
 }
 
