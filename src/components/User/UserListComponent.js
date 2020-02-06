@@ -75,7 +75,7 @@ const UserListComponent = () => {
         <>
             <button className="btn btn-link" onClick={()=>history.push("/user/register")}>Регистрация на потребител</button>
             
-            <div class="table-responsive">
+            <div className="table-responsive">
                 <table className="table">
                     <thead>
                         <tr>

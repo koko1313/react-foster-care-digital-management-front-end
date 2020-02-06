@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import * as actions from "../../../../redux/actions";
 import networkClient from '../../../../network/network-client';
 import Select from './Select';
 
@@ -8,18 +6,16 @@ const CitiesSelect = (props) => {
 
     const [citiesFromServer, setCitiesFromServer] = useState();
 
-    const isLoading = useSelector(state => state.loadingCities);
-
-    const dispatch = useDispatch();
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        dispatch(actions.setLoadingCities(true));
+        setIsLoading(true);
 
         networkClient.get("/city/all", null, (cities) => {
             setCitiesFromServer(cities);
         })
         .finally(()=> {
-            dispatch(actions.setLoadingCities(false));
+            setIsLoading(false);
         });
     }, []);
 

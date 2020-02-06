@@ -71,7 +71,7 @@ const FamilyListComponent = () => {
         <>
             <button className="btn btn-link" onClick={()=>history.push("/family/register")}>Добави семейство</button>
             
-            <div class="table-responsive">
+            <div className="table-responsive">
                 <table className="table">
                     <thead>
                         <tr>

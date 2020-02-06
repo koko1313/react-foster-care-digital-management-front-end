@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import * as actions from "../../../../redux/actions";
 import Select from './Select';
 import networkClient from '../../../../network/network-client';
 
@@ -8,18 +6,16 @@ const SubRegionsSelect = (props) => {
 
     const [subRegionsFromServer, setSubRegionsFromServer] = useState();
 
-    const isLoading = useSelector(state => state.loadingSubRegions);
-
-    const dispatch = useDispatch();
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        dispatch(actions.setLoadingSubRegions(true));
+        setIsLoading(true);
 
         networkClient.get("/sub-region/all", null, (regions) => {
             setSubRegionsFromServer(regions);
         })
         .finally(()=> {
-            dispatch(actions.setLoadingSubRegions(false));
+            setIsLoading(false);
         });
     }, []);
 

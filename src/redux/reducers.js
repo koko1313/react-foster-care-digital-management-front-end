@@ -12,50 +12,6 @@ export function loading(state = false, action) {
     }
 }
 
-export function loadingPositions(state = false, action) {
-    switch(action.type) {
-        case types.LOADING_POSITIONS: {
-            return action.payload;
-        }
-        default: {
-            return state;
-        }
-    }
-}
-
-export function loadingRegions(state = false, action) {
-    switch(action.type) {
-        case types.LOADING_REGIONS: {
-            return action.payload;
-        }
-        default: {
-            return state;
-        }
-    }
-}
-
-export function loadingSubRegions(state = false, action) {
-    switch(action.type) {
-        case types.LOADING_SUB_REGIONS: {
-            return action.payload;
-        }
-        default: {
-            return state;
-        }
-    }
-}
-
-export function loadingCities(state = false, action) {
-    switch(action.type) {
-        case types.LOADING_CITIES: {
-            return action.payload;
-        }
-        default: {
-            return state;
-        }
-    }
-}
-
 function loggedUser(state = {}, action) {
     switch (action.type) {
         case types.SET_LOGGED_USER: {
@@ -98,4 +54,4 @@ function families(state = [], action) {
     }
 }
 
-export default combineReducers({loading, loggedUser, children, users, loadingPositions, loadingRegions, loadingSubRegions, loadingCities, families});
+export default combineReducers({loading, loggedUser, children, users, families});
