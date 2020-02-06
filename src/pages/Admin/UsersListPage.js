@@ -76,20 +76,23 @@ const UsersListPage = () => {
             <h1>Потребители</h1>
 
             <button className="btn btn-link" onClick={()=>history.push("/user/register")}>Регистрация на потребител</button>
-            <table className="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Име</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Позиция</th>
-                        <th scope="col">Адрес</th>
-                        <th scope="col">Действия</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {renderUsersList()}
-                </tbody>
-            </table>
+            
+            <div class="table-responsive">
+                <table className="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Име</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Позиция</th>
+                            <th scope="col">Адрес</th>
+                            <th scope="col">Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {renderUsersList()}
+                    </tbody>
+                </table>
+            </div>
 
             <Loader loading={isLoading} />
         </>

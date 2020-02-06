@@ -72,20 +72,23 @@ const FamiliesListPage = () => {
             <h1>Семейства</h1>
 
             <button className="btn btn-link" onClick={()=>history.push("/family/register")}>Добави семейство</button>
-            <table className="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Име на жената</th>
-                        <th scope="col">Име на мъжа</th>
-                        <th scope="col">Предпочитан пол</th>
-                        <th scope="col">Предпочитана възраст</th>
-                        <th scope="col">Действия</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {renderFamiliesList()}
-                </tbody>
-            </table>
+            
+            <div class="table-responsive">
+                <table className="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Име на жената</th>
+                            <th scope="col">Име на мъжа</th>
+                            <th scope="col">Предпочитан пол</th>
+                            <th scope="col">Предпочитана възраст</th>
+                            <th scope="col">Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {renderFamiliesList()}
+                    </tbody>
+                </table>
+            </div>
 
             <Loader loading={isLoading} />
         </>
