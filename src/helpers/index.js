@@ -6,6 +6,12 @@ export function objectIsEmpty(object) {
     return Object.entries(object).length === 0;
 }
 
+
+/**
+ * Check if user has a role
+ * @param {JSON object} user Example: {roles: {id: 1, name: ROLE_ADMIN} }
+ * @param {String} roleAsString 
+ */
 export function userHasRole(user, roleAsString) {
     let userHasRole = false;
 
