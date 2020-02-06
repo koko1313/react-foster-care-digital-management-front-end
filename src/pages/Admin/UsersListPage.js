@@ -75,6 +75,7 @@ const UsersListPage = () => {
         <>
             <h1>Потребители</h1>
 
+            <button className="btn btn-link" onClick={()=>history.push("/user/register")}>Регистрация на потребител</button>
             <table className="table">
                 <thead>
                     <tr>

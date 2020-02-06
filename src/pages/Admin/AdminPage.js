@@ -5,14 +5,9 @@ const AdminPage = () => {
 
     let history = useHistory();
 
-    const goTo = (path) => {
-        history.push(path);
-    }
-
     return (
         <>
-            <button className="btn btn-link" onClick={()=>goTo("/user/register")}>Регистрация на потребител</button>
-            <button className="btn btn-link" onClick={()=>goTo("/user/all")}>Потребители</button>
+            <button className="btn btn-link" onClick={()=>history.push("/user/all")}>Потребители</button>
         </>
     );
 

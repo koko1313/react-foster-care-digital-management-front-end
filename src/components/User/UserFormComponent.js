@@ -41,7 +41,6 @@ const RegisterUserComponent = () => {
             dispatch(actions.setLoading(true));
 
             networkClient.get(`user/${id}`, null, (user) => {
-                console.log(user);
                 setPosition(user.position.id);
                 setEmail(user.email);
                 setFirstName(user.first_name);
