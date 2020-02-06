@@ -22,7 +22,7 @@ const FamilyListComponent = () => {
         .finally(() => {
             setIsLoading(false);
         });
-    }, []);
+    }, [dispatch]);
 
     const editFamily = (id) => {
         //history.push(`/user/edit/${id}`);

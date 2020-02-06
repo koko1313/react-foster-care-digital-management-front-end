@@ -40,7 +40,7 @@ const Router = () => {
         networkClient.get("/user/logged", null, (loggedUser) => {
             dispatch(actions.setLoggedUser(loggedUser));
         });
-    }, []);
+    }, [dispatch]);
 
     const loggedUser = useSelector(state => state.loggedUser);
 

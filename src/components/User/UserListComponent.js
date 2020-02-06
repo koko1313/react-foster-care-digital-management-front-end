@@ -22,7 +22,7 @@ const UserListComponent = () => {
         .finally(() => {
             setIsLoading(false);
         });
-    }, []);
+    }, [dispatch]);
 
     const editUser = (id) => {
         history.push(`/user/edit/${id}`);
