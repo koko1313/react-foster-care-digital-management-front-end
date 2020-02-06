@@ -2,10 +2,10 @@ import React, { useEffect } from 'react';
 import networkClient from '../../network/network-client';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from "../../redux/actions";
-import Loader from '../../components/base-components/Loader';
+import Loader from '../base-components/Loader';
 import { useHistory } from 'react-router-dom';
 
-const FamiliesListPage = () => {
+const FamilyListComponent = () => {
 
     const isLoading = useSelector(state => state.loading);
     const families = useSelector(state => state.families);
@@ -69,8 +69,6 @@ const FamiliesListPage = () => {
 
     return (
         <>
-            <h1>Семейства</h1>
-
             <button className="btn btn-link" onClick={()=>history.push("/family/register")}>Добави семейство</button>
             
             <div class="table-responsive">
@@ -96,4 +94,4 @@ const FamiliesListPage = () => {
 
 }
 
-export default FamiliesListPage;
+export default FamilyListComponent;

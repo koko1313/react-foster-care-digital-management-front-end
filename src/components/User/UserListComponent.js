@@ -5,7 +5,7 @@ import * as actions from "../../redux/actions";
 import Loader from '../../components/base-components/Loader';
 import { useHistory } from 'react-router-dom';
 
-const UsersListPage = () => {
+const UserListComponent = () => {
 
     const isLoading = useSelector(state => state.loading);
     const users = useSelector(state => state.users);
@@ -73,8 +73,6 @@ const UsersListPage = () => {
 
     return (
         <>
-            <h1>Потребители</h1>
-
             <button className="btn btn-link" onClick={()=>history.push("/user/register")}>Регистрация на потребител</button>
             
             <div class="table-responsive">
@@ -100,4 +98,4 @@ const UsersListPage = () => {
 
 }
 
-export default UsersListPage;
+export default UserListComponent;

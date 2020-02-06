@@ -16,12 +16,12 @@ import { objectIsEmpty, userHasRole } from './helpers';
 
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
-import ChildrenListPage from './pages/OEPG/ChildrenListPage';
-import FamiliesListPage from './pages/OEPG/FamiliesListPage';
-import Logout from './components/User/UserSession/Logout';
-import RegisterUserPage from './pages/Admin/RegisterUserPage';
-import AdminPage from './pages/Admin/AdminPage';
-import UsersListPage from './pages/Admin/UsersListPage';
+import ChildrenListPage from './pages/Children/ChildrenListPage';
+import FamiliesListPage from './pages/Family/FamiliesListPage';
+import Logout from './components/Session/Logout';
+import UserFormPage from './pages/User/UserFormPage';
+import AdminPage from './pages/AdminPage';
+import UserListPage from './pages/User/UserListPage';
 
 const Router = () => {
 
@@ -91,7 +91,7 @@ const Router = () => {
             exact: true,
             roles: [role.ADMIN],
             main: () => <Layout>
-                <RegisterUserPage />
+                <UserFormPage />
             </Layout>
         },
         {
@@ -99,7 +99,7 @@ const Router = () => {
             exact: true,
             roles: [role.ADMIN],
             main: () => <Layout>
-                <RegisterUserPage />
+                <UserFormPage />
             </Layout>
         },
         {
@@ -107,7 +107,7 @@ const Router = () => {
             exact: true,
             roles: [role.ADMIN],
             main: () => <Layout>
-                <UsersListPage />
+                <UserListPage />
             </Layout>
         },
         {

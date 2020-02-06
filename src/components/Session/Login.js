@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
-import networkClient from '../../../network/network-client';
+import networkClient from '../../network/network-client';
 
 import { useDispatch, useSelector } from 'react-redux';
-import * as actions from "../../../redux/actions";
+import * as actions from "../../redux/actions";
 import { Alert } from 'reactstrap';
-import Loader from '../../base-components/Loader';
+import Loader from '../base-components/Loader';
 
 const Login = () => {
 
