@@ -6,7 +6,7 @@ import RegionsSelect from '../base-components/Form/Select/RegionsSelect';
 import SubRegionsSelect from '../base-components/Form/Select/SubRegionsSelect';
 import CitiesSelect from '../base-components/Form/Select/CitiesSelect';
 import PositionsSelect from '../base-components/Form/Select/PositionsSelect';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../redux/actions';
 import Loader from '../base-components/Loader';
@@ -33,6 +33,7 @@ const RegisterUserComponent = () => {
 
     const { id } = useParams(); // get parameter from url
     const dispatch = useDispatch();
+    const history = useHistory();
 
     useState(() => {
         if(id) {
@@ -76,6 +77,7 @@ const RegisterUserComponent = () => {
             // success
             (response) => {
                 setAlert({color: "success", message: "Успешно регистриран потребител!"});
+                history.push("user/all");
             },
             // error
             (error) => {
@@ -120,6 +122,7 @@ const RegisterUserComponent = () => {
             // success
             (response) => {
                 setAlert({color: "success", message: "Успешно редактиран потребител!"});
+                history.push("/user/all");
             },
             // error
             (error) => {
