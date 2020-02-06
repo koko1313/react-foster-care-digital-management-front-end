@@ -16,7 +16,7 @@ import { objectIsEmpty, userHasRole } from './helpers';
 
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
-import ChildrenListPage from './pages/ChildrenListPage';
+import ChildrenListPage from './pages/OEPG/ChildrenListPage';
 import Logout from './components/User/UserSession/Logout';
 import RegisterUserPage from './pages/Admin/RegisterUserPage';
 import AdminPage from './pages/Admin/AdminPage';

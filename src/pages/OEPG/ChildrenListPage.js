@@ -1,5 +1,5 @@
 import React from 'react';
-import ChildrenListComponent from '../components/ChildrenListComponent';
+import ChildrenListComponent from '../../components/ChildrenListComponent';
 
 const ChildrenListPage = () => {
 

@@ -4,12 +4,6 @@ import { css } from "@emotion/core";
 
 const Loader = (props) => {
 
-    const isFullScreen = () => {
-        if(props.fullScreen) {
-            return "full-screen";
-        }
-    };
-
     const overrideCss = `
         text-align: center;
     `;
