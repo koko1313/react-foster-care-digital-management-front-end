@@ -22,6 +22,7 @@ import Logout from './components/Session/Logout';
 import EmployeeOEPGFormPage from './pages/User/EmployeeOEPG/FormPage';
 import EmployeeOEPGListPage from './pages/User/EmployeeOEPG/ListPage';
 import ManageUsersPage from './pages/User/ManageUsersPage';
+import Loader from './components/base-components/Loader';
 
 const Router = () => {
 
@@ -136,9 +137,9 @@ const Router = () => {
 
     const getRoutes = () => {
         if(!checkedForLoggedUser) {
-            return null;
+            return <Loader loading={true} fullScreen={true} />;
         }
-        
+
         return routes.map((route, index) => {
             if(route.path === '*') {
                 return <Redirect key={index} to='/' />;
