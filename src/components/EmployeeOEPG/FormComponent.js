@@ -58,6 +58,7 @@ const FormComponent = () => {
             return null;
         }
 
+        setIsLoading(true);
         networkClient.post("/employee-oepg/register", 
             {
                 email: email,
@@ -73,7 +74,7 @@ const FormComponent = () => {
             // success
             (response) => {
                 setAlert({color: "success", message: "Успешно регистриран потребител!"});
-                history.push("/user/all");
+                history.push("/employee-oepg/all");
             },
             // error
             (error) => {
@@ -95,7 +96,10 @@ const FormComponent = () => {
                     setAlert({color: "danger", message: "Възникна грешка!"});
                 }
             }
-        );
+        )
+        .finally(() => {
+            setIsLoading(false);
+        });
     }
 
     const updateUser = () => {
@@ -104,6 +108,7 @@ const FormComponent = () => {
             return null;
         }
 
+        setIsLoading(true);
         networkClient.put(`/employee-oepg/update/${id}`, 
             {
                 email: email,
@@ -118,7 +123,7 @@ const FormComponent = () => {
             // success
             (response) => {
                 setAlert({color: "success", message: "Успешно редактиран потребител!"});
-                history.push("/user/all");
+                history.push("/employee-oepg/all");
             },
             // error
             (error) => {
@@ -140,7 +145,10 @@ const FormComponent = () => {
                     setAlert({color: "danger", message: "Възникна грешка!"});
                 }
             }
-        );
+        )
+        .finally(()=> {
+            setIsLoading(false);
+        });
     }
 
     return (
