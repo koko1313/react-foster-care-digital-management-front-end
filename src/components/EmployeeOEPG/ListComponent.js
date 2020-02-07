@@ -1,23 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import networkClient from '../../network/network-client';
 import { useDispatch, useSelector } from 'react-redux';
-import * as actions from "../../redux/actions";
+import actions from "../../redux/actions";
 import Loader from '../base-components/Loader';
 import { useHistory } from 'react-router-dom';
 
 const ListComponent = () => {
 
     const [isLoading, setIsLoading] = useState(false);
-    const users = useSelector(state => state.users);
+    const users = useSelector(state => state.employeesOEPG);
 
     const history = useHistory();
     const dispatch = useDispatch();
 
     useEffect(()=> {
         setIsLoading(true);
+
+        
         
         networkClient.get('/employee-oepg/all', null, (users) => {
-            dispatch(actions.setUsers(users));
+            dispatch(actions.setEmployeesOEPG(users));
         })
         .finally(() => {
             setIsLoading(false);
@@ -39,7 +41,7 @@ const ListComponent = () => {
         
         networkClient.delete(`/employee-oepg/delete/${id}`, null, 
         // success
-        () => { dispatch(actions.deleteUser(id)) },
+        () => { dispatch(actions.deleteEmployeeOEPG(id)) },
         // error
         () => { console.log("err") })
         // finally

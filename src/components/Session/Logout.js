@@ -3,7 +3,7 @@ import networkClient from '../../network/network-client';
 import { useHistory } from "react-router-dom";
 
 import { useDispatch } from 'react-redux';
-import * as actions from "../../redux/actions";
+import actions from "../../redux/actions";
 import Loader from '../base-components/Loader';
 
 const Logout = () => {

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import networkClient from '../../network/network-client';
 
 import { useDispatch } from 'react-redux';
-import * as actions from "../../redux/actions";
+import actions from "../../redux/actions";
 import { Alert } from 'reactstrap';
 import Loader from '../base-components/Loader';
 

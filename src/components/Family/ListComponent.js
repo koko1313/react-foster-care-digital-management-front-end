@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import networkClient from '../../network/network-client';
 import { useDispatch, useSelector } from 'react-redux';
-import * as actions from "../../redux/actions";
+import actions from "../../redux/actions";
 import Loader from '../base-components/Loader';
 import { useHistory } from 'react-router-dom';
 

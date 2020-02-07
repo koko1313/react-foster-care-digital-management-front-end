@@ -7,7 +7,7 @@ import {
   } from "react-router-dom";
 
 import { useSelector, useDispatch } from 'react-redux';
-import * as actions from "./redux/actions";
+import actions from "./redux/actions";
 import networkClient from './network/network-client';
   
 import Header from './components/Layout/Header';
