@@ -5,7 +5,7 @@ import * as actions from "../../redux/actions";
 import Loader from '../base-components/Loader';
 import { useHistory } from 'react-router-dom';
 
-const FamilyListComponent = () => {
+const ListComponent = () => {
 
     const [isLoading, setIsLoading] = useState(false);
     const families = useSelector(state => state.families);
@@ -94,4 +94,4 @@ const FamilyListComponent = () => {
 
 }
 
-export default FamilyListComponent;
+export default ListComponent;

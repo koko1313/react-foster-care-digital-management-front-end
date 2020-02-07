@@ -1,5 +1,5 @@
 import React from 'react';
-import FamilyListComponent from '../../components/Family/FamilyListComponent';
+import FamilyListComponent from '../../components/Family/ListComponent';
 
 const FamilyListPage = () => {
 
