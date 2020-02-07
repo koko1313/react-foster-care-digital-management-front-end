@@ -19,8 +19,8 @@ import LoginPage from './pages/LoginPage';
 import ChildrenListPage from './pages/Children/ChildrenListPage';
 import FamiliesListPage from './pages/Family/FamiliesListPage';
 import Logout from './components/Session/Logout';
-import UserFormPage from './pages/User/UserFormPage';
-import UserListPage from './pages/User/UserListPage';
+import EmployeeOEPGFormPage from './pages/EmployeeOEPG/FormPage';
+import EmployeeOEPGListPage from './pages/EmployeeOEPG/ListPage';
 
 const Router = () => {
 
@@ -78,27 +78,27 @@ const Router = () => {
             </Layout>
         },
         {
-            path: '/user/register',
+            path: '/employee-oepg/register',
             exact: true,
             roles: [role.ADMIN],
             main: () => <Layout>
-                <UserFormPage />
+                <EmployeeOEPGFormPage />
             </Layout>
         },
         {
-            path: '/user/edit/:id',
+            path: '/employee-oepg/edit/:id',
             exact: true,
             roles: [role.ADMIN],
             main: () => <Layout>
-                <UserFormPage />
+                <EmployeeOEPGFormPage />
             </Layout>
         },
         {
-            path: '/user/all',
+            path: '/employee-oepg/all',
             exact: true,
             roles: [role.ADMIN],
             main: () => <Layout>
-                <UserListPage />
+                <EmployeeOEPGListPage />
             </Layout>
         },
         {

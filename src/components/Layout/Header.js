@@ -34,7 +34,7 @@ const Header = () => {
         },
         {
             exact: true,
-            to: "/user/all",
+            to: "/employee-oepg/all",
             label: "Потребители",
             roles: [role.ADMIN],
         },

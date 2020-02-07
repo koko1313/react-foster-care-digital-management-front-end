@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import networkClient from '../../network/network-client';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from "../../redux/actions";
-import Loader from '../../components/base-components/Loader';
+import Loader from '../base-components/Loader';
 import { useHistory } from 'react-router-dom';
 
-const UserListComponent = () => {
+const ListComponent = () => {
 
     const [isLoading, setIsLoading] = useState(false);
     const users = useSelector(state => state.users);
@@ -16,7 +16,7 @@ const UserListComponent = () => {
     useEffect(()=> {
         setIsLoading(true);
         
-        networkClient.get('/user/all', null, (users) => {
+        networkClient.get('/employee-oepg/all', null, (users) => {
             dispatch(actions.setUsers(users));
         })
         .finally(() => {
@@ -25,7 +25,7 @@ const UserListComponent = () => {
     }, [dispatch]);
 
     const editUser = (id) => {
-        history.push(`/user/edit/${id}`);
+        history.push(`/employee-oepg/edit/${id}`);
     }
 
     const deleteUser = (id) => {
@@ -37,7 +37,7 @@ const UserListComponent = () => {
 
         setIsLoading(true);
         
-        networkClient.delete(`/user/delete/${id}`, null, 
+        networkClient.delete(`/employee-oepg/delete/${id}`, null, 
         // success
         () => { dispatch(actions.deleteUser(id)) },
         // error
@@ -73,7 +73,7 @@ const UserListComponent = () => {
 
     return (
         <>
-            <button className="btn btn-link" onClick={()=>history.push("/user/register")}>Регистрация на потребител</button>
+            <button className="btn btn-link" onClick={()=>history.push("/employee-oepg/register")}>Регистрация на потребител</button>
             
             <div className="table-responsive">
                 <table className="table">
@@ -98,4 +98,4 @@ const UserListComponent = () => {
 
 }
 
-export default UserListComponent;
+export default ListComponent;

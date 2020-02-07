@@ -9,7 +9,7 @@ import PositionsSelect from '../base-components/Form/Select/PositionsSelect';
 import { useParams, useHistory } from 'react-router-dom';
 import Loader from '../base-components/Loader';
 
-const RegisterUserComponent = () => {
+const FormComponent = () => {
 
     const [alert, setAlert] = useState({color: null, message: null});
     const onDismiss = () => setAlert({color: null, message: null});
@@ -37,7 +37,7 @@ const RegisterUserComponent = () => {
             setIsEditingUser(true);
             setIsLoading(true);
 
-            networkClient.get(`user/${id}`, null, (user) => {
+            networkClient.get(`/employee-oepg/${id}`, null, (user) => {
                 setPosition(user.position.id);
                 setEmail(user.email);
                 setFirstName(user.first_name);
@@ -58,7 +58,7 @@ const RegisterUserComponent = () => {
             return null;
         }
 
-        networkClient.post("/register", 
+        networkClient.post("/employee-oepg/register", 
             {
                 email: email,
                 password: password,
@@ -104,7 +104,7 @@ const RegisterUserComponent = () => {
             return null;
         }
 
-        networkClient.put(`/user/update/${id}`, 
+        networkClient.put(`/employee-oepg/update/${id}`, 
             {
                 email: email,
                 firstName: firstName,
@@ -186,4 +186,4 @@ const RegisterUserComponent = () => {
 
 }
 
-export default RegisterUserComponent;
+export default FormComponent;
