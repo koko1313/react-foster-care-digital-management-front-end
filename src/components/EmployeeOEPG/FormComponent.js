@@ -5,7 +5,6 @@ import Input from '../base-components/Form/Input';
 import RegionsSelect from '../base-components/Form/Select/RegionsSelect';
 import SubRegionsSelect from '../base-components/Form/Select/SubRegionsSelect';
 import CitiesSelect from '../base-components/Form/Select/CitiesSelect';
-import PositionsSelect from '../base-components/Form/Select/PositionsSelect';
 import { useParams, useHistory } from 'react-router-dom';
 import Loader from '../base-components/Loader';
 
@@ -18,7 +17,6 @@ const FormComponent = () => {
 
     const [isEditingUser, setIsEditingUser] = useState(false);
 
-    const [position, setPosition] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [rePassword, setRePassword] = useState("");
@@ -38,7 +36,6 @@ const FormComponent = () => {
             setIsLoading(true);
 
             networkClient.get(`/employee-oepg/${id}`, null, (user) => {
-                setPosition(user.position.id);
                 setEmail(user.email);
                 setFirstName(user.first_name);
                 setSecondName(user.second_name);
@@ -69,7 +66,6 @@ const FormComponent = () => {
                 regionId: region,
                 subRegionId: subRegion,
                 cityId: city,
-                positionId: position,
             },
             // success
             (response) => {
@@ -118,7 +114,6 @@ const FormComponent = () => {
                 regionId: region,
                 subRegionId: subRegion,
                 cityId: city,
-                positionId: position,
             },
             // success
             (response) => {
@@ -158,8 +153,6 @@ const FormComponent = () => {
             </Alert>
 
             <form>
-                <PositionsSelect label="Позиция" placeholder="Избери позиция ..." onChange={(e) => setPosition(e.target.value)} value={position} />
-
                 <Input id="email" label="Email" type="email" placeholder="Email ..." onChange={(e) => setEmail(e.target.value)} value={email} />
 
                 {isEditingUser ? null :
