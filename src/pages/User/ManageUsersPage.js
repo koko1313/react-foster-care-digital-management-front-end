@@ -7,7 +7,7 @@ const ManageUsersPage = () => {
 
     return (
         <>
-            <button className="btn btn-link" onClick={() => history.push("/employee-oepg/all")}>Потребители ОЕПГ</button>
+            <button className="btn btn-link" onClick={() => history.push("/employee-oepg/all")}>Потребители Областен екип приемна грижа (ОЕПГ)</button>
         </>
     );
 

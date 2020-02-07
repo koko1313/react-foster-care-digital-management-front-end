@@ -5,7 +5,7 @@ const Footer = () => {
     return (
         <div className="footer">
             <div className="container">
-                Software technologies 2020
+                Агенция за социално подпомагане
             </div>
         </div>
     );
