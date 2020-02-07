@@ -1,11 +1,11 @@
 import React from 'react';
-import EmployeeOEPGFormComponent from '../../components/EmployeeOEPG/FormComponent';
+import EmployeeOEPGFormComponent from '../../../components/EmployeeOEPG/FormComponent';
 
 const FormPage = () => {
 
     return (
         <>
-            <h1>Регистрация на потребител</h1>
+            <h1>Потребител ОЕПГ</h1>
             
             <EmployeeOEPGFormComponent />
         </>

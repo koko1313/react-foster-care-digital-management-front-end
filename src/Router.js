@@ -19,8 +19,9 @@ import LoginPage from './pages/LoginPage';
 import ChildrenListPage from './pages/Children/ChildrenListPage';
 import FamiliesListPage from './pages/Family/FamiliesListPage';
 import Logout from './components/Session/Logout';
-import EmployeeOEPGFormPage from './pages/EmployeeOEPG/FormPage';
-import EmployeeOEPGListPage from './pages/EmployeeOEPG/ListPage';
+import EmployeeOEPGFormPage from './pages/User/EmployeeOEPG/FormPage';
+import EmployeeOEPGListPage from './pages/User/EmployeeOEPG/ListPage';
+import ManageUsersPage from './pages/User/ManageUsersPage';
 
 const Router = () => {
 
@@ -75,6 +76,14 @@ const Router = () => {
             roles: [role.LOGGED],
             main: () => <Layout>
                 <Logout />
+            </Layout>
+        },
+        {
+            path: '/user-manager',
+            exact: true,
+            roles: [role.ADMIN],
+            main: () => <Layout>
+                <ManageUsersPage />
             </Layout>
         },
         {
