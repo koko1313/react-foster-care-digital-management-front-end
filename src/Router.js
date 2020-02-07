@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     BrowserRouter,
     Switch,
@@ -35,11 +35,15 @@ const Router = () => {
     );
 
     const dispatch = useDispatch();
+    const [checkedForLoggedUser, setCheckedForLoggedUser] = useState(false);
 
     useEffect(() => {
         // check if there is logged user
         networkClient.get("/user/logged", null, (loggedUser) => {
             dispatch(actions.setLoggedUser(loggedUser));
+        })
+        .finally(() => {
+            setCheckedForLoggedUser(true);
         });
     }, [dispatch]);
 
@@ -129,8 +133,12 @@ const Router = () => {
         // path if non of above are reached
         { path: '*' },
     ];
-    
+
     const getRoutes = () => {
+        if(!checkedForLoggedUser) {
+            return null;
+        }
+        
         return routes.map((route, index) => {
             if(route.path === '*') {
                 return <Redirect key={index} to='/' />;

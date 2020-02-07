@@ -91,11 +91,10 @@ const FormComponent = () => {
                 } else {
                     setAlert({color: "danger", message: "Възникна грешка!"});
                 }
+
+                setIsLoading(false);
             }
-        )
-        .finally(() => {
-            setIsLoading(false);
-        });
+        );
     }
 
     const updateUser = () => {
