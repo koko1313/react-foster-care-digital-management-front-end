@@ -5,6 +5,7 @@ import Input from '../base-components/Form/Input';
 import { useParams, useHistory } from 'react-router-dom';
 import Loader from '../base-components/Loader';
 import Select from '../base-components/Form/Select/Select';
+import { useSelector } from 'react-redux';
 
 const FormComponent = () => {
 
@@ -25,9 +26,13 @@ const FormComponent = () => {
     const [preferKidGender, setPreferKidGender] = useState("");
     const [preferKidMinAge, setPreferKidMinAge] = useState("");
     const [preferKidMaxAge, setPreferKidMaxAge] = useState("");
+    const [wardenId, setWardenId] = useState("");
+
+    const [warden, setWarden] = useState();
 
     const { id } = useParams(); // get parameter from url
     const history = useHistory();
+    const loggedUser = useSelector(state => state.loggedUser); // get logged user, it have to be EmployeeOEPG
 
     useState(() => {
         if(id) {
@@ -45,9 +50,15 @@ const FormComponent = () => {
                 setPreferKidGender(family.prefer_kid_gender);
                 setPreferKidMinAge(family.prefer_kid_min_age);
                 setPreferKidMaxAge(family.prefer_kid_max_age);
+                setWardenId(loggedUser.id);
+
+                setWarden(family.warden); // when editing, warden is family warden
+
                 setIsLoading(false);
             });
-        }
+        } else {
+            setWarden(loggedUser); // when registering family, warden is current logged user
+        }     
     }, [id]);
     
 
@@ -65,6 +76,7 @@ const FormComponent = () => {
                 preferKidGender: preferKidGender,
                 preferKidMinAge: preferKidMinAge,
                 preferKidMaxAge: preferKidMaxAge,
+                wardenId: wardenId,
             },
             // success
             (response) => {
@@ -106,6 +118,7 @@ const FormComponent = () => {
                 preferKidGender: preferKidGender,
                 preferKidMinAge: preferKidMinAge,
                 preferKidMaxAge: preferKidMaxAge,
+                wardenId: wardenId,
             },
             // success
             (response) => {
@@ -174,12 +187,19 @@ const FormComponent = () => {
 
                 <div className="form-row">
                     <div className="form-group col-md">
-                        <Input id="preferKidMinAge" label="Минимална възраст" type="number" placeholder="Минимална възраст ..." required={true} onChange={(e) => setPreferKidMinAge(e.target.value)} value={preferKidMinAge} />
+                        <Input id="preferKidMinAge" label="Минимална възраст" type="number" placeholder="Минимална възраст ..." onChange={(e) => setPreferKidMinAge(e.target.value)} value={preferKidMinAge} />
                     </div>
                     <div className="form-group col-md">
-                        <Input id="preferKidMaxAge" label="Максимална възраст" type="number" placeholder="Максимална възраст ..." required={true} onChange={(e) => setPreferKidMaxAge(e.target.value)} value={preferKidMaxAge} />
+                        <Input id="preferKidMaxAge" label="Максимална възраст" type="number" placeholder="Максимална възраст ..." onChange={(e) => setPreferKidMaxAge(e.target.value)} value={preferKidMaxAge} />
                     </div>
                 </div>
+
+                <Input 
+                    id="warden" 
+                    label="Социален работник" 
+                    type="text" 
+                    value={warden ? `${warden.first_name} ${warden.second_name} ${warden.last_name}` : ""} 
+                    disabled={true} />
 
                 {isEditing ?
                     <button type="button" className="btn btn-warning" onClick={update}>Редактирай</button>
