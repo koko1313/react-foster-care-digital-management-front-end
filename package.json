@@ -1,5 +1,6 @@
 {
   "name": "childcare-social-services",
+  "homepage": "http://koko.projects.bgschool.bg/build/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

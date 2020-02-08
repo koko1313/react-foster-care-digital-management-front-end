@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-    BrowserRouter,
+    HashRouter,
     Switch,
     Route,
     Redirect,
@@ -198,11 +198,11 @@ const Router = () => {
     }
 
     return (
-        <BrowserRouter>
+        <HashRouter>
             <Switch>
                 {getRoutes()}
             </Switch>
-        </BrowserRouter>
+        </HashRouter>
     )
 
 }

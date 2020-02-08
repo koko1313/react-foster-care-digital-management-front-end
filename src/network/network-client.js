@@ -48,6 +48,7 @@ export default {
         const data = Object.assign({
             method: 'get',
             baseURL: "http://127.0.0.1:8000/",
+            //baseURL: "http://koko.projects.bgschool.bg/social-care-rest/",
             withCredentials: true,
         }, options);
 
