@@ -1,6 +1,6 @@
 {
   "name": "childcare-social-services",
-  "homepage": "http://koko.projects.bgschool.bg/build/",
+  "homepage": "http://foster-care.koko.projects.bgschool.bg/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
