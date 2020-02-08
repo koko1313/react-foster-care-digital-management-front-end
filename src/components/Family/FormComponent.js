@@ -172,6 +172,15 @@ const FormComponent = () => {
                     <option value="f">Момиче</option>
                 </Select>
 
+                <div className="form-row">
+                    <div className="form-group col-md">
+                        <Input id="preferKidMinAge" label="Минимална възраст" type="number" placeholder="Минимална възраст ..." required={true} onChange={(e) => setPreferKidMinAge(e.target.value)} value={preferKidMinAge} />
+                    </div>
+                    <div className="form-group col-md">
+                        <Input id="preferKidMaxAge" label="Максимална възраст" type="number" placeholder="Максимална възраст ..." required={true} onChange={(e) => setPreferKidMaxAge(e.target.value)} value={preferKidMaxAge} />
+                    </div>
+                </div>
+
                 {isEditing ?
                     <button type="button" className="btn btn-warning" onClick={update}>Редактирай</button>
                     :
