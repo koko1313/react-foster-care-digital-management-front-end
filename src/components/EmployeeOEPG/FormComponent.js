@@ -152,7 +152,7 @@ const FormComponent = () => {
             </Alert>
 
             <form>
-                <Input id="email" label="Email" type="email" placeholder="Email ..." onChange={(e) => setEmail(e.target.value)} value={email} />
+                <Input id="email" label="Email" type="email" placeholder="Email ..." required={true} onChange={(e) => setEmail(e.target.value)} value={email} />
 
                 {isEditingUser ? null :
                     <>
@@ -161,22 +161,22 @@ const FormComponent = () => {
                     </>
                 }
 
-                <Input id="firstName" label="Име" type="text" placeholder="Име ..." onChange={(e) => setFirstName(e.target.value)} value={firstName} />
+                <Input id="firstName" label="Име" type="text" placeholder="Име ..." required={true} onChange={(e) => setFirstName(e.target.value)} value={firstName} />
 
-                <Input id="secondName" label="Презиме" type="text" placeholder="Презиме ..." onChange={(e) => setSecondName(e.target.value)} value={secondName} />
+                <Input id="secondName" label="Презиме" type="text" placeholder="Презиме ..." required={true} onChange={(e) => setSecondName(e.target.value)} value={secondName} />
 
-                <Input id="lastName" label="Фамилия" type="text" placeholder="Фамилия ..." onChange={(e) => setLastName(e.target.value)} value={lastName} />
+                <Input id="lastName" label="Фамилия" type="text" placeholder="Фамилия ..." required={true} onChange={(e) => setLastName(e.target.value)} value={lastName} />
 
-                <RegionsSelect id="region" label="Област" placeholder="Избери област ..." onChange={(e) => setRegion(e.target.value)} value={region} />
+                <RegionsSelect id="region" label="Област" placeholder="Избери област ..." required={true} onChange={(e) => setRegion(e.target.value)} value={region} />
 
-                <SubRegionsSelect id="subRegion" label="Община" placeholder="Избери община ..." onChange={(e) => setSubRegion(e.target.value)} value={subRegion} />
+                <SubRegionsSelect id="subRegion" label="Община" placeholder="Избери община ..." required={true} onChange={(e) => setSubRegion(e.target.value)} value={subRegion} />
 
-                <CitiesSelect id="city" label="Град" placeholder="Избери град ..." onChange={(e) => setCity(e.target.value)} value={city} />
+                <CitiesSelect id="city" label="Град" placeholder="Избери град ..." required={true} onChange={(e) => setCity(e.target.value)} value={city} />
 
                 {isEditingUser ?
                     <button type="button" className="btn btn-warning" onClick={updateUser}>Редактирай</button>
                     :
-                    <button type="button" className="btn btn-primary" onClick={registerUser}>Регистрирай</button>
+                    <button type="submit" className="btn btn-primary" onClick={registerUser}>Регистрирай</button>
                 }
             </form>
 
