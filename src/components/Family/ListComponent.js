@@ -25,7 +25,7 @@ const ListComponent = () => {
     }, [dispatch]);
 
     const editFamily = (id) => {
-        //history.push(`/user/edit/${id}`);
+        history.push(`/family/edit/${id}`);
     }
 
     const deleteFamily = (id) => {

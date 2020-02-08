@@ -176,7 +176,7 @@ const FormComponent = () => {
                 {isEditingUser ?
                     <button type="button" className="btn btn-warning" onClick={updateUser}>Редактирай</button>
                     :
-                    <button type="submit" className="btn btn-primary" onClick={registerUser}>Регистрирай</button>
+                    <button type="button" className="btn btn-primary" onClick={registerUser}>Регистрирай</button>
                 }
             </form>
 

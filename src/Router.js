@@ -18,6 +18,7 @@ import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import ChildrenListPage from './pages/Children/ChildrenListPage';
 import FamiliesListPage from './pages/Family/FamiliesListPage';
+import FamiliesFormPage from './pages/Family/FormPage';
 import Logout from './components/Session/Logout';
 import EmployeeOEPGFormPage from './pages/User/EmployeeOEPG/FormPage';
 import EmployeeOEPGListPage from './pages/User/EmployeeOEPG/ListPage';
@@ -129,6 +130,22 @@ const Router = () => {
             roles: [role.OEPG],
             main: () => <Layout>
                 <FamiliesListPage />
+            </Layout>
+        },
+        {
+            path: '/family/register',
+            exact: true,
+            roles: [role.OEPG],
+            main: () => <Layout>
+                <FamiliesFormPage />
+            </Layout>
+        },
+        {
+            path: '/family/edit/:id',
+            exact: true,
+            roles: [role.OEPG],
+            main: () => <Layout>
+                <FamiliesFormPage />
             </Layout>
         },
         // path if non of above are reached
