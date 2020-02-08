@@ -116,7 +116,7 @@ const Header = () => {
                 className="navbar-brand"
                 exact to="/">
                 <i className="fa fa-cubes mr-3"></i>
-                <span className="project-name">АСП</span>
+                <span className="project-name">Приемна грижа</span>
             </NavLink>
             <NavbarToggler onClick={toggleIsOpen} />
             <Collapse isOpen={isOpen} navbar>

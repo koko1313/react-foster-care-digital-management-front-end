@@ -58,7 +58,6 @@ const ListComponent = () => {
                 <tr key={user.id}>
                     <td>{`${user.first_name} ${user.second_name} ${user.last_name}`}</td>
                     <td>{user.email}</td>
-                    <td>{user.position ? user.position.name : null}</td>
                     <td>
                         {user.city ? user.city.name + ", " : null}
                         {user.sub_region ? user.sub_region.name + ", " : null}
@@ -83,7 +82,6 @@ const ListComponent = () => {
                         <tr>
                             <th scope="col">Име</th>
                             <th scope="col">Email</th>
-                            <th scope="col">Позиция</th>
                             <th scope="col">Адрес</th>
                             <th scope="col">Действия</th>
                         </tr>
