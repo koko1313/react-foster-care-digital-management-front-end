@@ -5,6 +5,9 @@ export function loggedUser(state = {}, action) {
         case types.SET_LOGGED_USER: {
             return {...action.payload};
         }
+        case types.DELETE_LOGGED_USER: {
+            return {};
+        }
         default: return state;
     }
 }

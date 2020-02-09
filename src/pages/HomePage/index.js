@@ -8,7 +8,7 @@ const HomePage = () => {
             <div className="col-md order-2">
                 <div className="image">
                     <img className="img-fluid" src={image} alt="family-front-house" />
-                    <a className="img-credit" href="http://www.freepik.com">Designed by brgfx / Freepik</a>
+                    <a className="img-credit" href="http://www.freepik.com" target="_blank" rel="noopener noreferrer">Designed by brgfx / Freepik</a>
                 </div>
             </div>
             <div className="col-md order-1 order-md-2 mb-2 text-justify">

@@ -16,7 +16,7 @@ const Logout = () => {
             // success
             (loggedUser) => {
                 // remove logged user from redux
-                dispatch(actions.setLoggedUser({}));
+                dispatch(actions.deleteLoggedUser());
                 history.push("/");
             },
             // fail
