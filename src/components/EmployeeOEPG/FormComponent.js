@@ -7,6 +7,8 @@ import SubRegionsSelect from '../base-components/Form/Select/SubRegionsSelect';
 import CitiesSelect from '../base-components/Form/Select/CitiesSelect';
 import { useParams, useHistory } from 'react-router-dom';
 import Loader from '../base-components/Loader';
+import { useDispatch } from 'react-redux';
+import actions from "../../redux/actions";
 
 const FormComponent = () => {
 
@@ -16,6 +18,9 @@ const FormComponent = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     const [isEditingUser, setIsEditingUser] = useState(false);
+
+    const dispatch = useDispatch();
+    const history = useHistory();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -28,23 +33,43 @@ const FormComponent = () => {
     const [city, setCity] = useState("");
 
     const { id } = useParams(); // get parameter from url
-    const history = useHistory();
 
     useState(() => {
         if(id) {
             setIsEditingUser(true);
             setIsLoading(true);
 
-            networkClient.get(`/employee-oepg/${id}`, null, (user) => {
-                setEmail(user.email);
-                setFirstName(user.first_name);
-                setSecondName(user.second_name);
-                setLastName(user.last_name);
-                setRegion(user.region.id);
-                setSubRegion(user.sub_region.id);
-                setCity(user.city.id);
-                setIsLoading(false);
-            });
+            networkClient.get(`/employee-oepg/${id}`, null, 
+                (user) => {
+                    setEmail(user.email);
+                    setFirstName(user.first_name);
+                    setSecondName(user.second_name);
+                    setLastName(user.last_name);
+                    setRegion(user.region.id);
+                    setSubRegion(user.sub_region.id);
+                    setCity(user.city.id);
+                    setIsLoading(false);
+                },
+                (error) => {
+                    if(error.response) {
+                        switch(error.response.status) {
+                            case 401: {
+                                dispatch(actions.setAlert({title: "Грешка!", message: "Сесията ви изтече!"}));
+                                dispatch(actions.deleteLoggedUser());
+                                break;
+                            }
+                            case 404: {
+                                dispatch(actions.setAlert({title: "Грешка!", message: "Не е намерен такъв потребител!"}));
+                                history.goBack();
+                                break;
+                            }
+                            default: ;
+                        }
+                    } else {
+                        dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
+                    }
+                }
+            );
         }
     }, [id]);
     
@@ -84,12 +109,10 @@ const FormComponent = () => {
                             setAlert({color: "danger", message: "Не са попълнени всички полета!"});
                             break;
                         }
-                        default: {
-                            setAlert({color: "danger", message: "Възникна грешка!"});
-                        }
+                        default: ;
                     }
                 } else {
-                    setAlert({color: "danger", message: "Възникна грешка!"});
+                    dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
                 }
 
                 setIsLoading(false);
@@ -131,12 +154,10 @@ const FormComponent = () => {
                             setAlert({color: "danger", message: "Не са попълнени всички полета!"});
                             break;
                         }
-                        default: {
-                            setAlert({color: "danger", message: "Възникна грешка!"});
-                        }
+                        default: ;
                     }
                 } else {
-                    setAlert({color: "danger", message: "Възникна грешка!"});
+                    dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
                 }
             }
         )

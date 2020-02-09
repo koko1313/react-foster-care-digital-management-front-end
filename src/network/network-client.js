@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 export default {
-
     get(url, params, success, failure) {
         return this.request({
             method: 'get',

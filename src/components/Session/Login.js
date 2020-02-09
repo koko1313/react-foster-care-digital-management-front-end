@@ -35,9 +35,7 @@ const Login = () => {
                             setAlert({color: "danger", message: "Грешен email или парола!"});
                             break;
                         }
-                        default: {
-                            setAlert({color: "danger", message: "Нещо се обърка!"});
-                        }
+                        default: ;
                     }
                 } else {
                     setAlert({color: "danger", message: "Нещо се обърка!"});

@@ -32,10 +32,9 @@ const ListComponent = () => {
                     }
                 } else {
                     dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
-                    dispatch(actions.deleteLoggedUser());
                 }
             }
-        ).then(() => {
+        ).finally(() => {
             setIsLoading(false);
         });
     }, [dispatch]);
@@ -54,12 +53,24 @@ const ListComponent = () => {
         setIsLoading(true);
         
         networkClient.delete(`/employee-oepg/delete/${id}`, null, 
-        // success
-        () => { dispatch(actions.deleteEmployeeOEPG(id)) },
-        // error
-        () => { console.log("err") })
-        // finally
-        .finally(() => { 
+            () => { 
+                dispatch(actions.deleteEmployeeOEPG(id)) 
+            },
+            (error) => {
+                if(error.response) {
+                    switch(error.response.status) {
+                        case 401: {
+                            dispatch(actions.setAlert({title: "Грешка!", message: "Сесията ви изтече!"}));
+                            dispatch(actions.deleteLoggedUser());
+                            break;
+                        }
+                        default: ;
+                    }
+                } else {
+                    dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
+                }
+            }
+        ).finally(() => { 
             setIsLoading(false);
         });
     }

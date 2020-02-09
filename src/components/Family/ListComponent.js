@@ -16,10 +16,25 @@ const ListComponent = () => {
     useEffect(()=> {
         setIsLoading(true);
         
-        networkClient.get('/family/all', null, (families) => {
-            dispatch(actions.setFamilies(families));
-        })
-        .finally(() => {
+        networkClient.get('/family/all', null, 
+            (families) => {
+                dispatch(actions.setFamilies(families));
+            },
+            (error) => {
+                if(error.response) {
+                    switch(error.response.status) {
+                        case 401: {
+                            dispatch(actions.setAlert({title: "Грешка!", message: "Сесията ви изтече!"}));
+                            dispatch(actions.deleteLoggedUser());
+                            break;
+                        }
+                        default: ;
+                    }
+                } else {
+                    dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
+                }
+            }
+        ).finally(() => {
             setIsLoading(false);
         });
     }, [dispatch]);
@@ -38,12 +53,24 @@ const ListComponent = () => {
         setIsLoading(true);
         
         networkClient.delete(`/family/delete/${id}`, null, 
-        // success
-        () => { dispatch(actions.deleteFamily(id)) },
-        // error
-        () => { console.log("err") })
-        // finally
-        .finally(() => { 
+            () => { 
+                dispatch(actions.deleteFamily(id)) 
+            },
+            (error) => {
+                if(error.response) {
+                    switch(error.response.status) {
+                        case 401: {
+                            dispatch(actions.setAlert({title: "Грешка!", message: "Сесията ви изтече!"}));
+                            dispatch(actions.deleteLoggedUser());
+                            break;
+                        }
+                        default: ;
+                    }
+                } else {
+                    dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
+                }
+            }
+        ).finally(() => { 
             setIsLoading(false);
         });
     }

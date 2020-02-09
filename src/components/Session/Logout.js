@@ -21,7 +21,7 @@ const Logout = () => {
             },
             // fail
             () => {
-                alert("Неуспешно излизане!");
+                dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
                 history.goBack();
             }
         );

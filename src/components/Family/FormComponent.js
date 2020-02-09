@@ -5,7 +5,8 @@ import Input from '../base-components/Form/Input';
 import { useParams, useHistory } from 'react-router-dom';
 import Loader from '../base-components/Loader';
 import Select from '../base-components/Form/Select/Select';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import actions from "../../redux/actions";
 
 const FormComponent = () => {
 
@@ -32,6 +33,7 @@ const FormComponent = () => {
 
     const { id } = useParams(); // get parameter from url
     const history = useHistory();
+    const dispatch = useDispatch();
     const loggedUser = useSelector(state => state.loggedUser); // get logged user, it have to be EmployeeOEPG
 
     useState(() => {
@@ -39,23 +41,44 @@ const FormComponent = () => {
             setIsEditing(true);
             setIsLoading(true);
 
-            networkClient.get(`/family/${id}`, null, (family) => {
-                setTutular(family.titular);
-                setWomanFirstName(family.woman_first_name);
-                setWomanSecondName(family.woman_second_name);
-                setWomanLastName(family.woman_last_name);
-                setManFirstName(family.man_first_name);
-                setManSecondName(family.man_second_name);
-                setManLastName(family.man_last_name);
-                setPreferKidGender(family.prefer_kid_gender);
-                setPreferKidMinAge(family.prefer_kid_min_age);
-                setPreferKidMaxAge(family.prefer_kid_max_age);
-                setWardenId(family.warden.id);
+            networkClient.get(`/family/${id}`, null, 
+                (family) => {
+                    setTutular(family.titular);
+                    setWomanFirstName(family.woman_first_name);
+                    setWomanSecondName(family.woman_second_name);
+                    setWomanLastName(family.woman_last_name);
+                    setManFirstName(family.man_first_name);
+                    setManSecondName(family.man_second_name);
+                    setManLastName(family.man_last_name);
+                    setPreferKidGender(family.prefer_kid_gender);
+                    setPreferKidMinAge(family.prefer_kid_min_age);
+                    setPreferKidMaxAge(family.prefer_kid_max_age);
+                    setWardenId(family.warden.id);
 
-                setWarden(family.warden); // when editing, warden is family warden
+                    setWarden(family.warden); // when editing, warden is family warden
 
-                setIsLoading(false);
-            });
+                    setIsLoading(false);
+                },
+                (error) => {
+                    if(error.response) {
+                        switch(error.response.status) {
+                            case 401: {
+                                dispatch(actions.setAlert({title: "Грешка!", message: "Сесията ви изтече!"}));
+                                dispatch(actions.deleteLoggedUser());
+                                break;
+                            }
+                            case 404: {
+                                dispatch(actions.setAlert({title: "Грешка!", message: "Не е намерено такова семейство!"}));
+                                history.goBack();
+                                break;
+                            }
+                            default: ;
+                        }
+                    } else {
+                        dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
+                    }
+                }
+            );
         } else {
             setWardenId(loggedUser.id);
             setWarden(loggedUser); // when registering family, warden is current logged user
@@ -92,12 +115,10 @@ const FormComponent = () => {
                             setAlert({color: "danger", message: "Не са попълнени всички полета!"});
                             break;
                         }
-                        default: {
-                            setAlert({color: "danger", message: "Възникна грешка!"});
-                        }
+                        default: ;
                     }
                 } else {
-                    setAlert({color: "danger", message: "Възникна грешка!"});
+                    dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
                 }
 
                 setIsLoading(false);
@@ -134,12 +155,10 @@ const FormComponent = () => {
                             setAlert({color: "danger", message: "Не са попълнени всички полета!"});
                             break;
                         }
-                        default: {
-                            setAlert({color: "danger", message: "Възникна грешка!"});
-                        }
+                        default: ;
                     }
                 } else {
-                    setAlert({color: "danger", message: "Възникна грешка!"});
+                    dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
                 }
             }
         )
