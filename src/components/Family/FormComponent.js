@@ -50,13 +50,14 @@ const FormComponent = () => {
                 setPreferKidGender(family.prefer_kid_gender);
                 setPreferKidMinAge(family.prefer_kid_min_age);
                 setPreferKidMaxAge(family.prefer_kid_max_age);
-                setWardenId(loggedUser.id);
+                setWardenId(family.warden.id);
 
                 setWarden(family.warden); // when editing, warden is family warden
 
                 setIsLoading(false);
             });
         } else {
+            setWardenId(loggedUser.id);
             setWarden(loggedUser); // when registering family, warden is current logged user
         }     
     }, [id]);
