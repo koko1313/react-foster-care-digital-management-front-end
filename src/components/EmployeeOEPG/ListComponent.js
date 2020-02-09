@@ -16,12 +16,26 @@ const ListComponent = () => {
     useEffect(()=> {
         setIsLoading(true);
 
-        
-        
-        networkClient.get('/employee-oepg/all', null, (users) => {
-            dispatch(actions.setEmployeesOEPG(users));
-        })
-        .finally(() => {
+        networkClient.get('/employee-oepg/all', null, 
+            (users) => {
+                dispatch(actions.setEmployeesOEPG(users));
+            },
+            (error) => {
+                if(error.response) {
+                    switch(error.response.status) {
+                        case 401: {
+                            dispatch(actions.setAlert({title: "Грешка!", message: "Сесията ви изтече!"}));
+                            dispatch(actions.deleteLoggedUser());
+                            break;
+                        }
+                        default: ;
+                    }
+                } else {
+                    dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
+                    dispatch(actions.deleteLoggedUser());
+                }
+            }
+        ).then(() => {
             setIsLoading(false);
         });
     }, [dispatch]);
