@@ -25,7 +25,7 @@ const NamesInput = (props) => {
                             onChange={props.onSelect}
                             checked = {props.checked}
                             />
-                        <label className="form-check-label" htmlFor={props.id}>Титуляр</label>
+                        <label className="form-check-label" htmlFor={props.id}><small>Титуляр</small></label>
                     </div>
                 </div>
                 <input type="text" className="form-control" placeholder="Име ..." onChange={props.onChangeFirstName} value={props.firstName} />
