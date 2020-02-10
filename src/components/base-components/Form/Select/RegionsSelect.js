@@ -1,28 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import Select from './Select';
 import networkClient from '../../../../network/network-client';
+import { useDispatch, useSelector } from 'react-redux';
+import actions from '../../../../redux/actions';
 
 const RegionsSelect = (props) => {
 
-    const [regionsFromServer, setRegionsFromServer] = useState();
+    const regions = useSelector(state => state.regions);
 
     const [isLoading, setIsLoading] = useState(false);
 
+    const dispatch = useDispatch();
+
     useEffect(() => {
+        if(regions.length > 0) return; // if regions are already loaded from server
+
         setIsLoading(true);
 
         networkClient.get("/region/all", null, (regions) => {
-            setRegionsFromServer(regions);
+            dispatch(actions.setRegions(regions));
         })
         .finally(()=> {
             setIsLoading(false);
         });
-    }, []);
+    }, [dispatch]);
 
     const renderRegions = () => {
-        if(!regionsFromServer) return null;
+        if(!regions) return null;
 
-        return regionsFromServer.map((region) => {
+        return regions.map((region) => {
             return <option key={region.id} value={region.id}>{region.name}</option>
         });
     }

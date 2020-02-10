@@ -1,28 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import networkClient from '../../../../network/network-client';
 import Select from './Select';
+import { useDispatch, useSelector } from 'react-redux';
+import actions from '../../../../redux/actions';
 
 const CitiesSelect = (props) => {
 
-    const [citiesFromServer, setCitiesFromServer] = useState();
+    const cities = useSelector(state => state.cities);
 
     const [isLoading, setIsLoading] = useState(false);
 
+    const dispatch = useDispatch();
+
     useEffect(() => {
+        if(cities.length > 0) return; // if cities are already loaded from the server
+
         setIsLoading(true);
 
         networkClient.get("/city/all", null, (cities) => {
-            setCitiesFromServer(cities);
+            dispatch(actions.setCities(cities));
         })
         .finally(()=> {
             setIsLoading(false);
         });
-    }, []);
+    }, [dispatch]);
 
     const renderCities = () => {
-        if(!citiesFromServer) return null;
+        if(!cities) return null;
 
-        return citiesFromServer.map((city) => {
+        return cities.map((city) => {
             return <option key={city.id} value={city.id}>{city.name}</option>
         });
     }
