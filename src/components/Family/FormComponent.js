@@ -259,13 +259,13 @@ const FormComponent = () => {
                 </div>
 
                 <div className="form-row">
-                    <div className="form-group col-md">
+                    <div className="col-md">
                         <RegionsSelect id="region" label="Област" placeholder="Избери област ..." onChange={(e) => setRegion(e.target.value)} value={region} />
                     </div>
-                    <div className="form-group col-md">
+                    <div className="col-md">
                         <SubRegionsSelect id="subRegion" label="Община" placeholder="Избери община ..." onChange={(e) => setSubRegion(e.target.value)} value={subRegion} />
                     </div>
-                    <div className="form-group col-md">
+                    <div className="col-md">
                         <CitiesSelect id="city" label="Град" placeholder="Избери град ..." onChange={(e) => setCity(e.target.value)} value={city} />
                     </div>
                 </div>

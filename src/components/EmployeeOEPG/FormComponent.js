@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import networkClient from '../../network/network-client';
 import { Alert } from 'reactstrap';
 import Input from '../base-components/Form/Input';
+import NamesInput from '../base-components/Form/NamesInput';
 import RegionsSelect from '../base-components/Form/Select/RegionsSelect';
 import SubRegionsSelect from '../base-components/Form/Select/SubRegionsSelect';
 import CitiesSelect from '../base-components/Form/Select/CitiesSelect';
@@ -9,6 +10,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import Loader from '../base-components/Loader';
 import { useDispatch } from 'react-redux';
 import actions from "../../redux/actions";
+import BackButton from '../base-components/BackButton';
 
 const FormComponent = () => {
 
@@ -187,28 +189,43 @@ const FormComponent = () => {
 
                 {isEditingUser ? null :
                     <>
-                        <Input id="password" label="Парола" type="password" placeholder="Парола ..." onChange={(e) => setPassword(e.target.value)} />
-                        <Input id="rePassword" label="Повтори парола" type="password" placeholder="Повтори парола ..." onChange={(e) => setRePassword(e.target.value)} />
+                        <Input id="password" label="Парола" type="password" placeholder="Парола ..." required={true} onChange={(e) => setPassword(e.target.value)} />
+                        <Input id="rePassword" label="Повтори парола" type="password" placeholder="Повтори парола ..." required={true} onChange={(e) => setRePassword(e.target.value)} />
                     </>
                 }
 
-                <Input id="firstName" label="Име" type="text" placeholder="Име ..." required={true} onChange={(e) => setFirstName(e.target.value)} value={firstName} />
+                <NamesInput 
+                    id = "name" 
+                    label = "Име" 
+                    required = {true} 
+                    firstName = {firstName} 
+                    secondName = {secondName} 
+                    lastName = {lastName} 
+                    onChangeFirstName = {(e) => setFirstName(e.target.value)}
+                    onChangeSecondName = {(e) => setSecondName(e.target.value)}
+                    onChangeLastName = {(e) => setLastName(e.target.value)}
+                />
 
-                <Input id="secondName" label="Презиме" type="text" placeholder="Презиме ..." required={true} onChange={(e) => setSecondName(e.target.value)} value={secondName} />
+                <div className="form-row">
+                    <div className="col-md">
+                        <RegionsSelect id="region" label="Област" placeholder="Избери област ..." required={true} onChange={(e) => setRegion(e.target.value)} value={region} />
+                    </div>
+                    <div className="col-md">
+                        <SubRegionsSelect id="subRegion" label="Община" placeholder="Избери община ..." required={true} onChange={(e) => setSubRegion(e.target.value)} value={subRegion} />
+                    </div>
+                    <div className="col-md">
+                        <CitiesSelect id="city" label="Град" placeholder="Избери град ..." required={true} onChange={(e) => setCity(e.target.value)} value={city} />
+                    </div>
+                </div>
 
-                <Input id="lastName" label="Фамилия" type="text" placeholder="Фамилия ..." required={true} onChange={(e) => setLastName(e.target.value)} value={lastName} />
-
-                <RegionsSelect id="region" label="Област" placeholder="Избери област ..." required={true} onChange={(e) => setRegion(e.target.value)} value={region} />
-
-                <SubRegionsSelect id="subRegion" label="Община" placeholder="Избери община ..." required={true} onChange={(e) => setSubRegion(e.target.value)} value={subRegion} />
-
-                <CitiesSelect id="city" label="Град" placeholder="Избери град ..." required={true} onChange={(e) => setCity(e.target.value)} value={city} />
-
-                {isEditingUser ?
-                    <button type="button" className="btn btn-warning" onClick={updateUser}>Редактирай</button>
-                    :
-                    <button type="button" className="btn btn-primary" onClick={registerUser}>Регистрирай</button>
-                }
+                <div className="pull-right">
+                    {isEditingUser ?
+                        <button type="button" className="btn btn-warning" onClick={updateUser}>Редактирай</button>
+                        :
+                        <button type="button" className="btn btn-primary" onClick={registerUser}>Регистрирай</button>
+                    }
+                    <BackButton />
+                </div>
             </form>
 
             <Loader loading={isLoading} fullScreen={true} />

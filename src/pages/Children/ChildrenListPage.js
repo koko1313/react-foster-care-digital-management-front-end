@@ -3,7 +3,7 @@ import React from 'react';
 const ChildrenListPage = () => {
 
     return (
-        <div></div>
+        <div>Тук ще има страница с деца</div>
     );
 }
 

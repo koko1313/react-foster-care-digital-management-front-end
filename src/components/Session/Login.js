@@ -56,14 +56,24 @@ const Login = () => {
 
         <form onSubmit={login}>
             <div className="form-group">
-                <label htmlFor="email">Email address</label>
-                <input type="email" className="form-control" id="email" onChange={(e) => {setEmail(e.target.value)}} />
+                <label htmlFor="email">Email</label>
+                <div className="input-group">
+                    <div className="input-group-prepend">
+                        <span className="input-group-text"><i className="fa fa-user"></i></span>
+                    </div>
+                    <input type="email" className="form-control" id="email" placeholder="Email ..." onChange={(e) => {setEmail(e.target.value)}} />
+                </div>
             </div>
             <div className="form-group">
-                <label htmlFor="password">Password</label>
-                <input type="password" className="form-control" id="password" onChange={(e) => {setPassword(e.target.value);}} />
+                <label htmlFor="password">Парола</label>
+                <div className="input-group">
+                    <div className="input-group-prepend">
+                        <span className="input-group-text"><i className="fa fa-lock"></i></span>
+                    </div>
+                    <input type="password" className="form-control" id="password" placeholder="Парола ..." onChange={(e) => {setPassword(e.target.value);}} />
+                </div>
             </div>
-            <button type="submit" className="btn btn-primary" >Вход</button>
+            <button type="submit" className="btn btn-primary pull-right">Вход</button>
         </form>
     </>;
 
