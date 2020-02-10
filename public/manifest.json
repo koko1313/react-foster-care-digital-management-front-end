@@ -1,6 +1,8 @@
 {
   "short_name": "ПГ",
   "name": "Приемна грижа",
+  "description": "Приемна грижа - административен мениджмънт.",
+  "lang": "bg-BG",
   "icons": [
     {
       "src": "favicon.ico",
@@ -19,7 +21,7 @@
     }
   ],
   "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "display": "fullscreen",
+  "theme_color": "#6a89fd",
+  "background_color": "#efefef"
 }
