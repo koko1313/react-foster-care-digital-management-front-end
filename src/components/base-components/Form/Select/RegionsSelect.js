@@ -23,7 +23,7 @@ const RegionsSelect = (props) => {
         .finally(()=> {
             setIsLoading(false);
         });
-    }, [dispatch]);
+    }, [dispatch, regions]);
 
     const renderRegions = () => {
         if(!regions) return null;

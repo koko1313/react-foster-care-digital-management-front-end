@@ -23,7 +23,7 @@ const CitiesSelect = (props) => {
         .finally(()=> {
             setIsLoading(false);
         });
-    }, [dispatch]);
+    }, [dispatch, cities]);
 
     const renderCities = () => {
         if(!cities) return null;

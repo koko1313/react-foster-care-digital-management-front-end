@@ -23,7 +23,7 @@ const SubRegionsSelect = (props) => {
         .finally(()=> {
             setIsLoading(false);
         });
-    }, [dispatch]);
+    }, [dispatch, subRegions]);
 
     const renderSubRegions = () => {
         if(!subRegions) return null;
