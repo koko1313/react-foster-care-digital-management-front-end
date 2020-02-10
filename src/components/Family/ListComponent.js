@@ -28,10 +28,13 @@ const ListComponent = () => {
                             dispatch(actions.deleteLoggedUser());
                             break;
                         }
-                        default: ;
+                        default: {
+                            dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
+                            break;
+                        };
                     }
                 } else {
-                    dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
+                    dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));
                 }
             }
         ).finally(() => {
@@ -64,10 +67,13 @@ const ListComponent = () => {
                             dispatch(actions.deleteLoggedUser());
                             break;
                         }
-                        default: ;
+                        default: {
+                            dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
+                            break;
+                        };
                     }
                 } else {
-                    dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
+                    dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));
                 }
             }
         ).finally(() => { 

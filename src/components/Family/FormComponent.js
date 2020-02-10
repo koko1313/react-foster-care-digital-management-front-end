@@ -84,10 +84,13 @@ const FormComponent = () => {
                                 history.goBack();
                                 break;
                             }
-                            default: ;
+                            default: {
+                                dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
+                                break;
+                            };
                         }
                     } else {
-                        dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
+                        dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));
                     }
                 }
             );
@@ -99,25 +102,26 @@ const FormComponent = () => {
     
 
     const register = () => {
+        const data = {
+            titular: titular,
+            womanFirstName: womanFirstName,
+            womanSecondName: womanSecondName,
+            womanLastName: womanLastName,
+            manFirstName: manFirstName,
+            manSecondName: manSecondName,
+            manLastName: manLastName,
+            preferKidGender: preferKidGender,
+            preferKidMinAge: preferKidMinAge,
+            preferKidMaxAge: preferKidMaxAge,
+            regionId: region,
+            subRegionId: subRegion,
+            cityId: city,
+            address: address,
+            wardenId: wardenId,
+        };
+
         setIsLoading(true);
-        networkClient.post("/family/register", 
-            {
-                titular: titular,
-                womanFirstName: womanFirstName,
-                womanSecondName: womanSecondName,
-                womanLastName: womanLastName,
-                manFirstName: manFirstName,
-                manSecondName: manSecondName,
-                manLastName: manLastName,
-                preferKidGender: preferKidGender,
-                preferKidMinAge: preferKidMinAge,
-                preferKidMaxAge: preferKidMaxAge,
-                regionId: region,
-                subRegionId: subRegion,
-                cityId: city,
-                address: address,
-                wardenId: wardenId,
-            },
+        networkClient.post("/family/register", data,
             // success
             (response) => {
                 setAlert({color: "success", message: "Успешно регистрирано семейство!"});
@@ -136,10 +140,13 @@ const FormComponent = () => {
                             dispatch(actions.deleteLoggedUser());
                             break;
                         }
-                        default: ;
+                        default: {
+                            dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
+                            break;
+                        };
                     }
                 } else {
-                    dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
+                    dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));
                 }
 
                 setIsLoading(false);
@@ -149,24 +156,25 @@ const FormComponent = () => {
 
     const update = () => {
         setIsLoading(true);
-        networkClient.put(`/family/update/${id}`, 
-            {
-                titular: titular,
-                womanFirstName: womanFirstName,
-                womanSecondName: womanSecondName,
-                womanLastName: womanLastName,
-                manFirstName: manFirstName,
-                manSecondName: manSecondName,
-                manLastName: manLastName,
-                preferKidGender: preferKidGender,
-                preferKidMinAge: preferKidMinAge,
-                preferKidMaxAge: preferKidMaxAge,
-                regionId: region,
-                subRegionId: subRegion,
-                cityId: city,
-                address: address,
-                wardenId: wardenId,
-            },
+        const data = {
+            titular: titular,
+            womanFirstName: womanFirstName,
+            womanSecondName: womanSecondName,
+            womanLastName: womanLastName,
+            manFirstName: manFirstName,
+            manSecondName: manSecondName,
+            manLastName: manLastName,
+            preferKidGender: preferKidGender,
+            preferKidMinAge: preferKidMinAge,
+            preferKidMaxAge: preferKidMaxAge,
+            regionId: region,
+            subRegionId: subRegion,
+            cityId: city,
+            address: address,
+            wardenId: wardenId,
+        };
+
+        networkClient.put(`/family/update/${id}`, data,
             // success
             (response) => {
                 setAlert({color: "success", message: "Успешно редактирано семейство!"});
@@ -185,11 +193,10 @@ const FormComponent = () => {
                             dispatch(actions.deleteLoggedUser());
                             break;
                         }
-                        case 500: {
-                            dispatch(actions.setAlert({title: "Грешка!", message: "Нещо на сървъра се обърка!"}));
+                        default: {
+                            dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
                             break;
-                        }
-                        default: ;
+                        };
                     }
                 } else {
                     dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));

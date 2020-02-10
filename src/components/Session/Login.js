@@ -35,10 +35,13 @@ const Login = () => {
                             setAlert({color: "danger", message: "Грешен email или парола!"});
                             break;
                         }
-                        default: ;
+                        default: {
+                            dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
+                            break;
+                        };
                     }
                 } else {
-                    setAlert({color: "danger", message: "Нещо се обърка!"});
+                    setAlert({color: "danger", message: "Няма връзка със сървъра!"});
                 }
 
                 setIsLoading(false);

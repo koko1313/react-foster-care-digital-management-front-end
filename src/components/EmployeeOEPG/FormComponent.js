@@ -63,10 +63,13 @@ const FormComponent = () => {
                                 history.goBack();
                                 break;
                             }
-                            default: ;
+                            default: {
+                                dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се объркаa!"}));
+                                break;
+                            };
                         }
                     } else {
-                        dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
+                        dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));
                     }
                 }
             );
@@ -81,17 +84,18 @@ const FormComponent = () => {
         }
 
         setIsLoading(true);
-        networkClient.post("/employee-oepg/register", 
-            {
-                email: email,
-                password: password,
-                firstName: firstName,
-                secondName: secondName,
-                lastName: lastName,
-                regionId: region,
-                subRegionId: subRegion,
-                cityId: city,
-            },
+        const data = {
+            email: email,
+            password: password,
+            firstName: firstName,
+            secondName: secondName,
+            lastName: lastName,
+            regionId: region,
+            subRegionId: subRegion,
+            cityId: city,
+        };
+
+        networkClient.post("/employee-oepg/register", data,
             // success
             (response) => {
                 setAlert({color: "success", message: "Успешно регистриран потребител!"});
@@ -114,10 +118,13 @@ const FormComponent = () => {
                             dispatch(actions.deleteLoggedUser());
                             break;
                         }
-                        default: ;
+                        default: {
+                            dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
+                            break;
+                        };
                     }
                 } else {
-                    dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
+                    dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));
                 }
 
                 setIsLoading(false);
@@ -164,10 +171,13 @@ const FormComponent = () => {
                             dispatch(actions.deleteLoggedUser());
                             break;
                         }
-                        default: ;
+                        default: {
+                            dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
+                            break;
+                        };
                     }
                 } else {
-                    dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
+                    dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));
                 }
             }
         )
