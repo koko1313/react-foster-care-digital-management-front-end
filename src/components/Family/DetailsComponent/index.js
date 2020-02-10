@@ -140,7 +140,7 @@ const DetailsComponent = () => {
 
     return (
         <>
-            <div className="mt-5">
+            <div className="container mt-5">
             {renderFamilyInformation()}
             </div>
             <Loader loading={isLoading} fullScreen={true} />
