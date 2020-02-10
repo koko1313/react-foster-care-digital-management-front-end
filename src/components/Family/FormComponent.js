@@ -7,6 +7,10 @@ import Loader from '../base-components/Loader';
 import Select from '../base-components/Form/Select/Select';
 import { useSelector, useDispatch } from 'react-redux';
 import actions from "../../redux/actions";
+import RegionsSelect from '../base-components/Form/Select/RegionsSelect';
+import SubRegionsSelect from '../base-components/Form/Select/SubRegionsSelect';
+import CitiesSelect from '../base-components/Form/Select/CitiesSelect';
+import NamesInput from '../base-components/Form/NamesInput';
 
 const FormComponent = () => {
 
@@ -17,7 +21,7 @@ const FormComponent = () => {
 
     const [isEditing, setIsEditing] = useState(false);
 
-    const [titular, setTutular] = useState("");
+    const [titular, setTitular] = useState("");
     const [womanFirstName, setWomanFirstName] = useState("");
     const [womanSecondName, setWomanSecondName] = useState("");
     const [womanLastName, setWomanLastName] = useState("");
@@ -27,6 +31,10 @@ const FormComponent = () => {
     const [preferKidGender, setPreferKidGender] = useState("");
     const [preferKidMinAge, setPreferKidMinAge] = useState("");
     const [preferKidMaxAge, setPreferKidMaxAge] = useState("");
+    const [region, setRegion] = useState("");
+    const [subRegion, setSubRegion] = useState("");
+    const [city, setCity] = useState("");
+    const [address, setAddress] = useState("");
     const [wardenId, setWardenId] = useState("");
 
     const [warden, setWarden] = useState();
@@ -43,7 +51,7 @@ const FormComponent = () => {
 
             networkClient.get(`/family/${id}`, null, 
                 (family) => {
-                    setTutular(family.titular);
+                    setTitular(family.titular);
                     setWomanFirstName(family.woman_first_name);
                     setWomanSecondName(family.woman_second_name);
                     setWomanLastName(family.woman_last_name);
@@ -53,6 +61,10 @@ const FormComponent = () => {
                     setPreferKidGender(family.prefer_kid_gender);
                     setPreferKidMinAge(family.prefer_kid_min_age);
                     setPreferKidMaxAge(family.prefer_kid_max_age);
+                    if(family.region) setRegion(family.region.id);
+                    if(family.sub_region) setSubRegion(family.sub_region.id);
+                    if(family.city) setCity(family.city.id);
+                    setAddress(family.address);
                     setWardenId(family.warden.id);
 
                     setWarden(family.warden); // when editing, warden is family warden
@@ -140,6 +152,10 @@ const FormComponent = () => {
                 preferKidGender: preferKidGender,
                 preferKidMinAge: preferKidMinAge,
                 preferKidMaxAge: preferKidMaxAge,
+                regionId: region,
+                subRegionId: subRegion,
+                cityId: city,
+                address: address,
                 wardenId: wardenId,
             },
             // success
@@ -174,38 +190,45 @@ const FormComponent = () => {
             </Alert>
 
             <form>
-                <Input id="titular" label="Титуляр" type="text" placeholder="Титуляр ..." required={true} onChange={(e) => setTutular(e.target.value)} value={titular} />
+                {/* <Input id="titular" label="Титуляр" type="text" placeholder="Титуляр ..." required={true} onChange={(e) => setTitular(e.target.value)} value={titular} /> */}
+         
+                <NamesInput 
+                    id = "womanName" 
+                    label = "Жена" 
+                    required = {true} 
+                    // name = "titular" 
+                    firstName = {womanFirstName} 
+                    secondName = {womanSecondName} 
+                    lastName = {womanLastName} 
+                    // value = {`${womanFirstName} ${womanSecondName} ${womanLastName}`}
+                    onChangeFirstName = {(e) => setWomanFirstName(e.target.value)}
+                    onChangeSecondName = {(e) => setWomanSecondName(e.target.value)}
+                    onChangeLastName = {(e) => setWomanLastName(e.target.value)}
+                    // onSelect = {() => setTitular(`${womanFirstName} ${womanSecondName} ${womanLastName}`)}
+                />
+
+                <NamesInput 
+                    id = "manName" 
+                    label = "Мъж" 
+                    required = {true} 
+                    // name = "titular" 
+                    firstName = {manFirstName} 
+                    secondName = {manSecondName} 
+                    lastName = {manLastName} 
+                    // value = {`${manFirstName} ${manSecondName} ${manLastName}`}
+                    onChangeFirstName = {(e) => setManFirstName(e.target.value)}
+                    onChangeSecondName = {(e) => setManSecondName(e.target.value)}
+                    onChangeLastName = {(e) => setManLastName(e.target.value)}
+                    // onSelect = {() => setTitular(`${manFirstName} ${manSecondName} ${manLastName}`)}
+                />
 
                 <div className="form-row">
                     <div className="form-group col-md">
-                        <Input id="womanFirstName" label="Име на жената" type="text" placeholder="Име на жената ..." required={true} onChange={(e) => setWomanFirstName(e.target.value)} value={womanFirstName} />
+                        <Select id="preferKidGender" label="Предпочитан пол на децата" placeholder="Избери предпочитан пол ..." onChange={(e) => setPreferKidGender(e.target.value)} value={preferKidGender}>
+                            <option value="m">Момче</option>
+                            <option value="f">Момиче</option>
+                        </Select>
                     </div>
-                    <div className="form-group col-md">
-                        <Input id="womanSecondName" label="Презиме на жената" type="text" placeholder="Презиме на жената ..." required={true} onChange={(e) => setWomanSecondName(e.target.value)} value={womanSecondName} />
-                    </div>
-                    <div className="form-group col-md">
-                        <Input id="womanLastName" label="Фамилия на жената" type="text" placeholder="Фамилия на жената ..." required={true} onChange={(e) => setWomanLastName(e.target.value)} value={womanLastName} />
-                    </div>
-                </div>
-
-                <div className="form-row">
-                    <div className="form-group col-md">
-                        <Input id="manFirstName" label="Име на мъжа" type="text" placeholder="Име на мъжа ..." required={true} onChange={(e) => setManFirstName(e.target.value)} value={manFirstName} />
-                    </div>
-                    <div className="form-group col-md">
-                        <Input id="manSecondName" label="Презиме на мъжа" type="text" placeholder="Презиме на мъжа ..." required={true} onChange={(e) => setManSecondName(e.target.value)} value={manSecondName} />
-                    </div>
-                    <div className="form-group col-md">
-                        <Input id="manLastName" label="Фамилия на мъжа" type="text" placeholder="Фамилия на мъжа ..." required={true} onChange={(e) => setManLastName(e.target.value)} value={manLastName} />
-                    </div>
-                </div>
-
-                <Select id="preferKidGender" label="Предпочитан пол на децата" placeholder="Избери предпочитан пол ..." onChange={(e) => setPreferKidGender(e.target.value)} value={preferKidGender}>
-                    <option value="m">Момче</option>
-                    <option value="f">Момиче</option>
-                </Select>
-
-                <div className="form-row">
                     <div className="form-group col-md">
                         <Input id="preferKidMinAge" label="Минимална възраст" type="number" placeholder="Минимална възраст ..." onChange={(e) => setPreferKidMinAge(e.target.value)} value={preferKidMinAge} />
                     </div>
@@ -213,6 +236,20 @@ const FormComponent = () => {
                         <Input id="preferKidMaxAge" label="Максимална възраст" type="number" placeholder="Максимална възраст ..." onChange={(e) => setPreferKidMaxAge(e.target.value)} value={preferKidMaxAge} />
                     </div>
                 </div>
+
+                <div className="form-row">
+                    <div className="form-group col-md">
+                        <RegionsSelect id="region" label="Област" placeholder="Избери област ..." onChange={(e) => setRegion(e.target.value)} value={region} />
+                    </div>
+                    <div className="form-group col-md">
+                        <SubRegionsSelect id="subRegion" label="Община" placeholder="Избери община ..." onChange={(e) => setSubRegion(e.target.value)} value={subRegion} />
+                    </div>
+                    <div className="form-group col-md">
+                        <CitiesSelect id="city" label="Град" placeholder="Избери град ..." onChange={(e) => setCity(e.target.value)} value={city} />
+                    </div>
+                </div>
+                
+                <Input id="address" label="Адрес" type="text" placeholder="Адрес ..." value={address} onChange={(e) => setAddress(e.target.value)} />
 
                 <Input 
                     id="warden" 
