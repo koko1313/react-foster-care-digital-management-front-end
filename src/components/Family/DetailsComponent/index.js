@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import networkClient from '../../../network/network-client';
 import actions from '../../../redux/actions';
 import Loader from '../../base-components/Loader';
+import BackButton from '../../base-components/BackButton';
 import './style.scss';
 
 const DetailsComponent = () => {
@@ -121,13 +122,17 @@ const DetailsComponent = () => {
                 <div className="row info">
                     <div className="col-md-2 info-header">Адрес</div>
                     <div className="col info-body">
-                        {family.region.name}, {family.sub_region.name}, {family.city.name}, {family.address}
+                        {family.region && family.region.name + ", "}
+                        {family.sub_region && family.sub_region.name + ", "}
+                        {family.city && family.city.name + ", "} 
+                        {family.address}
                     </div>
                 </div>
 
                 <div className="row pull-right">
                     <button type="button" className="btn btn-warning mr-1" onClick={() => { editFamily(family.id) }}>Редактирай</button>
                     <button type="button" className="btn btn-danger" onClick={() => { deleteFamily(family.id) }}>Изтрий</button>
+                    <BackButton />
                 </div>
             </>
         );

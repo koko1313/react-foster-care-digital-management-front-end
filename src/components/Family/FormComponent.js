@@ -11,6 +11,7 @@ import RegionsSelect from '../base-components/Form/Select/RegionsSelect';
 import SubRegionsSelect from '../base-components/Form/Select/SubRegionsSelect';
 import CitiesSelect from '../base-components/Form/Select/CitiesSelect';
 import NamesInput from '../base-components/Form/NamesInput';
+import BackButton from '../base-components/BackButton';
 
 const FormComponent = () => {
 
@@ -278,11 +279,15 @@ const FormComponent = () => {
                     value={warden ? `${warden.first_name} ${warden.second_name} ${warden.last_name}` : ""} 
                     disabled={true} />
 
-                {isEditing ?
-                    <button type="button" className="btn btn-warning" onClick={update}>Редактирай</button>
-                    :
-                    <button type="button" className="btn btn-primary" onClick={register}>Регистрирай</button>
-                }
+                <div className="pull-right">
+                    {isEditing ?
+                        <button type="button" className="btn btn-warning" onClick={update}>Редактирай</button>
+                        :
+                        <button type="button" className="btn btn-primary" onClick={register}>Регистрирай</button>
+                    }
+
+                    <BackButton />
+                </div>
             </form>
 
             <Loader loading={isLoading} fullScreen={true} />
