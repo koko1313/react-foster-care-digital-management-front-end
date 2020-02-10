@@ -208,8 +208,6 @@ const FormComponent = () => {
             </Alert>
 
             <form>
-                {/* <Input id="titular" label="Титуляр" type="text" placeholder="Титуляр ..." required={true} onChange={(e) => setTitular(e.target.value)} value={titular} /> */}
-         
                 <NamesInput 
                     id = "womanName" 
                     label = "Жена" 
