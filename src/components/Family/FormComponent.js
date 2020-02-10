@@ -220,6 +220,8 @@ const FormComponent = () => {
                     onChangeFirstName = {(e) => setWomanFirstName(e.target.value)}
                     onChangeSecondName = {(e) => setWomanSecondName(e.target.value)}
                     onChangeLastName = {(e) => setWomanLastName(e.target.value)}
+                    
+                    includeTitularSelect = {true}
                     name = "titular" 
                     value = {"woman"}
                     onSelect = {(e) => setTitular(e.target.value)}
@@ -236,6 +238,8 @@ const FormComponent = () => {
                     onChangeFirstName = {(e) => setManFirstName(e.target.value)}
                     onChangeSecondName = {(e) => setManSecondName(e.target.value)}
                     onChangeLastName = {(e) => setManLastName(e.target.value)}
+
+                    includeTitularSelect = {true}
                     name = "titular" 
                     value = {"man"}
                     onSelect = {(e) => setTitular(e.target.value)}
