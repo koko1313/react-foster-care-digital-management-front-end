@@ -1,0 +1,20 @@
+@import '../../../assets/styles/styles.scss';
+
+.info {
+    @include media-breakpoint-down(md) {
+        margin-bottom: 2rem;
+    }
+}
+
+.info-header {
+    font-weight: bold;
+    @include media-breakpoint-up(md) {
+        border-right: 1px solid;
+        text-align: right;
+        padding-bottom: 2rem;
+    }
+}
+
+.info-body {
+    font-style: italic;
+}

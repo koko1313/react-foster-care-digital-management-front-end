@@ -23,15 +23,13 @@ const ListComponent = () => {
             (error) => {
                 if(error.response) {
                     switch(error.response.status) {
-                        case 401: {
+                        case 401:
                             dispatch(actions.setAlert({title: "Грешка!", message: "Сесията ви изтече!"}));
                             dispatch(actions.deleteLoggedUser());
                             break;
-                        }
-                        default: {
+                        default:
                             dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
                             break;
-                        };
                     }
                 } else {
                     dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));
@@ -62,15 +60,13 @@ const ListComponent = () => {
             (error) => {
                 if(error.response) {
                     switch(error.response.status) {
-                        case 401: {
+                        case 401:
                             dispatch(actions.setAlert({title: "Грешка!", message: "Сесията ви изтече!"}));
                             dispatch(actions.deleteLoggedUser());
                             break;
-                        }
-                        default: {
+                        default:
                             dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
                             break;
-                        };
                     }
                 } else {
                     dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));
@@ -95,8 +91,8 @@ const ListComponent = () => {
                         {user.region ? user.region.name : null}
                     </td>
                     <td>
-                        <button type="button" className="btn btn-warning mr-1" onClick={() => { editUser(user.id) }}><i className="fa fa-edit"></i></button>
-                        <button type="button" className="btn btn-danger" onClick={() => { deleteUser(user.id) }}><i className="fa fa-trash"></i></button>
+                        <button type="button" className="btn btn-warning mr-1 mb-1" onClick={() => { editUser(user.id) }}><i className="fa fa-edit"></i></button>
+                        <button type="button" className="btn btn-danger mb-1" onClick={() => { deleteUser(user.id) }}><i className="fa fa-trash"></i></button>
                     </td>
                 </tr>
             );

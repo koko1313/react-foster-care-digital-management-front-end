@@ -23,15 +23,13 @@ const ListComponent = () => {
             (error) => {
                 if(error.response) {
                     switch(error.response.status) {
-                        case 401: {
+                        case 401:
                             dispatch(actions.setAlert({title: "Грешка!", message: "Сесията ви изтече!"}));
                             dispatch(actions.deleteLoggedUser());
                             break;
-                        }
-                        default: {
+                        default:
                             dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
                             break;
-                        };
                     }
                 } else {
                     dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));
@@ -61,20 +59,19 @@ const ListComponent = () => {
         
         networkClient.delete(`/family/delete/${id}`, null, 
             () => { 
-                dispatch(actions.deleteFamily(id)) 
+                dispatch(actions.deleteFamily(id));
+                history.push("/family/all");
             },
             (error) => {
                 if(error.response) {
                     switch(error.response.status) {
-                        case 401: {
+                        case 401:
                             dispatch(actions.setAlert({title: "Грешка!", message: "Сесията ви изтече!"}));
                             dispatch(actions.deleteLoggedUser());
                             break;
-                        }
-                        default: {
+                        default:
                             dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
                             break;
-                        };
                     }
                 } else {
                     dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));
@@ -96,9 +93,9 @@ const ListComponent = () => {
                     <td>{family.prefer_kid_gender}</td>
                     <td>{`${family.prefer_kid_min_age} - ${family.prefer_kid_max_age}`}</td>
                     <td>
-                        <button type="button" className="btn btn-info mr-1" onClick={() => { viewDetails(family.id) }}><i className="fa fa-info-circle"></i></button>
-                        <button type="button" className="btn btn-warning mr-1" onClick={() => { editFamily(family.id) }}><i className="fa fa-edit"></i></button>
-                        <button type="button" className="btn btn-danger" onClick={() => { deleteFamily(family.id) }}><i className="fa fa-trash"></i></button>
+                        <button type="button" className="btn btn-info mr-1 mb-1" onClick={() => { viewDetails(family.id) }}><i className="fa fa-info-circle"></i></button>
+                        <button type="button" className="btn btn-warning mr-1 mb-1" onClick={() => { editFamily(family.id) }}><i className="fa fa-edit"></i></button>
+                        <button type="button" className="btn btn-danger mb-1" onClick={() => { deleteFamily(family.id) }}><i className="fa fa-trash"></i></button>
                     </td>
                 </tr>
             );

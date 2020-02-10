@@ -31,14 +31,12 @@ const Login = () => {
             (error) => {
                 if(error.response) {
                     switch(error.response.status) {
-                        case 401: {
+                        case 401:
                             setAlert({color: "danger", message: "Грешен email или парола!"});
                             break;
-                        }
-                        default: {
+                        default:
                             dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
                             break;
-                        };
                     }
                 } else {
                     setAlert({color: "danger", message: "Няма връзка със сървъра!"});
