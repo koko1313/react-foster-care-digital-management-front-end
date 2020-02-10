@@ -88,10 +88,14 @@ const ListComponent = () => {
         return families.map((family) => {
             return (
                 <tr key={family.id}>
-                    <td>{`${family.woman_first_name} ${family.woman_second_name} ${family.woman_last_name}`}</td>
-                    <td>{`${family.man_first_name} ${family.man_second_name} ${family.man_last_name}`}</td>
-                    <td>{family.prefer_kid_gender}</td>
-                    <td>{`${family.prefer_kid_min_age} - ${family.prefer_kid_max_age}`}</td>
+                    <td>
+                        {family.titular === "woman" &&
+                            `${family.woman_first_name} ${family.woman_second_name} ${family.woman_last_name}`
+                        }
+                        {family.titular === "man" &&
+                            `${family.man_first_name} ${family.man_second_name} ${family.man_last_name}`
+                        }
+                    </td>
                     <td>
                         <button type="button" className="btn btn-info mr-1 mb-1" onClick={() => { viewDetails(family.id) }}><i className="fa fa-info-circle"></i></button>
                         <button type="button" className="btn btn-warning mr-1 mb-1" onClick={() => { editFamily(family.id) }}><i className="fa fa-edit"></i></button>
@@ -110,10 +114,7 @@ const ListComponent = () => {
                 <table className="table">
                     <thead>
                         <tr>
-                            <th scope="col">Име на жената</th>
-                            <th scope="col">Име на мъжа</th>
-                            <th scope="col">Предпочитан пол</th>
-                            <th scope="col">Предпочитана възраст</th>
+                            <th style={{width: 75+'%'}} scope="col">Титуляр</th>
                             <th scope="col">Действия</th>
                         </tr>
                     </thead>

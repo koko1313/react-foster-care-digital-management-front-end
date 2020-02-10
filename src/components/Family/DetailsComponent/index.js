@@ -92,35 +92,35 @@ const DetailsComponent = () => {
         return (
             <>
                 <div className="row info">
-                    <div className="col-md-2 info-header">Жена</div>
+                    <div className="col-md-3 info-header">Жена</div>
                     <div className="col info-body">
                         {family.woman_first_name} {family.woman_second_name} {family.woman_last_name}
                         {family.titular === "woman" && " (титуляр)"}
                     </div>
                 </div>
                 <div className="row info">
-                    <div className="col-md-2 info-header">Мъж</div>
+                    <div className="col-md-3 info-header">Мъж</div>
                     <div className="col info-body">
                         {family.man_first_name} {family.man_second_name} {family.man_last_name}
                         {family.titular === "man" && " (титуляр)"}
                     </div>
                 </div>
                 <div className="row info">
-                    <div className="col-md-2 info-header">Предпочитан пол на децата</div>
+                    <div className="col-md-3 info-header">Предпочитан пол на децата</div>
                     <div className="col info-body">
                         {family.prefer_kid_gender === "m" && "Момче"}
                         {family.prefer_kid_gender === "f" && "Момиче"}
                     </div>
                 </div>
                 <div className="row info">
-                    <div className="col-md-2 info-header">Предпочитана възраст на децата</div>
+                    <div className="col-md-3 info-header">Предпочитана възраст на децата</div>
                     <div className="col info-body">
                         Минимална: {family.prefer_kid_min_age} <br />
                         Максимална: {family.prefer_kid_max_age}
                     </div>
                 </div>
                 <div className="row info">
-                    <div className="col-md-2 info-header">Адрес</div>
+                    <div className="col-md-3 info-header">Адрес</div>
                     <div className="col info-body">
                         {family.region && family.region.name + ", "}
                         {family.sub_region && family.sub_region.name + ", "}

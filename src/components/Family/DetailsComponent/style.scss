@@ -1,7 +1,7 @@
 @import '../../../assets/styles/styles.scss';
 
 .info {
-    @include media-breakpoint-down(md) {
+    @include media-breakpoint-down(sm) {
         margin-bottom: 2rem;
     }
 }
