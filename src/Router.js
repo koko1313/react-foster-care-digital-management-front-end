@@ -16,12 +16,17 @@ import { objectIsEmpty, userHasRole } from './helpers';
 
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
+import Logout from './components/Session/Logout';
+
 import ChildrenListPage from './pages/Children/ChildrenListPage';
+
 import FamiliesListPage from './pages/Family/FamiliesListPage';
 import FamiliesFormPage from './pages/Family/FormPage';
-import Logout from './components/Session/Logout';
+import FamilyDetailsPage from './pages/Family/DetailsPage';
+
 import EmployeeOEPGFormPage from './pages/User/EmployeeOEPG/FormPage';
 import EmployeeOEPGListPage from './pages/User/EmployeeOEPG/ListPage';
+
 import ManageUsersPage from './pages/User/ManageUsersPage';
 import Loader from './components/base-components/Loader';
 
@@ -146,6 +151,14 @@ const Router = () => {
             roles: [role.OEPG],
             main: () => <Layout>
                 <FamiliesFormPage />
+            </Layout>
+        },
+        {
+            path: '/family/details/:id',
+            exact: true,
+            roles: [role.OEPG],
+            main: () => <Layout>
+                <FamilyDetailsPage />
             </Layout>
         },
         // path if non of above are reached

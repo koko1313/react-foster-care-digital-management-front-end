@@ -139,16 +139,17 @@ const FormComponent = () => {
         }
 
         setIsLoading(true);
-        networkClient.put(`/employee-oepg/update/${id}`, 
-            {
-                email: email,
-                firstName: firstName,
-                secondName: secondName,
-                lastName: lastName,
-                regionId: region,
-                subRegionId: subRegion,
-                cityId: city,
-            },
+        const data = {
+            email: email,
+            firstName: firstName,
+            secondName: secondName,
+            lastName: lastName,
+            regionId: region,
+            subRegionId: subRegion,
+            cityId: city,
+        };
+        
+        networkClient.put(`/employee-oepg/update/${id}`, data,
             // success
             (response) => {
                 setAlert({color: "success", message: "Успешно редактиран потребител!"});
