@@ -109,6 +109,11 @@ const FormComponent = () => {
                             setAlert({color: "danger", message: "Не са попълнени всички полета!"});
                             break;
                         }
+                        case 401: {
+                            dispatch(actions.setAlert({title: "Грешка!", message: "Сесията ви изтече!"}));
+                            dispatch(actions.deleteLoggedUser());
+                            break;
+                        }
                         default: ;
                     }
                 } else {
@@ -152,6 +157,11 @@ const FormComponent = () => {
                         }
                         case 400: {
                             setAlert({color: "danger", message: "Не са попълнени всички полета!"});
+                            break;
+                        }
+                        case 401: {
+                            dispatch(actions.setAlert({title: "Грешка!", message: "Сесията ви изтече!"}));
+                            dispatch(actions.deleteLoggedUser());
                             break;
                         }
                         default: ;

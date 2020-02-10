@@ -112,6 +112,10 @@ const FormComponent = () => {
                 preferKidGender: preferKidGender,
                 preferKidMinAge: preferKidMinAge,
                 preferKidMaxAge: preferKidMaxAge,
+                regionId: region,
+                subRegionId: subRegion,
+                cityId: city,
+                address: address,
                 wardenId: wardenId,
             },
             // success
@@ -125,6 +129,11 @@ const FormComponent = () => {
                     switch(error.response.status) {
                         case 400: {
                             setAlert({color: "danger", message: "Не са попълнени всички полета!"});
+                            break;
+                        }
+                        case 401: {
+                            dispatch(actions.setAlert({title: "Грешка!", message: "Сесията ви изтече!"}));
+                            dispatch(actions.deleteLoggedUser());
                             break;
                         }
                         default: ;
@@ -171,10 +180,19 @@ const FormComponent = () => {
                             setAlert({color: "danger", message: "Не са попълнени всички полета!"});
                             break;
                         }
+                        case 401: {
+                            dispatch(actions.setAlert({title: "Грешка!", message: "Сесията ви изтече!"}));
+                            dispatch(actions.deleteLoggedUser());
+                            break;
+                        }
+                        case 500: {
+                            dispatch(actions.setAlert({title: "Грешка!", message: "Нещо на сървъра се обърка!"}));
+                            break;
+                        }
                         default: ;
                     }
                 } else {
-                    dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
+                    dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));
                 }
             }
         )
@@ -196,30 +214,32 @@ const FormComponent = () => {
                     id = "womanName" 
                     label = "Жена" 
                     required = {true} 
-                    // name = "titular" 
                     firstName = {womanFirstName} 
                     secondName = {womanSecondName} 
                     lastName = {womanLastName} 
-                    // value = {`${womanFirstName} ${womanSecondName} ${womanLastName}`}
                     onChangeFirstName = {(e) => setWomanFirstName(e.target.value)}
                     onChangeSecondName = {(e) => setWomanSecondName(e.target.value)}
                     onChangeLastName = {(e) => setWomanLastName(e.target.value)}
-                    // onSelect = {() => setTitular(`${womanFirstName} ${womanSecondName} ${womanLastName}`)}
+                    name = "titular" 
+                    value = {"woman"}
+                    onSelect = {(e) => setTitular(e.target.value)}
+                    checked = {titular === "woman"}
                 />
 
                 <NamesInput 
                     id = "manName" 
                     label = "Мъж" 
                     required = {true} 
-                    // name = "titular" 
                     firstName = {manFirstName} 
                     secondName = {manSecondName} 
                     lastName = {manLastName} 
-                    // value = {`${manFirstName} ${manSecondName} ${manLastName}`}
                     onChangeFirstName = {(e) => setManFirstName(e.target.value)}
                     onChangeSecondName = {(e) => setManSecondName(e.target.value)}
                     onChangeLastName = {(e) => setManLastName(e.target.value)}
-                    // onSelect = {() => setTitular(`${manFirstName} ${manSecondName} ${manLastName}`)}
+                    name = "titular" 
+                    value = {"man"}
+                    onSelect = {(e) => setTitular(e.target.value)}
+                    checked = {titular === "man"}
                 />
 
                 <div className="form-row">
