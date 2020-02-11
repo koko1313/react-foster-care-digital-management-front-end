@@ -126,6 +126,11 @@ const DetailsComponent = () => {
                             <div className="col-md-3 info-header">Месторабота</div>
                             <div className="col info-body">{family.woman.work}</div>
                         </div>
+
+                        <div className="row">
+                            <div className="col-md-3 info-header">Гражданство</div>
+                            <div className="col info-body">{family.woman.citizenship}</div>
+                        </div>
                     </div>
                 }
 
@@ -163,6 +168,11 @@ const DetailsComponent = () => {
                         <div className="row">
                             <div className="col-md-3 info-header">Месторабота</div>
                             <div className="col info-body">{family.man.work}</div>
+                        </div>
+
+                        <div className="row">
+                            <div className="col-md-3 info-header">Гражданство</div>
+                            <div className="col info-body">{family.man.citizenship}</div>
                         </div>
                     </div>
                 }
@@ -206,6 +216,16 @@ const DetailsComponent = () => {
                             {family.city && family.city.name + ", "} 
                             {family.address}
                         </div>
+                    </div>
+
+                    <div className="row">
+                        <div className="col-md-3 info-header">Ниво на български език</div>
+                        <div className="col info-body">{family.levelOfBulgarianLanguage}</div>
+                    </div>
+
+                    <div className="row">
+                        <div className="col-md-3 info-header">Религия</div>
+                        <div className="col info-body">{family.religion}</div>
                     </div>
                 </div>
 
