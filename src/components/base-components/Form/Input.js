@@ -1,5 +1,15 @@
 import React from 'react';
 
+/**
+ * @param {string} id
+ * @param {string} label
+ * @param {string} type
+ * @param {string} placeholder
+ * @param {string} value
+ * @param {function} onChange
+ * @param {bool} required
+ * @param {bool} disabled
+ */
 const Input = (props) => {
 
     const ifRequired = () => {

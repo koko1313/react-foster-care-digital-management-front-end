@@ -91,20 +91,26 @@ const DetailsComponent = () => {
 
         return (
             <>
-                <div className="row info">
-                    <div className="col-md-3 info-header">Жена</div>
-                    <div className="col info-body">
-                        {family.woman.first_name} {family.woman.second_name} {family.woman.last_name}
-                        {family.titular === "woman" && " (титуляр)"}
+                {family.woman &&
+                    <div className="row info">
+                        <div className="col-md-3 info-header">Жена</div>
+                        <div className="col info-body">
+                            {family.woman.first_name} {family.woman.second_name} {family.woman.last_name}
+                            {family.titular === "woman" && " (титуляр)"}
+                        </div>
                     </div>
-                </div>
-                <div className="row info">
-                    <div className="col-md-3 info-header">Мъж</div>
-                    <div className="col info-body">
-                        {family.man.first_name} {family.man.second_name} {family.man.last_name}
-                        {family.titular === "man" && " (титуляр)"}
+                }
+
+                {family.man &&
+                    <div className="row info">
+                        <div className="col-md-3 info-header">Мъж</div>
+                        <div className="col info-body">
+                            {family.man.first_name} {family.man.second_name} {family.man.last_name}
+                            {family.titular === "man" && " (титуляр)"}
+                        </div>
                     </div>
-                </div>
+                }
+                
                 <div className="row info">
                     <div className="col-md-3 info-header">Предпочитан пол на децата</div>
                     <div className="col info-body">

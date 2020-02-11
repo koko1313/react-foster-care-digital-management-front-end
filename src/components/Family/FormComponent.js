@@ -23,12 +23,23 @@ const FormComponent = () => {
     const [isEditing, setIsEditing] = useState(false);
 
     const [titular, setTitular] = useState("");
+
     const [womanFirstName, setWomanFirstName] = useState("");
     const [womanSecondName, setWomanSecondName] = useState("");
     const [womanLastName, setWomanLastName] = useState("");
+    const [womanEgn, setWomanEgn] = useState("");
+    const [womanPhone, setWomanPhone] = useState("");
+    const [womanEducation, setWomanEducation] = useState("");
+    const [womanWork, setWomanWork] = useState("");
+
     const [manFirstName, setManFirstName] = useState("");
     const [manSecondName, setManSecondName] = useState("");
     const [manLastName, setManLastName] = useState("");
+    const [manEgn, setManEgn] = useState("");
+    const [manPhone, setManPhone] = useState("");
+    const [manEducation, setManEducation] = useState("");
+    const [manWork, setManWork] = useState("");
+
     const [preferKidGender, setPreferKidGender] = useState("");
     const [preferKidMinAge, setPreferKidMinAge] = useState("");
     const [preferKidMaxAge, setPreferKidMaxAge] = useState("");
@@ -53,12 +64,27 @@ const FormComponent = () => {
             networkClient.get(`/family/${id}`, null, 
                 (family) => {
                     setTitular(family.titular);
-                    setWomanFirstName(family.woman.first_name);
-                    setWomanSecondName(family.woman.second_name);
-                    setWomanLastName(family.woman.last_name);
-                    setManFirstName(family.man.first_name);
-                    setManSecondName(family.man.second_name);
-                    setManLastName(family.man.last_name);
+
+                    if(family.woman) {
+                        setWomanFirstName(family.woman.first_name);
+                        setWomanSecondName(family.woman.second_name);
+                        setWomanLastName(family.woman.last_name);
+                        setWomanEgn(family.woman.egn);
+                        setWomanPhone(family.woman.phone);
+                        setWomanEducation(family.woman.education);
+                        setWomanWork(family.woman.work);
+                    }
+
+                    if(family.man) {
+                        setManFirstName(family.man.first_name);
+                        setManSecondName(family.man.second_name);
+                        setManLastName(family.man.last_name);
+                        setManEgn(family.man.egn);
+                        setManPhone(family.man.phone);
+                        setManEducation(family.man.education);
+                        setManWork(family.man.work);
+                    }
+
                     setPreferKidGender(family.prefer_kid_gender);
                     setPreferKidMinAge(family.prefer_kid_min_age);
                     setPreferKidMaxAge(family.prefer_kid_max_age);
@@ -102,12 +128,23 @@ const FormComponent = () => {
     const register = () => {
         const data = {
             titular: titular,
+
             womanFirstName: womanFirstName,
             womanSecondName: womanSecondName,
             womanLastName: womanLastName,
+            womanEgn: womanEgn,
+            womanPhone: womanPhone,
+            womanEducation: womanEducation,
+            womanWork: womanWork,
+
             manFirstName: manFirstName,
             manSecondName: manSecondName,
             manLastName: manLastName,
+            manEgn: manEgn,
+            manPhone: manPhone,
+            manEducation: manEducation,
+            manWork: manWork,
+
             preferKidGender: preferKidGender,
             preferKidMinAge: preferKidMinAge,
             preferKidMaxAge: preferKidMaxAge,
@@ -153,12 +190,23 @@ const FormComponent = () => {
         setIsLoading(true);
         const data = {
             titular: titular,
+
             womanFirstName: womanFirstName,
             womanSecondName: womanSecondName,
             womanLastName: womanLastName,
+            womanEgn: womanEgn,
+            womanPhone: womanPhone,
+            womanEducation: womanEducation,
+            womanWork: womanWork,
+
             manFirstName: manFirstName,
             manSecondName: manSecondName,
             manLastName: manLastName,
+            manEgn: manEgn,
+            manPhone: manPhone,
+            manEducation: manEducation,
+            manWork: manWork,
+
             preferKidGender: preferKidGender,
             preferKidMinAge: preferKidMinAge,
             preferKidMaxAge: preferKidMaxAge,
@@ -202,46 +250,72 @@ const FormComponent = () => {
 
     return (
         <>
+            <p class="text-muted"><em>При приемно семейство с един родител се попълват данните или само за мъж или само за жена</em></p>
+
             <Alert color={alert.color} isOpen={alert.message ? true : false} toggle={onDismiss}>
                 {alert.message}
             </Alert>
 
             <form>
-                <NamesInput 
-                    id = "womanName" 
-                    label = "Жена" 
-                    required = {true} 
-                    firstName = {womanFirstName} 
-                    secondName = {womanSecondName} 
-                    lastName = {womanLastName} 
-                    onChangeFirstName = {(e) => setWomanFirstName(e.target.value)}
-                    onChangeSecondName = {(e) => setWomanSecondName(e.target.value)}
-                    onChangeLastName = {(e) => setWomanLastName(e.target.value)}
-                    
-                    includeTitularSelect = {true}
-                    name = "titular" 
-                    value = {"woman"}
-                    onSelect = {(e) => setTitular(e.target.value)}
-                    checked = {titular === "woman"}
-                />
+                <div className="row">
+                    {/* Жена */}
+                    <div className="col-md">
+                        <p><strong>Жена</strong></p>
 
-                <NamesInput 
-                    id = "manName" 
-                    label = "Мъж" 
-                    required = {true} 
-                    firstName = {manFirstName} 
-                    secondName = {manSecondName} 
-                    lastName = {manLastName} 
-                    onChangeFirstName = {(e) => setManFirstName(e.target.value)}
-                    onChangeSecondName = {(e) => setManSecondName(e.target.value)}
-                    onChangeLastName = {(e) => setManLastName(e.target.value)}
+                        <NamesInput 
+                            id = "womanName" 
+                            label = "Имена" 
+                            required = {true} 
+                            firstName = {womanFirstName} 
+                            secondName = {womanSecondName} 
+                            lastName = {womanLastName} 
+                            onChangeFirstName = {(e) => setWomanFirstName(e.target.value)}
+                            onChangeSecondName = {(e) => setWomanSecondName(e.target.value)}
+                            onChangeLastName = {(e) => setWomanLastName(e.target.value)}
+                            
+                            includeTitularSelect = {true}
+                            name = "titular" 
+                            value = {"woman"}
+                            onSelect = {(e) => setTitular(e.target.value)}
+                            checked = {titular === "woman"}
+                        />
 
-                    includeTitularSelect = {true}
-                    name = "titular" 
-                    value = {"man"}
-                    onSelect = {(e) => setTitular(e.target.value)}
-                    checked = {titular === "man"}
-                />
+                        <Input id="womanEgn" label="ЕГН" type="number" placeholder="ЕГН ..." value={womanEgn} onChange={(e) => {setWomanEgn(e.target.value)}} required={true} />
+                        <Input id="womanPhone" label="Телефон" type="number" placeholder="Телефон ..." value={womanPhone} onChange={(e) => {setWomanPhone(e.target.value)}} required={true} />
+                        <Input id="womanEducation" label="Образование" type="text" placeholder="Образование ..." value={womanEducation} onChange={(e) => {setWomanEducation(e.target.value)}} required={true} />
+                        <Input id="womanWork" label="Месторабота" type="text" placeholder="Месторабота ..." value={womanWork} onChange={(e) => {setWomanWork(e.target.value)}} />
+                        <hr />
+                    </div>
+
+                    {/* Мъж */}
+                    <div className="col-md">
+                        <p><strong>Мъж</strong></p>
+
+                        <NamesInput 
+                            id = "manName" 
+                            label = "Имена" 
+                            required = {true} 
+                            firstName = {manFirstName} 
+                            secondName = {manSecondName} 
+                            lastName = {manLastName} 
+                            onChangeFirstName = {(e) => setManFirstName(e.target.value)}
+                            onChangeSecondName = {(e) => setManSecondName(e.target.value)}
+                            onChangeLastName = {(e) => setManLastName(e.target.value)}
+
+                            includeTitularSelect = {true}
+                            name = "titular" 
+                            value = {"man"}
+                            onSelect = {(e) => setTitular(e.target.value)}
+                            checked = {titular === "man"}
+                        />
+
+                        <Input id="manEgn" label="ЕГН" type="number" placeholder="ЕГН ..." value={manEgn} onChange={(e) => {setManEgn(e.target.value)}} required={true} />
+                        <Input id="manPhone" label="Телефон" type="number" placeholder="Телефон ..." value={manPhone} onChange={(e) => {setManPhone(e.target.value)}} required={true} />
+                        <Input id="manEducation" label="Образование" type="text" placeholder="Образование ..." value={manEducation} onChange={(e) => {setManEducation(e.target.value)}} required={true} />
+                        <Input id="manWork" label="Месторабота" type="text" placeholder="Месторабота ..." value={manWork} onChange={(e) => {setManWork(e.target.value)}} />
+                        <hr />
+                    </div>
+                </div>
 
                 <div className="form-row">
                     <div className="form-group col-md">
