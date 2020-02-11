@@ -317,34 +317,41 @@ const FormComponent = () => {
                     </div>
                 </div>
 
-                <div className="form-row">
-                    <div className="form-group col-md">
-                        <Select id="preferKidGender" label="Предпочитан пол на децата" placeholder="Избери предпочитан пол ..." onChange={(e) => setPreferKidGender(e.target.value)} value={preferKidGender}>
-                            <option value="m">Момче</option>
-                            <option value="f">Момиче</option>
-                        </Select>
+                <div>
+                    <p><strong>За какво дете бихте желали да се грижите</strong></p>
+                    <div className="form-row">
+                        <div className="form-group col-md">
+                            <Select id="preferKidGender" label="Предпочитан пол" placeholder="Избери предпочитан пол ..." onChange={(e) => setPreferKidGender(e.target.value)} value={preferKidGender}>
+                                <option value="m">Момче</option>
+                                <option value="f">Момиче</option>
+                            </Select>
+                        </div>
+                        <div className="form-group col-md">
+                            <Input id="preferKidMinAge" label="Минимална възраст" type="number" placeholder="Минимална възраст ..." onChange={(e) => setPreferKidMinAge(e.target.value)} value={preferKidMinAge} />
+                        </div>
+                        <div className="form-group col-md">
+                            <Input id="preferKidMaxAge" label="Максимална възраст" type="number" placeholder="Максимална възраст ..." onChange={(e) => setPreferKidMaxAge(e.target.value)} value={preferKidMaxAge} />
+                        </div>
                     </div>
-                    <div className="form-group col-md">
-                        <Input id="preferKidMinAge" label="Минимална възраст" type="number" placeholder="Минимална възраст ..." onChange={(e) => setPreferKidMinAge(e.target.value)} value={preferKidMinAge} />
-                    </div>
-                    <div className="form-group col-md">
-                        <Input id="preferKidMaxAge" label="Максимална възраст" type="number" placeholder="Максимална възраст ..." onChange={(e) => setPreferKidMaxAge(e.target.value)} value={preferKidMaxAge} />
-                    </div>
+                    <hr />
                 </div>
 
-                <div className="form-row">
-                    <div className="col-md">
-                        <RegionsSelect id="region" label="Област" placeholder="Избери област ..." onChange={(e) => setRegion(e.target.value)} value={region} />
+                <div>
+                    <p><strong>За семейството</strong></p>
+                    <div className="form-row">
+                        <div className="col-md">
+                            <RegionsSelect id="region" label="Област" placeholder="Избери област ..." onChange={(e) => setRegion(e.target.value)} value={region} />
+                        </div>
+                        <div className="col-md">
+                            <SubRegionsSelect id="subRegion" label="Община" placeholder="Избери община ..." onChange={(e) => setSubRegion(e.target.value)} value={subRegion} />
+                        </div>
+                        <div className="col-md">
+                            <CitiesSelect id="city" label="Град" placeholder="Избери град ..." onChange={(e) => setCity(e.target.value)} value={city} />
+                        </div>
                     </div>
-                    <div className="col-md">
-                        <SubRegionsSelect id="subRegion" label="Община" placeholder="Избери община ..." onChange={(e) => setSubRegion(e.target.value)} value={subRegion} />
-                    </div>
-                    <div className="col-md">
-                        <CitiesSelect id="city" label="Град" placeholder="Избери град ..." onChange={(e) => setCity(e.target.value)} value={city} />
-                    </div>
+                    
+                    <Input id="address" label="Адрес" type="text" placeholder="Адрес ..." value={address} onChange={(e) => setAddress(e.target.value)} />
                 </div>
-                
-                <Input id="address" label="Адрес" type="text" placeholder="Адрес ..." value={address} onChange={(e) => setAddress(e.target.value)} />
 
                 <Input 
                     id="warden" 
