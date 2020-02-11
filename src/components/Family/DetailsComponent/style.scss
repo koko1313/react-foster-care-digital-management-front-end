@@ -1,17 +1,21 @@
 @import '../../../assets/styles/styles.scss';
 
-.info {
+.info-section {
     @include media-breakpoint-down(sm) {
-        margin-bottom: 2rem;
+        margin-bottom: 1rem;
     }
 }
 
-.info-header {
+.info-heading {
+    font-size: 1.3rem;
     font-weight: bold;
+}
+
+.info-header {
     @include media-breakpoint-up(md) {
         border-right: 1px solid;
         text-align: right;
-        padding-bottom: 2rem;
+        padding-bottom: 1rem;
     }
 }
 
