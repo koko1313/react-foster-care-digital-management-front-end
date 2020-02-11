@@ -94,14 +94,14 @@ const DetailsComponent = () => {
                 <div className="row info">
                     <div className="col-md-3 info-header">Жена</div>
                     <div className="col info-body">
-                        {family.woman_first_name} {family.woman_second_name} {family.woman_last_name}
+                        {family.woman.first_name} {family.woman.second_name} {family.woman.last_name}
                         {family.titular === "woman" && " (титуляр)"}
                     </div>
                 </div>
                 <div className="row info">
                     <div className="col-md-3 info-header">Мъж</div>
                     <div className="col info-body">
-                        {family.man_first_name} {family.man_second_name} {family.man_last_name}
+                        {family.man.first_name} {family.man.second_name} {family.man.last_name}
                         {family.titular === "man" && " (титуляр)"}
                     </div>
                 </div>

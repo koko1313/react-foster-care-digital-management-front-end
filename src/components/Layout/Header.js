@@ -115,7 +115,7 @@ const Header = () => {
                 tag={RRNavLink}
                 className="navbar-brand"
                 exact to="/">
-                <i className="fa fa-child mr-3"></i>
+                {/* <i className="fa fa-child mr-3"></i> */}
                 <span className="project-name">Приемна грижа</span>
             </NavLink>
             <NavbarToggler onClick={toggleIsOpen} />

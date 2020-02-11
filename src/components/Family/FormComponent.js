@@ -53,12 +53,12 @@ const FormComponent = () => {
             networkClient.get(`/family/${id}`, null, 
                 (family) => {
                     setTitular(family.titular);
-                    setWomanFirstName(family.woman_first_name);
-                    setWomanSecondName(family.woman_second_name);
-                    setWomanLastName(family.woman_last_name);
-                    setManFirstName(family.man_first_name);
-                    setManSecondName(family.man_second_name);
-                    setManLastName(family.man_last_name);
+                    setWomanFirstName(family.woman.first_name);
+                    setWomanSecondName(family.woman.second_name);
+                    setWomanLastName(family.woman.last_name);
+                    setManFirstName(family.man.first_name);
+                    setManSecondName(family.man.second_name);
+                    setManLastName(family.man.last_name);
                     setPreferKidGender(family.prefer_kid_gender);
                     setPreferKidMinAge(family.prefer_kid_min_age);
                     setPreferKidMaxAge(family.prefer_kid_max_age);

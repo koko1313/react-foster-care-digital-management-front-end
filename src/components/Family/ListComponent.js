@@ -90,10 +90,10 @@ const ListComponent = () => {
                 <tr key={family.id}>
                     <td>
                         {family.titular === "woman" &&
-                            `${family.woman_first_name} ${family.woman_second_name} ${family.woman_last_name}`
+                            `${family.woman.first_name} ${family.woman.second_name} ${family.woman.last_name}`
                         }
                         {family.titular === "man" &&
-                            `${family.man_first_name} ${family.man_second_name} ${family.man_last_name}`
+                            `${family.man.first_name} ${family.man.second_name} ${family.man.last_name}`
                         }
                     </td>
                     <td>
