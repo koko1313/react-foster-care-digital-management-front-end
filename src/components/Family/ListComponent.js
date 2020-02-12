@@ -98,8 +98,8 @@ const ListComponent = () => {
                     </td>
                     <td>
                         <button type="button" className="btn btn-info mr-1 mb-1" onClick={() => { viewDetails(family.id) }}><i className="fa fa-info-circle"></i></button>
-                        <button type="button" className="btn btn-warning mr-1 mb-1" onClick={() => { editFamily(family.id) }}><i className="fa fa-edit"></i></button>
-                        <button type="button" className="btn btn-danger mb-1" onClick={() => { deleteFamily(family.id) }}><i className="fa fa-trash"></i></button>
+                        {/* <button type="button" className="btn btn-warning mr-1 mb-1" onClick={() => { editFamily(family.id) }}><i className="fa fa-edit"></i></button>
+                        <button type="button" className="btn btn-danger mb-1" onClick={() => { deleteFamily(family.id) }}><i className="fa fa-trash"></i></button> */}
                     </td>
                 </tr>
             );

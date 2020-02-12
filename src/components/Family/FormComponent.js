@@ -112,7 +112,7 @@ const FormComponent = () => {
                     if(family.city) setCity(family.city.id);
                     setAddress(family.address);
 
-                    setLevelOfBulgarianLanguage(family.levelOfBulgarianLanguage);
+                    setLevelOfBulgarianLanguage(family.level_of_bulgarian_language);
                     setReligion(family.religion);
 
                     setFamilyType(family.family_type);
@@ -165,7 +165,7 @@ const FormComponent = () => {
             womanEducation: womanEducation,
             womanWork: womanWork,
             womanEmploymentType: womanEmploymentType,
-            womanCitizenship,
+            womanCitizenship: womanCitizenship,
 
             manFirstName: manFirstName,
             manSecondName: manSecondName,
@@ -175,7 +175,7 @@ const FormComponent = () => {
             manEducation: manEducation,
             manWork: manWork,
             manEmploymentType: manEmploymentType,
-            manCitizenship,
+            manCitizenship: manCitizenship,
 
             preferKidGender: preferKidGender,
             preferKidMinAge: preferKidMinAge,

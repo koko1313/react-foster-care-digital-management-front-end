@@ -129,7 +129,7 @@ const DetailsComponent = () => {
 
                         <div className="row">
                             <div className="col-md-3 info-header">Трудова заетост</div>
-                            <div className="col info-body">{family.woman.employmentType}</div>
+                            <div className="col info-body">{family.woman.employment_type}</div>
                         </div>
 
                         <div className="row">
@@ -177,7 +177,7 @@ const DetailsComponent = () => {
 
                         <div className="row">
                             <div className="col-md-3 info-header">Трудова заетост</div>
-                            <div className="col info-body">{family.man.employmentType}</div>
+                            <div className="col info-body">{family.man.employment_type}</div>
                         </div>
 
                         <div className="row">
@@ -230,12 +230,32 @@ const DetailsComponent = () => {
 
                     <div className="row">
                         <div className="col-md-3 info-header">Ниво на български език</div>
-                        <div className="col info-body">{family.levelOfBulgarianLanguage}</div>
+                        <div className="col info-body">{family.level_of_bulgarian_language}</div>
                     </div>
 
                     <div className="row">
                         <div className="col-md-3 info-header">Религия</div>
                         <div className="col info-body">{family.religion}</div>
+                    </div>
+
+                    <div className="row">
+                        <div className="col-md-3 info-header">Среден месечен доход на член от семейството</div>
+                        <div className="col info-body">{family.average_monthly_income_per_family_member} лв</div>
+                    </div>
+
+                    <div className="row">
+                        <div className="col-md-3 info-header">Доходи от други източници</div>
+                        <div className="col info-body">{family.another_income} лв</div>
+                    </div>
+
+                    <div className="row">
+                        <div className="col-md-3 info-header">Тип на приемното семейство</div>
+                        <div className="col info-body">{family.family_type}</div>
+                    </div>
+
+                    <div className="row">
+                        <div className="col-md-3 info-header">Жилище</div>
+                        <div className="col info-body">{family.house_type}</div>
                     </div>
                 </div>
 
@@ -251,7 +271,7 @@ const DetailsComponent = () => {
     return (
         <>
             <div className="container mt-5">
-            {renderFamilyInformation()}
+                {renderFamilyInformation()}
             </div>
             <Loader loading={isLoading} fullScreen={true} />
         </>
