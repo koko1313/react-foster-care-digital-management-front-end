@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
-import networkClient from '../../network/network-client';
+import networkClient from '../../../network/network-client';
 import { Alert } from 'reactstrap';
-import Input from '../base-components/Form/Input';
+import Input from '../../base-components/Form/Input';
 import { useParams, useHistory } from 'react-router-dom';
-import Loader from '../base-components/Loader';
-import Select from '../base-components/Form/Select/Select';
+import Loader from '../../base-components/Loader';
+import Select from '../../base-components/Form/Select/Select';
 import { useSelector, useDispatch } from 'react-redux';
-import actions from "../../redux/actions";
-import RegionsSelect from '../base-components/Form/Select/RegionsSelect';
-import SubRegionsSelect from '../base-components/Form/Select/SubRegionsSelect';
-import CitiesSelect from '../base-components/Form/Select/CitiesSelect';
-import NamesInput from '../base-components/Form/NamesInput';
-import BackButton from '../base-components/BackButton';
+import actions from "../../../redux/actions";
+import RegionsSelect from '../../base-components/Form/Select/RegionsSelect';
+import SubRegionsSelect from '../../base-components/Form/Select/SubRegionsSelect';
+import CitiesSelect from '../../base-components/Form/Select/CitiesSelect';
+import NamesInput from '../../base-components/Form/NamesInput';
+import BackButton from '../../base-components/BackButton';
+import ParentInput from './ParentInputs';
 
 const FormComponent = () => {
 
@@ -70,6 +71,73 @@ const FormComponent = () => {
     const dispatch = useDispatch();
     const loggedUser = useSelector(state => state.loggedUser); // get logged user, it have to be EmployeeOEPG
 
+    // data that will be send to server
+    const data = {
+        titular: titular,
+
+        womanFirstName: womanFirstName,
+        womanSecondName: womanSecondName,
+        womanLastName: womanLastName,
+        womanEgn: womanEgn,
+        womanPhone: womanPhone,
+        womanEducation: womanEducation,
+        womanWork: womanWork,
+        womanEmploymentType: womanEmploymentType,
+        womanCitizenship: womanCitizenship,
+
+        manFirstName: manFirstName,
+        manSecondName: manSecondName,
+        manLastName: manLastName,
+        manEgn: manEgn,
+        manPhone: manPhone,
+        manEducation: manEducation,
+        manWork: manWork,
+        manEmploymentType: manEmploymentType,
+        manCitizenship: manCitizenship,
+
+        preferKidGender: preferKidGender,
+        preferKidMinAge: preferKidMinAge,
+        preferKidMaxAge: preferKidMaxAge,
+
+        regionId: region,
+        subRegionId: subRegion,
+        cityId: city,
+        address: address,
+
+        levelOfBulgarianLanguage: levelOfBulgarianLanguage,
+        religion: religion,
+
+        familyType: familyType,
+        averageMonthlyIncomePerFamilyMember: averageMonthlyIncomePerFamilyMember,
+        anotherIncome: anotherIncome,
+        houseType: houseType,
+
+        wardenId: wardenId,
+    };
+
+    const processErrorMessages = (error) => {
+        if(error.response) {
+            switch(error.response.status) {
+                case 400:
+                    setAlert({color: "danger", message: "Не са попълнени всички полета!"});
+                    break;
+                case 401:
+                    dispatch(actions.setAlert({title: "Грешка!", message: "Сесията ви изтече!"}));
+                    dispatch(actions.deleteLoggedUser());
+                    break;
+                case 404:
+                    dispatch(actions.setAlert({title: "Грешка!", message: "Не е намерено такова семейство!"}));
+                    history.goBack();
+                    break;
+                default:
+                    dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
+                    break;
+            }
+        } else {
+            dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));
+        }
+    }
+
     useState(() => {
         if(id) {
             setIsEditing(true);
@@ -127,23 +195,7 @@ const FormComponent = () => {
                     setIsLoading(false);
                 },
                 (error) => {
-                    if(error.response) {
-                        switch(error.response.status) {
-                            case 401:
-                                dispatch(actions.setAlert({title: "Грешка!", message: "Сесията ви изтече!"}));
-                                dispatch(actions.deleteLoggedUser());
-                                break;
-                            case 404:
-                                dispatch(actions.setAlert({title: "Грешка!", message: "Не е намерено такова семейство!"}));
-                                history.goBack();
-                                break;
-                            default:
-                                dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
-                                break;
-                        }
-                    } else {
-                        dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));
-                    }
+                    processErrorMessages(error);
                 }
             );
         } else {
@@ -152,51 +204,7 @@ const FormComponent = () => {
         }     
     }, [id]);
     
-
     const register = () => {
-        const data = {
-            titular: titular,
-
-            womanFirstName: womanFirstName,
-            womanSecondName: womanSecondName,
-            womanLastName: womanLastName,
-            womanEgn: womanEgn,
-            womanPhone: womanPhone,
-            womanEducation: womanEducation,
-            womanWork: womanWork,
-            womanEmploymentType: womanEmploymentType,
-            womanCitizenship: womanCitizenship,
-
-            manFirstName: manFirstName,
-            manSecondName: manSecondName,
-            manLastName: manLastName,
-            manEgn: manEgn,
-            manPhone: manPhone,
-            manEducation: manEducation,
-            manWork: manWork,
-            manEmploymentType: manEmploymentType,
-            manCitizenship: manCitizenship,
-
-            preferKidGender: preferKidGender,
-            preferKidMinAge: preferKidMinAge,
-            preferKidMaxAge: preferKidMaxAge,
-
-            regionId: region,
-            subRegionId: subRegion,
-            cityId: city,
-            address: address,
-
-            levelOfBulgarianLanguage: levelOfBulgarianLanguage,
-            religion: religion,
-
-            familyType: familyType,
-            averageMonthlyIncomePerFamilyMember: averageMonthlyIncomePerFamilyMember,
-            anotherIncome: anotherIncome,
-            houseType: houseType,
-
-            wardenId: wardenId,
-        };
-
         setIsLoading(true);
         networkClient.post("/family/register", data,
             // success
@@ -206,22 +214,7 @@ const FormComponent = () => {
             },
             // error
             (error) => {
-                if(error.response) {
-                    switch(error.response.status) {
-                        case 400:
-                            setAlert({color: "danger", message: "Не са попълнени всички полета!"});
-                            break;
-                        case 401:
-                            dispatch(actions.setAlert({title: "Грешка!", message: "Сесията ви изтече!"}));
-                            dispatch(actions.deleteLoggedUser());
-                            break;
-                        default:
-                            dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
-                            break;
-                    }
-                } else {
-                    dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));
-                }
+                processErrorMessages(error);
 
                 setIsLoading(false);
             }
@@ -230,73 +223,13 @@ const FormComponent = () => {
 
     const update = () => {
         setIsLoading(true);
-        const data = {
-            titular: titular,
-
-            womanFirstName: womanFirstName,
-            womanSecondName: womanSecondName,
-            womanLastName: womanLastName,
-            womanEgn: womanEgn,
-            womanPhone: womanPhone,
-            womanEducation: womanEducation,
-            womanWork: womanWork,
-            womanEmploymentType: womanEmploymentType,
-            womanCitizenship: womanCitizenship,
-
-            manFirstName: manFirstName,
-            manSecondName: manSecondName,
-            manLastName: manLastName,
-            manEgn: manEgn,
-            manPhone: manPhone,
-            manEducation: manEducation,
-            manWork: manWork,
-            manEmploymentType: manEmploymentType,
-            manCitizenship: manCitizenship,
-
-            preferKidGender: preferKidGender,
-            preferKidMinAge: preferKidMinAge,
-            preferKidMaxAge: preferKidMaxAge,
-
-            regionId: region,
-            subRegionId: subRegion,
-            cityId: city,
-            address: address,
-
-            levelOfBulgarianLanguage: levelOfBulgarianLanguage,
-            religion: religion,
-
-            familyType: familyType,
-            averageMonthlyIncomePerFamilyMember: averageMonthlyIncomePerFamilyMember,
-            anotherIncome: anotherIncome,
-            houseType: houseType,
-
-            wardenId: wardenId,
-        };
-
         networkClient.put(`/family/update/${id}`, data,
-            // success
             (response) => {
                 setAlert({color: "success", message: "Успешно редактирано семейство!"});
                 history.goBack();
             },
-            // error
             (error) => {
-                if(error.response) {
-                    switch(error.response.status) {
-                        case 400:
-                            setAlert({color: "danger", message: "Не са попълнени всички полета!"});
-                            break;
-                        case 401:
-                            dispatch(actions.setAlert({title: "Грешка!", message: "Сесията ви изтече!"}));
-                            dispatch(actions.deleteLoggedUser());
-                            break;
-                        default:
-                            dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
-                            break;
-                    }
-                } else {
-                    dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));
-                }
+                processErrorMessages(error);
             }
         )
         .finally(()=> {
@@ -318,30 +251,32 @@ const FormComponent = () => {
                     <div className="col-md">
                         <p><strong>Жена</strong></p>
 
-                        <NamesInput 
-                            id = "womanName" 
-                            label = "Имена" 
-                            required = {true} 
+                        <ParentInput 
                             firstName = {womanFirstName} 
                             secondName = {womanSecondName} 
                             lastName = {womanLastName} 
+                            egn = {womanEgn}
+                            phone = {womanPhone}
+                            education = {womanEducation}
+                            work = {womanWork}
+                            employmentType = {womanEmploymentType}
+                            citizenship = {womanCitizenship}
+
                             onChangeFirstName = {(e) => setWomanFirstName(e.target.value)}
                             onChangeSecondName = {(e) => setWomanSecondName(e.target.value)}
                             onChangeLastName = {(e) => setWomanLastName(e.target.value)}
-                            
-                            includeTitularSelect = {true}
-                            name = "titular" 
-                            value = {"woman"}
-                            onSelect = {(e) => setTitular(e.target.value)}
-                            checked = {titular === "woman"}
-                        />
+                            onChangeEgn = {(e) => setWomanEgn(e.target.value)}
+                            onChangePhone = {(e) => setWomanPhone(e.target.value)}
+                            onChangeEducation = {(e) => setWomanEducation(e.target.value)}
+                            onChangeWork = {(e) => setWomanWork(e.target.value)}
+                            onChangeEmploymentType = {(e) => setWomanEmploymentType(e.target.value)}
+                            onChangeCitizenship = {(e) => setWomanCitizenship(e.target.value)}
 
-                        <Input id="womanEgn" label="ЕГН" type="number" placeholder="ЕГН ..." value={womanEgn} onChange={(e) => {setWomanEgn(e.target.value)}} required={true} />
-                        <Input id="womanPhone" label="Телефон" type="number" placeholder="Телефон ..." value={womanPhone} onChange={(e) => {setWomanPhone(e.target.value)}} required={true} />
-                        <Input id="womanEducation" label="Образование" type="text" placeholder="Образование ..." value={womanEducation} onChange={(e) => {setWomanEducation(e.target.value)}} required={true} />
-                        <Input id="womanWork" label="Месторабота" type="text" placeholder="Месторабота ..." value={womanWork} onChange={(e) => {setWomanWork(e.target.value)}} />
-                        <Input id="womanEmploymentType" label="Трудова заетост" type="text" placeholder="Трудов договор, граждански договор, безработен, пенсионер ..." value={womanEmploymentType} onChange={(e) => {setWomanEmploymentType(e.target.value)}} />
-                        <Input id="womanCitizenship" label="Гражданство" type="text" placeholder="Гражданство ..." value={womanCitizenship} onChange={(e) => {setWomanCitizenship(e.target.value)}} />
+                            titularRadioId = "womanTitularRadio"
+                            titularRadioValue = "woman"
+                            titularChecked = {titular === "woman"}
+                            titularOnSelect = {(e) => setTitular(e.target.value)}
+                        />
                         <hr />
                     </div>
 
@@ -349,30 +284,32 @@ const FormComponent = () => {
                     <div className="col-md">
                         <p><strong>Мъж</strong></p>
 
-                        <NamesInput 
-                            id = "manName" 
-                            label = "Имена" 
-                            required = {true} 
+                        <ParentInput 
                             firstName = {manFirstName} 
                             secondName = {manSecondName} 
                             lastName = {manLastName} 
+                            egn = {manEgn}
+                            phone = {manPhone}
+                            education = {manEducation}
+                            work = {manWork}
+                            employmentType = {manEmploymentType}
+                            citizenship = {manCitizenship}
+
                             onChangeFirstName = {(e) => setManFirstName(e.target.value)}
                             onChangeSecondName = {(e) => setManSecondName(e.target.value)}
                             onChangeLastName = {(e) => setManLastName(e.target.value)}
+                            onChangeEgn = {(e) => setManEgn(e.target.value)}
+                            onChangePhone = {(e) => setManPhone(e.target.value)}
+                            onChangeEducation = {(e) => setManEducation(e.target.value)}
+                            onChangeWork = {(e) => setManWork(e.target.value)}
+                            onChangeEmploymentType = {(e) => setManEmploymentType(e.target.value)}
+                            onChangeCitizenship = {(e) => setManCitizenship(e.target.value)}
 
-                            includeTitularSelect = {true}
-                            name = "titular" 
-                            value = {"man"}
-                            onSelect = {(e) => setTitular(e.target.value)}
-                            checked = {titular === "man"}
+                            titularRadioId = "manTitularRadio"
+                            titularRadioValue = "man"
+                            titularChecked = {titular === "man"}
+                            titularOnSelect = {(e) => setTitular(e.target.value)}
                         />
-
-                        <Input id="manEgn" label="ЕГН" type="number" placeholder="ЕГН ..." value={manEgn} onChange={(e) => {setManEgn(e.target.value)}} required={true} />
-                        <Input id="manPhone" label="Телефон" type="number" placeholder="Телефон ..." value={manPhone} onChange={(e) => {setManPhone(e.target.value)}} required={true} />
-                        <Input id="manEducation" label="Образование" type="text" placeholder="Образование ..." value={manEducation} onChange={(e) => {setManEducation(e.target.value)}} required={true} />
-                        <Input id="manWork" label="Месторабота" type="text" placeholder="Месторабота ..." value={manWork} onChange={(e) => {setManWork(e.target.value)}} />
-                        <Input id="manEmploymentType" label="Трудова заетост" type="text" placeholder="Трудов договор, граждански договор, безработен, пенсионер ..." value={manEmploymentType} onChange={(e) => {setManEmploymentType(e.target.value)}} />
-                        <Input id="manCitizenship" label="Гражданство" type="text" placeholder="Гражданство ..." value={manCitizenship} onChange={(e) => {setManCitizenship(e.target.value)}} />
                         <hr />
                     </div>
                 </div>
@@ -415,8 +352,8 @@ const FormComponent = () => {
                     <Input id="religion" label="Религия" type="text" placeholder="Религия ..." value={religion} onChange={(e) => setReligion(e.target.value)} />
                     
                     <Select id="familyType" label="Желая да предоставям приемна грижа като" placeholder="Желая да предоставям приемна грижа като ..." onChange={(e) => setFamilyType(e.target.value)} value={familyType}>
-                        <option value="volunteer">Доброволно приемно семейство</option>
-                        <option value="professional">Професионално приемно семейство</option>
+                        <option value="Доброволно приемно семейство">Доброволно приемно семейство</option>
+                        <option value="Професионално приемно семейство">Професионално приемно семейство</option>
                     </Select>
 
                     <Input id="monthlyIncomePerFamilyMember" label="Среден месечен доход на член от семейството (в лева)" type="number" placeholder="Среден месечен доход на член от семейството (в лева) ..." value={averageMonthlyIncomePerFamilyMember} onChange={(e) => setAverageMonthlyIncomePerFamilyMember(e.target.value)} />
