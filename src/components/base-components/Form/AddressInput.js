@@ -14,7 +14,7 @@ import Input from './Input';
  * @param {function} subRegionOnChange
  * @param {function} cityOnChange
  * @param {function} addressOnChange
- * @param {bool} isRequired
+ * @param {bool} required
  */
 const AddressInput = (props) => {
 
