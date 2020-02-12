@@ -3,14 +3,12 @@ import networkClient from '../../network/network-client';
 import { Alert } from 'reactstrap';
 import Input from '../base-components/Form/Input';
 import NamesInput from '../base-components/Form/NamesInput';
-import RegionsSelect from '../base-components/Form/Select/RegionsSelect';
-import SubRegionsSelect from '../base-components/Form/Select/SubRegionsSelect';
-import CitiesSelect from '../base-components/Form/Select/CitiesSelect';
 import { useParams, useHistory } from 'react-router-dom';
 import Loader from '../base-components/Loader';
 import { useDispatch } from 'react-redux';
 import actions from "../../redux/actions";
 import BackButton from '../base-components/BackButton';
+import AddressInput from '../base-components/Form/AddressInput';
 
 const FormComponent = () => {
 
@@ -33,9 +31,22 @@ const FormComponent = () => {
     const [region, setRegion] = useState("");
     const [subRegion, setSubRegion] = useState("");
     const [city, setCity] = useState("");
+    const [address, setAddress] = useState("");
 
     const { id } = useParams(); // get parameter from url
 
+    const data = {
+        email: email,
+        password: password,
+        firstName: firstName,
+        secondName: secondName,
+        lastName: lastName,
+        regionId: region,
+        subRegionId: subRegion,
+        cityId: city,
+        address: address,
+    };
+    
     const processErrorMessages = (error) => {
         if(error.response) {
             switch(error.response.status) {
@@ -76,6 +87,7 @@ const FormComponent = () => {
                     setRegion(user.region.id);
                     setSubRegion(user.sub_region.id);
                     setCity(user.city.id);
+                    setAddress(user.address);
                     setIsLoading(false);
                 },
                 (error) => {
@@ -93,16 +105,6 @@ const FormComponent = () => {
         }
 
         setIsLoading(true);
-        const data = {
-            email: email,
-            password: password,
-            firstName: firstName,
-            secondName: secondName,
-            lastName: lastName,
-            regionId: region,
-            subRegionId: subRegion,
-            cityId: city,
-        };
 
         networkClient.post("/employee-oepg/register", data,
             // success
@@ -126,15 +128,6 @@ const FormComponent = () => {
         }
 
         setIsLoading(true);
-        const data = {
-            email: email,
-            firstName: firstName,
-            secondName: secondName,
-            lastName: lastName,
-            regionId: region,
-            subRegionId: subRegion,
-            cityId: city,
-        };
         
         networkClient.put(`/employee-oepg/update/${id}`, data,
             // success
@@ -144,25 +137,7 @@ const FormComponent = () => {
             },
             // error
             (error) => {
-                if(error.response) {
-                    switch(error.response.status) {
-                        case 409:
-                            setAlert({color: "danger", message: "Вече съществува потребител с този email адрес!"});
-                            break;
-                        case 400:
-                            setAlert({color: "danger", message: "Не са попълнени всички полета!"});
-                            break;
-                        case 401:
-                            dispatch(actions.setAlert({title: "Грешка!", message: "Сесията ви изтече!"}));
-                            dispatch(actions.deleteLoggedUser());
-                            break;
-                        default:
-                            dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
-                            break;
-                    }
-                } else {
-                    dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));
-                }
+                processErrorMessages(error);
             }
         )
         .finally(()=> {
@@ -198,17 +173,17 @@ const FormComponent = () => {
                     onChangeLastName = {(e) => setLastName(e.target.value)}
                 />
 
-                <div className="form-row">
-                    <div className="col-md">
-                        <RegionsSelect id="region" label="Област" placeholder="Избери област ..." required={true} onChange={(e) => setRegion(e.target.value)} value={region} />
-                    </div>
-                    <div className="col-md">
-                        <SubRegionsSelect id="subRegion" label="Община" placeholder="Избери община ..." required={true} onChange={(e) => setSubRegion(e.target.value)} value={subRegion} />
-                    </div>
-                    <div className="col-md">
-                        <CitiesSelect id="city" label="Град" placeholder="Избери град ..." required={true} onChange={(e) => setCity(e.target.value)} value={city} />
-                    </div>
-                </div>
+                <AddressInput 
+                    region = {region}
+                    subRegion = {subRegion}
+                    city = {city}
+                    address = {address}
+                    regionOnChange = {(e) => setRegion(e.target.value)}
+                    subRegionOnChange = {(e) => setSubRegion(e.target.value)}
+                    cityOnChange = {(e) => setCity(e.target.value)}
+                    addressOnChange = {(e) => setAddress(e.target.value)}
+                    required = {true}
+                />
 
                 <div className="pull-right">
                     {isEditingUser ?

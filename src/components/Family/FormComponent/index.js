@@ -7,11 +7,9 @@ import Loader from '../../base-components/Loader';
 import Select from '../../base-components/Form/Select/Select';
 import { useSelector, useDispatch } from 'react-redux';
 import actions from "../../../redux/actions";
-import RegionsSelect from '../../base-components/Form/Select/RegionsSelect';
-import SubRegionsSelect from '../../base-components/Form/Select/SubRegionsSelect';
-import CitiesSelect from '../../base-components/Form/Select/CitiesSelect';
 import BackButton from '../../base-components/BackButton';
 import ParentInput from './ParentInputs';
+import AddressInput from '../../base-components/Form/AddressInput';
 
 const FormComponent = () => {
 
@@ -334,19 +332,18 @@ const FormComponent = () => {
 
                 <div>
                     <p><strong>За семейството</strong></p>
-                    <div className="form-row">
-                        <div className="col-md">
-                            <RegionsSelect id="region" label="Област" placeholder="Избери област ..." onChange={(e) => setRegion(e.target.value)} value={region} />
-                        </div>
-                        <div className="col-md">
-                            <SubRegionsSelect id="subRegion" label="Община" placeholder="Избери община ..." onChange={(e) => setSubRegion(e.target.value)} value={subRegion} />
-                        </div>
-                        <div className="col-md">
-                            <CitiesSelect id="city" label="Град" placeholder="Избери град ..." onChange={(e) => setCity(e.target.value)} value={city} />
-                        </div>
-                    </div>
+
+                    <AddressInput 
+                        region = {region}
+                        subRegion = {subRegion}
+                        city = {city}
+                        address = {address}
+                        regionOnChange = {(e) => setRegion(e.target.value)}
+                        subRegionOnChange = {(e) => setSubRegion(e.target.value)}
+                        cityOnChange = {(e) => setCity(e.target.value)}
+                        addressOnChange = {(e) => setAddress(e.target.value)}
+                    />
                     
-                    <Input id="address" label="Адрес" type="text" placeholder="Адрес ..." value={address} onChange={(e) => setAddress(e.target.value)} />
                     <Input id="levelOfBulgarianLanguage" label="Ниво на български език" type="text" placeholder="Ниво на български език ..." value={levelOfBulgarianLanguage} onChange={(e) => setLevelOfBulgarianLanguage(e.target.value)} />
                     <Input id="religion" label="Религия" type="text" placeholder="Религия ..." value={religion} onChange={(e) => setReligion(e.target.value)} />
                     
