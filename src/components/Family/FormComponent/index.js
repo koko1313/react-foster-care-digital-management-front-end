@@ -10,7 +10,6 @@ import actions from "../../../redux/actions";
 import RegionsSelect from '../../base-components/Form/Select/RegionsSelect';
 import SubRegionsSelect from '../../base-components/Form/Select/SubRegionsSelect';
 import CitiesSelect from '../../base-components/Form/Select/CitiesSelect';
-import NamesInput from '../../base-components/Form/NamesInput';
 import BackButton from '../../base-components/BackButton';
 import ParentInput from './ParentInputs';
 
