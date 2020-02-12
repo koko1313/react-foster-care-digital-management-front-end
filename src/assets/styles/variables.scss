@@ -7,9 +7,21 @@ $font-family-monospace: Menlo, Monaco, Consolas, 'Liberation Mono',
 'Courier New', monospace;
 $font-family-base: $font-family-sans-serif;
 
+// $theme-colors: (
+//     "primary": #6a89fd,
+//     "primary-dark": #5968cb,
+//     "action": #ffd900,
+//     "secondary": #687b86,
+//     "action-secondary": #ff8f2b,
+//     "dark-overlay": #292d29,
+//     "title": #666666,
+//     "border-light": #e6e6e6,
+//     "border-ultra-light": #f1f1f1,
+// );
+
 $theme-colors: (
-    "primary": #6a89fd,
-    "primary-dark": #5968cb,
+    "primary": #13C21C,
+    "primary-dark": #10a217,
     "action": #ffd900,
     "secondary": #687b86,
     "action-secondary": #ff8f2b,
