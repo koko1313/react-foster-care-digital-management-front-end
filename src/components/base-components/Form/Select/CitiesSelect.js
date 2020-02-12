@@ -23,7 +23,9 @@ const CitiesSelect = (props) => {
         .finally(()=> {
             setIsLoading(false);
         });
-    }, [dispatch, cities]);
+
+        // eslint-disable-next-line
+    }, []);
 
     const renderCities = () => {
         if(!cities) return null;

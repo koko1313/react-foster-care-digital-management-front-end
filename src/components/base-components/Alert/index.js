@@ -17,7 +17,9 @@ const Alert = () => {
         } else {
             setIsOpen(false);
         }
-    }, [alert]);
+        
+        // eslint-disable-next-line
+    }, []);
 
     const toggle = () => {
         if(isOpen) {

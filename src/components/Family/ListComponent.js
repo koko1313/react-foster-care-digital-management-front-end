@@ -38,7 +38,9 @@ const ListComponent = () => {
         ).finally(() => {
             setIsLoading(false);
         });
-    }, [dispatch]);
+
+        // eslint-disable-next-line
+    }, []);
 
     const viewDetails = (id) => {
         history.push(`/family/details/${id}`);

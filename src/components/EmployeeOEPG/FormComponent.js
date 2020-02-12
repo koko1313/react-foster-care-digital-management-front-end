@@ -36,6 +36,32 @@ const FormComponent = () => {
 
     const { id } = useParams(); // get parameter from url
 
+    const processErrorMessages = (error) => {
+        if(error.response) {
+            switch(error.response.status) {
+                case 400:
+                    setAlert({color: "danger", message: "Не са попълнени всички полета!"});
+                    break;
+                case 401:
+                    dispatch(actions.setAlert({title: "Грешка!", message: "Сесията ви изтече!"}));
+                    dispatch(actions.deleteLoggedUser());
+                    break;
+                case 404:
+                    dispatch(actions.setAlert({title: "Грешка!", message: "Не е намерен такъв потребител!"}));
+                    history.goBack();
+                    break;
+                case 409:
+                    setAlert({color: "danger", message: "Вече съществува потребител с този email адрес!"});
+                    break;
+                default:
+                    dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
+                    break;
+            }
+        } else {
+            dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));
+        }
+    }
+
     useState(() => {
         if(id) {
             setIsEditingUser(true);
@@ -53,23 +79,7 @@ const FormComponent = () => {
                     setIsLoading(false);
                 },
                 (error) => {
-                    if(error.response) {
-                        switch(error.response.status) {
-                            case 401:
-                                dispatch(actions.setAlert({title: "Грешка!", message: "Сесията ви изтече!"}));
-                                dispatch(actions.deleteLoggedUser());
-                                break;
-                            case 404:
-                                dispatch(actions.setAlert({title: "Грешка!", message: "Не е намерен такъв потребител!"}));
-                                history.goBack();
-                                break;
-                            default:
-                                dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се объркаa!"}));
-                                break;
-                        }
-                    } else {
-                        dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));
-                    }
+                    processErrorMessages(error);
                 }
             );
         }
@@ -102,25 +112,7 @@ const FormComponent = () => {
             },
             // error
             (error) => {
-                if(error.response) {
-                    switch(error.response.status) {
-                        case 409:
-                            setAlert({color: "danger", message: "Вече съществува потребител с този email адрес!"});
-                            break;
-                        case 400:
-                            setAlert({color: "danger", message: "Не са попълнени всички полета!"});
-                            break;
-                        case 401:
-                            dispatch(actions.setAlert({title: "Грешка!", message: "Сесията ви изтече!"}));
-                            dispatch(actions.deleteLoggedUser());
-                            break;
-                        default:
-                            dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
-                            break;
-                    }
-                } else {
-                    dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));
-                }
+                processErrorMessages(error);
 
                 setIsLoading(false);
             }

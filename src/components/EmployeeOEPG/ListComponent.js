@@ -13,6 +13,22 @@ const ListComponent = () => {
     const history = useHistory();
     const dispatch = useDispatch();
 
+    const processErrorMessages = (error) => {
+        if(error.response) {
+            switch(error.response.status) {
+                case 401:
+                    dispatch(actions.setAlert({title: "Грешка!", message: "Сесията ви изтече!"}));
+                    dispatch(actions.deleteLoggedUser());
+                    break;
+                default:
+                    dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
+                    break;
+            }
+        } else {
+            dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));
+        }
+    }
+
     useEffect(()=> {
         setIsLoading(true);
 
@@ -21,24 +37,14 @@ const ListComponent = () => {
                 dispatch(actions.setEmployeesOEPG(users));
             },
             (error) => {
-                if(error.response) {
-                    switch(error.response.status) {
-                        case 401:
-                            dispatch(actions.setAlert({title: "Грешка!", message: "Сесията ви изтече!"}));
-                            dispatch(actions.deleteLoggedUser());
-                            break;
-                        default:
-                            dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
-                            break;
-                    }
-                } else {
-                    dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));
-                }
+                processErrorMessages(error);
             }
         ).finally(() => {
             setIsLoading(false);
         });
-    }, [dispatch]);
+    
+        // eslint-disable-next-line
+    }, []);
 
     const editUser = (id) => {
         history.push(`/employee-oepg/edit/${id}`);
@@ -58,19 +64,7 @@ const ListComponent = () => {
                 dispatch(actions.deleteEmployeeOEPG(id)) 
             },
             (error) => {
-                if(error.response) {
-                    switch(error.response.status) {
-                        case 401:
-                            dispatch(actions.setAlert({title: "Грешка!", message: "Сесията ви изтече!"}));
-                            dispatch(actions.deleteLoggedUser());
-                            break;
-                        default:
-                            dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
-                            break;
-                    }
-                } else {
-                    dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));
-                }
+                processErrorMessages(error);
             }
         ).finally(() => { 
             setIsLoading(false);

@@ -52,7 +52,9 @@ const Router = () => {
         .finally(() => {
             setCheckedForLoggedUser(true);
         });
-    }, [dispatch]);
+
+        // eslint-disable-next-line
+    }, []);
 
     const loggedUser = useSelector(state => state.loggedUser);
 

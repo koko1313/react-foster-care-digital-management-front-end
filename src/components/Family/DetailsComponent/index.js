@@ -17,6 +17,26 @@ const DetailsComponent = () => {
 
     const { id } = useParams(); // get parameter from url
 
+    const processErrorMessages = (error) => {
+        if(error.response) {
+            switch(error.response.status) {
+                case 401:
+                    dispatch(actions.setAlert({title: "Грешка!", message: "Сесията ви изтече!"}));
+                    dispatch(actions.deleteLoggedUser());
+                    break;
+                case 404:
+                    dispatch(actions.setAlert({title: "Грешка!", message: "Не е намерено такова семейство!"}));
+                    history.goBack();
+                    break;
+                default:
+                    dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
+                    break;
+            }
+        } else {
+            dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));
+        }
+    }
+
     useEffect(() => {
         setIsLoading(true);
         
@@ -25,28 +45,14 @@ const DetailsComponent = () => {
                 setFamily(family)
             },
             (error) => {
-                if(error.response) {
-                    switch(error.response.status) {
-                        case 401:
-                            dispatch(actions.setAlert({title: "Грешка!", message: "Сесията ви изтече!"}));
-                            dispatch(actions.deleteLoggedUser());
-                            break;
-                        case 404:
-                            dispatch(actions.setAlert({title: "Грешка!", message: "Не е намерено такова семейство!"}));
-                            history.goBack();
-                            break;
-                        default:
-                            dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
-                            break;
-                    }
-                } else {
-                    dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));
-                }
+                processErrorMessages(error);
             }
         ).finally(() => {
             setIsLoading(false);
         });
-    }, [id, dispatch, history]);
+
+        // eslint-disable-next-line
+    }, []);
 
     const editFamily = (id) => {
         history.push(`/family/edit/${id}`);
@@ -67,19 +73,7 @@ const DetailsComponent = () => {
                 history.push("/family/all");
             },
             (error) => {
-                if(error.response) {
-                    switch(error.response.status) {
-                        case 401:
-                            dispatch(actions.setAlert({title: "Грешка!", message: "Сесията ви изтече!"}));
-                            dispatch(actions.deleteLoggedUser());
-                            break;
-                        default:
-                            dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
-                            break;
-                    }
-                } else {
-                    dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));
-                }
+                processErrorMessages(error);
             }
         ).finally(() => { 
             setIsLoading(false);

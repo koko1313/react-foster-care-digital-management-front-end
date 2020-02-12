@@ -23,7 +23,9 @@ const SubRegionsSelect = (props) => {
         .finally(()=> {
             setIsLoading(false);
         });
-    }, [dispatch, subRegions]);
+
+        // eslint-disable-next-line
+    }, []);
 
     const renderSubRegions = () => {
         if(!subRegions) return null;

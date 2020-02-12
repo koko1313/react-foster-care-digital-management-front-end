@@ -23,7 +23,9 @@ const RegionsSelect = (props) => {
         .finally(()=> {
             setIsLoading(false);
         });
-    }, [dispatch, regions]);
+        
+        // eslint-disable-next-line
+    }, []);
 
     const renderRegions = () => {
         if(!regions) return null;
