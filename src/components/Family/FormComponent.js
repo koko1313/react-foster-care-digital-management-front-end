@@ -31,6 +31,7 @@ const FormComponent = () => {
     const [womanPhone, setWomanPhone] = useState("");
     const [womanEducation, setWomanEducation] = useState("");
     const [womanWork, setWomanWork] = useState("");
+    const [womanEmploymentType, setWomanEmploymentType] = useState("");
     const [womanCitizenship, setWomanCitizenship] = useState("");
 
     const [manFirstName, setManFirstName] = useState("");
@@ -40,6 +41,7 @@ const FormComponent = () => {
     const [manPhone, setManPhone] = useState("");
     const [manEducation, setManEducation] = useState("");
     const [manWork, setManWork] = useState("");
+    const [manEmploymentType, setManEmploymentType] = useState("");
     const [manCitizenship, setManCitizenship] = useState("");
 
     const [preferKidGender, setPreferKidGender] = useState("");
@@ -53,6 +55,11 @@ const FormComponent = () => {
 
     const [levelOfBulgarianLanguage, setLevelOfBulgarianLanguage] = useState("");
     const [religion, setReligion] = useState("");
+
+    const [familyType, setFamilyType] = useState("");
+    const [averageMonthlyIncomePerFamilyMember, setAverageMonthlyIncomePerFamilyMember] = useState("");
+    const [anotherIncome, setAnotherIncome] = useState("");
+    const [houseType, setHouseType] = useState("");
 
     const [wardenId, setWardenId] = useState("");
 
@@ -80,6 +87,7 @@ const FormComponent = () => {
                         setWomanPhone(family.woman.phone);
                         setWomanEducation(family.woman.education);
                         setWomanWork(family.woman.work);
+                        setWomanEmploymentType(family.woman.employment_type);
                         setWomanCitizenship(family.woman.citizenship);
                     }
 
@@ -91,6 +99,7 @@ const FormComponent = () => {
                         setManPhone(family.man.phone);
                         setManEducation(family.man.education);
                         setManWork(family.man.work);
+                        setManEmploymentType(family.man.employment_type);
                         setManCitizenship(family.man.citizenship);
                     }
 
@@ -105,6 +114,11 @@ const FormComponent = () => {
 
                     setLevelOfBulgarianLanguage(family.levelOfBulgarianLanguage);
                     setReligion(family.religion);
+
+                    setFamilyType(family.family_type);
+                    setAverageMonthlyIncomePerFamilyMember(family.average_monthly_income_per_family_member);
+                    setAnotherIncome(family.another_income);
+                    setHouseType(family.house_type);
 
                     setWardenId(family.warden.id);
 
@@ -150,6 +164,7 @@ const FormComponent = () => {
             womanPhone: womanPhone,
             womanEducation: womanEducation,
             womanWork: womanWork,
+            womanEmploymentType: womanEmploymentType,
             womanCitizenship,
 
             manFirstName: manFirstName,
@@ -159,6 +174,7 @@ const FormComponent = () => {
             manPhone: manPhone,
             manEducation: manEducation,
             manWork: manWork,
+            manEmploymentType: manEmploymentType,
             manCitizenship,
 
             preferKidGender: preferKidGender,
@@ -172,6 +188,11 @@ const FormComponent = () => {
 
             levelOfBulgarianLanguage: levelOfBulgarianLanguage,
             religion: religion,
+
+            familyType: familyType,
+            averageMonthlyIncomePerFamilyMember: averageMonthlyIncomePerFamilyMember,
+            anotherIncome: anotherIncome,
+            houseType: houseType,
 
             wardenId: wardenId,
         };
@@ -219,6 +240,7 @@ const FormComponent = () => {
             womanPhone: womanPhone,
             womanEducation: womanEducation,
             womanWork: womanWork,
+            womanEmploymentType: womanEmploymentType,
             womanCitizenship: womanCitizenship,
 
             manFirstName: manFirstName,
@@ -228,6 +250,7 @@ const FormComponent = () => {
             manPhone: manPhone,
             manEducation: manEducation,
             manWork: manWork,
+            manEmploymentType: manEmploymentType,
             manCitizenship: manCitizenship,
 
             preferKidGender: preferKidGender,
@@ -241,6 +264,11 @@ const FormComponent = () => {
 
             levelOfBulgarianLanguage: levelOfBulgarianLanguage,
             religion: religion,
+
+            familyType: familyType,
+            averageMonthlyIncomePerFamilyMember: averageMonthlyIncomePerFamilyMember,
+            anotherIncome: anotherIncome,
+            houseType: houseType,
 
             wardenId: wardenId,
         };
@@ -312,6 +340,7 @@ const FormComponent = () => {
                         <Input id="womanPhone" label="Телефон" type="number" placeholder="Телефон ..." value={womanPhone} onChange={(e) => {setWomanPhone(e.target.value)}} required={true} />
                         <Input id="womanEducation" label="Образование" type="text" placeholder="Образование ..." value={womanEducation} onChange={(e) => {setWomanEducation(e.target.value)}} required={true} />
                         <Input id="womanWork" label="Месторабота" type="text" placeholder="Месторабота ..." value={womanWork} onChange={(e) => {setWomanWork(e.target.value)}} />
+                        <Input id="womanEmploymentType" label="Трудова заетост" type="text" placeholder="Трудов договор, граждански договор, безработен, пенсионер ..." value={womanEmploymentType} onChange={(e) => {setWomanEmploymentType(e.target.value)}} />
                         <Input id="womanCitizenship" label="Гражданство" type="text" placeholder="Гражданство ..." value={womanCitizenship} onChange={(e) => {setWomanCitizenship(e.target.value)}} />
                         <hr />
                     </div>
@@ -342,6 +371,7 @@ const FormComponent = () => {
                         <Input id="manPhone" label="Телефон" type="number" placeholder="Телефон ..." value={manPhone} onChange={(e) => {setManPhone(e.target.value)}} required={true} />
                         <Input id="manEducation" label="Образование" type="text" placeholder="Образование ..." value={manEducation} onChange={(e) => {setManEducation(e.target.value)}} required={true} />
                         <Input id="manWork" label="Месторабота" type="text" placeholder="Месторабота ..." value={manWork} onChange={(e) => {setManWork(e.target.value)}} />
+                        <Input id="manEmploymentType" label="Трудова заетост" type="text" placeholder="Трудов договор, граждански договор, безработен, пенсионер ..." value={manEmploymentType} onChange={(e) => {setManEmploymentType(e.target.value)}} />
                         <Input id="manCitizenship" label="Гражданство" type="text" placeholder="Гражданство ..." value={manCitizenship} onChange={(e) => {setManCitizenship(e.target.value)}} />
                         <hr />
                     </div>
@@ -383,6 +413,16 @@ const FormComponent = () => {
                     <Input id="address" label="Адрес" type="text" placeholder="Адрес ..." value={address} onChange={(e) => setAddress(e.target.value)} />
                     <Input id="levelOfBulgarianLanguage" label="Ниво на български език" type="text" placeholder="Ниво на български език ..." value={levelOfBulgarianLanguage} onChange={(e) => setLevelOfBulgarianLanguage(e.target.value)} />
                     <Input id="religion" label="Религия" type="text" placeholder="Религия ..." value={religion} onChange={(e) => setReligion(e.target.value)} />
+                    
+                    <Select id="familyType" label="Желая да предоставям приемна грижа като" placeholder="Желая да предоставям приемна грижа като ..." onChange={(e) => setFamilyType(e.target.value)} value={familyType}>
+                        <option value="volunteer">Доброволно приемно семейство</option>
+                        <option value="professional">Професионално приемно семейство</option>
+                    </Select>
+
+                    <Input id="monthlyIncomePerFamilyMember" label="Среден месечен доход на член от семейството (в лева)" type="number" placeholder="Среден месечен доход на член от семейството (в лева) ..." value={averageMonthlyIncomePerFamilyMember} onChange={(e) => setAverageMonthlyIncomePerFamilyMember(e.target.value)} />
+                    <Input id="anotherIncome" label="Доходи от други източници" type="number" placeholder="Доходи от други източници ..." value={anotherIncome} onChange={(e) => setAnotherIncome(e.target.value)} />
+                    
+                    <Input id="houseType" label="Жилище" type="text" placeholder="Собствено / под наем, брой стаи ..." value={houseType} onChange={(e) => setHouseType(e.target.value)} />
                     <hr />
                 </div>
 

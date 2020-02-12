@@ -128,6 +128,11 @@ const DetailsComponent = () => {
                         </div>
 
                         <div className="row">
+                            <div className="col-md-3 info-header">Трудова заетост</div>
+                            <div className="col info-body">{family.woman.employmentType}</div>
+                        </div>
+
+                        <div className="row">
                             <div className="col-md-3 info-header">Гражданство</div>
                             <div className="col info-body">{family.woman.citizenship}</div>
                         </div>
@@ -168,6 +173,11 @@ const DetailsComponent = () => {
                         <div className="row">
                             <div className="col-md-3 info-header">Месторабота</div>
                             <div className="col info-body">{family.man.work}</div>
+                        </div>
+
+                        <div className="row">
+                            <div className="col-md-3 info-header">Трудова заетост</div>
+                            <div className="col info-body">{family.man.employmentType}</div>
                         </div>
 
                         <div className="row">
