@@ -29,6 +29,7 @@ import EmployeeOEPGListPage from './pages/User/EmployeeOEPG/ListPage';
 
 import ManageUsersPage from './pages/User/ManageUsersPage';
 import Loader from './components/base-components/Loader';
+import DocumentPage from './pages/Family/DocumentPage';
 
 const Router = () => {
 
@@ -161,6 +162,14 @@ const Router = () => {
             roles: [role.OEPG],
             main: () => <Layout>
                 <FamilyDetailsPage />
+            </Layout>
+        },
+        {
+            path: '/family/document/:document/:id',
+            exact: true,
+            roles: [role.OEPG],
+            main: () => <Layout>
+                <DocumentPage />
             </Layout>
         },
         // path if non of above are reached

@@ -239,7 +239,7 @@ const FormComponent = () => {
 
     return (
         <>
-            <p class="text-muted"><em>При приемно семейство с един родител се попълват данните или само за мъж или само за жена</em></p>
+            <p className="text-muted"><em>При приемно семейство с един родител се попълват данните или само за мъж или само за жена</em></p>
 
             <Alert color={alert.color} isOpen={alert.message ? true : false} toggle={onDismiss}>
                 {alert.message}
