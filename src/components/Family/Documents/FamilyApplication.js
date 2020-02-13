@@ -58,7 +58,7 @@ const FamilyApplication = (props) => {
         window.print();
     }
 
-    const renderFamilyInformation = () => {
+    const renderDocument = () => {
         if(!family) return;
 
         let titular;
@@ -68,7 +68,7 @@ const FamilyApplication = (props) => {
             titular = family.woman;
             anotherParent = family.man;
         }
-        else if(family.title === "man") {
+        else if(family.titular === "man") {
             titular = family.man;
             anotherParent = family.woman;
         }
@@ -100,11 +100,15 @@ const FamilyApplication = (props) => {
                             <strong>Владеете ли български език добре:</strong> {family.level_of_bulgarian_language} <br />
                             <strong>Религия:</strong> {family.religion} <br />
 
-                            <strong>Съпруг/а</strong> <br />
-                            <strong>Име, презиме и  фамилия:</strong> {anotherParent.first_name} {anotherParent.second_name} {anotherParent.last_name} <br />
-                            <strong>ЕГН:</strong> {anotherParent.egn} <br />
-                            <strong>Образование:</strong> {anotherParent.education} <br />
-                            <strong>Месторабота:</strong> {anotherParent.work} <br />
+                            {anotherParent &&
+                                <>
+                                    <strong>Съпруг/а</strong> <br />
+                                    <strong>Име, презиме и  фамилия:</strong> {anotherParent.first_name} {anotherParent.second_name} {anotherParent.last_name} <br />
+                                    <strong>ЕГН:</strong> {anotherParent.egn} <br />
+                                    <strong>Образование:</strong> {anotherParent.education} <br />
+                                    <strong>Месторабота:</strong> {anotherParent.work} <br />
+                                </>
+                            }
 
                             <strong>2. Желая да предоставям приемна грижа като:</strong> {family.family_type} <br />
 
@@ -148,7 +152,7 @@ const FamilyApplication = (props) => {
     return (
         <>
             <button className="btn btn-primary pull-right mb-4 d-print-none" onClick={print}>Разпечатай</button>
-            {renderFamilyInformation()}
+            {renderDocument()}
             <Loader loading={isLoading} fullScreen={true} />
         </>
     );

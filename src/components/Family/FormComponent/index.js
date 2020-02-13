@@ -345,6 +345,7 @@ const FormComponent = () => {
                         subRegionOnChange = {(e) => setSubRegion(e.target.value)}
                         cityOnChange = {(e) => setCity(e.target.value)}
                         addressOnChange = {(e) => setAddress(e.target.value)}
+                        required = {true}
                     />
                     
                     <Input id="language" label="На какъв език се говори в семейството" type="text" placeholder="На какъв език се говори в семейството ..." value={language} onChange={(e) => setLanguage(e.target.value)} />

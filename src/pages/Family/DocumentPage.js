@@ -58,7 +58,7 @@ const DocumentPage = () => {
 
         switch(document) {
             case "family-application": 
-                return <FamilyApplication family={family} />;
+                return <FamilyApplication />;
             default:
                 dispatch(actions.setAlert({title: "Грешка!", message: "Не е намерен такъв документ!"}));
                 history.goBack();
