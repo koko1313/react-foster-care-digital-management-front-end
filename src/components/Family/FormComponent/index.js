@@ -51,6 +51,7 @@ const FormComponent = () => {
     const [city, setCity] = useState("");
     const [address, setAddress] = useState("");
 
+    const [language, setLanguage] = useState("");
     const [levelOfBulgarianLanguage, setLevelOfBulgarianLanguage] = useState("");
     const [religion, setReligion] = useState("");
 
@@ -101,6 +102,7 @@ const FormComponent = () => {
         cityId: city,
         address: address,
 
+        language: language,
         levelOfBulgarianLanguage: levelOfBulgarianLanguage,
         religion: religion,
 
@@ -177,6 +179,7 @@ const FormComponent = () => {
                     if(family.city) setCity(family.city.id);
                     setAddress(family.address);
 
+                    setLanguage(family.language);
                     setLevelOfBulgarianLanguage(family.level_of_bulgarian_language);
                     setReligion(family.religion);
 
@@ -316,8 +319,8 @@ const FormComponent = () => {
                     <div className="form-row">
                         <div className="form-group col-md">
                             <Select id="preferKidGender" label="Предпочитан пол" placeholder="Избери предпочитан пол ..." onChange={(e) => setPreferKidGender(e.target.value)} value={preferKidGender}>
-                                <option value="m">Момче</option>
-                                <option value="f">Момиче</option>
+                                <option value="Момче">Момче</option>
+                                <option value="Момиче">Момиче</option>
                             </Select>
                         </div>
                         <div className="form-group col-md">
@@ -344,7 +347,8 @@ const FormComponent = () => {
                         addressOnChange = {(e) => setAddress(e.target.value)}
                     />
                     
-                    <Input id="levelOfBulgarianLanguage" label="Ниво на български език" type="text" placeholder="Ниво на български език ..." value={levelOfBulgarianLanguage} onChange={(e) => setLevelOfBulgarianLanguage(e.target.value)} />
+                    <Input id="language" label="На какъв език се говори в семейството" type="text" placeholder="На какъв език се говори в семейството ..." value={language} onChange={(e) => setLanguage(e.target.value)} />
+                    <Input id="levelOfBulgarianLanguage" label="Владеете ли български език добре?" type="text" placeholder="Да / не ..." value={levelOfBulgarianLanguage} onChange={(e) => setLevelOfBulgarianLanguage(e.target.value)} />
                     <Input id="religion" label="Религия" type="text" placeholder="Религия ..." value={religion} onChange={(e) => setReligion(e.target.value)} />
                     
                     <Select id="familyType" label="Желая да предоставям приемна грижа като" placeholder="Желая да предоставям приемна грижа като ..." onChange={(e) => setFamilyType(e.target.value)} value={familyType}>

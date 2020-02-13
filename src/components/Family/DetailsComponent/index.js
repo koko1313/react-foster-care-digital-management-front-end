@@ -191,8 +191,8 @@ const DetailsComponent = () => {
                     <div className="row">
                         <div className="col-md-3 info-header">Предпочитан пол</div>
                         <div className="col info-body">
-                            {family.prefer_kid_gender === "m" && "Момче"}
-                            {family.prefer_kid_gender === "f" && "Момиче"}
+                            {family.prefer_kid_gender === "Момче" && "Момче"}
+                            {family.prefer_kid_gender === "Момиче" && "Момиче"}
                         </div>
                     </div>
 
@@ -223,7 +223,12 @@ const DetailsComponent = () => {
                     </div>
 
                     <div className="row">
-                        <div className="col-md-3 info-header">Ниво на български език</div>
+                        <div className="col-md-3 info-header">На какъв език се говори в семейството?</div>
+                        <div className="col info-body">{family.language}</div>
+                    </div>
+
+                    <div className="row">
+                        <div className="col-md-3 info-header">Владеете ли български език добре?</div>
                         <div className="col info-body">{family.level_of_bulgarian_language}</div>
                     </div>
 
