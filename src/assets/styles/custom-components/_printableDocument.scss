@@ -3,16 +3,24 @@
     width: 100%;
     font-family: 'Times New Roman', Times, serif;
     font-size: 12pt;
-    position: relative;
+    margin-top: 50px;
 }
 
 .printable-document-content {
     padding: 20px;
 }
 
-.printable-document tfoot {
+.printable-document-footer {
     border-top: 1px solid black;
     text-align: center;
     font-style: italic;
     line-height: 100%;
+    width: 100%;
+
+    @media print {
+        position: fixed;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
 }

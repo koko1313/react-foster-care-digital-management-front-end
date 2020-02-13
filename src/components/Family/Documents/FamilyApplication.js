@@ -132,21 +132,22 @@ const FamilyApplication = (props) => {
                     <tfoot>
                         <tr>
                             <td>
-                                Проект „Приеми ме 2015“ - BG05M9OP001-2.003-0001-C01, финансиран от Оперативна програма <br />
-                                „Развитие на човешките ресурси“, съфинансирана от Европейския съюз чрез Европейския <br />
-                                социален фонд.
+                                <div className="printable-document-footer">
+                                    Проект „Приеми ме 2015“ - BG05M9OP001-2.003-0001-C01, финансиран от Оперативна програма <br />
+                                    „Развитие на човешките ресурси“, съфинансирана от Европейския съюз чрез Европейския <br />
+                                    социален фонд.
+                                </div>
                             </td>
                         </tr>
                     </tfoot>
                 </table>
-                
-                <button onClick={print}>sadasd</button>
             </>
         );
     }
 
     return (
         <>
+            <button className="btn btn-primary pull-right mb-4 d-print-none" onClick={print}>Разпечатай</button>
             {renderFamilyInformation()}
             <Loader loading={isLoading} fullScreen={true} />
         </>
