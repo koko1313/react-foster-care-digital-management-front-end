@@ -131,6 +131,17 @@ const FamilyApplication = (props) => {
                                             {family.prefer_kid_min_gender ? family.prefer_kid_min_gender : " без значение"}
                                     </li>
                                 </ul>
+
+                            <div>
+                                <div className="d-inline">
+                                    Дата: ...........................................
+                                </div>
+                                <div className="d-inline pull-right">
+                                    Подписи: <br />
+                                    1. ........................................... <br />
+                                    2. ...........................................
+                                </div>
+                            </div>
                         </div>
                     </tbody>
 
