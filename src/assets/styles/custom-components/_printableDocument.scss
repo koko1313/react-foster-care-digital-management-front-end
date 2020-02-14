@@ -1,12 +1,27 @@
 .printable-document {
     background-color: $white;
-    width: 100%;
+    width: 21cm;
+    margin: 0 auto;
     font-family: 'Times New Roman', Times, serif;
     font-size: 12pt;
     margin-top: 50px;
     
     @media screen {
+        
         border: 1px solid $black;
+    }
+
+    @media print {
+        width: 100%;
+    }
+}
+
+.printable-document-responsive {
+    @media screen {    
+        @include media-breakpoint-down(sm) {
+            width: 100%;
+            overflow: auto;
+        }
     }
 }
 
