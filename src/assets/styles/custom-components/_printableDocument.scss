@@ -1,9 +1,13 @@
 .printable-document {
-    background-color: white;
+    background-color: $white;
     width: 100%;
     font-family: 'Times New Roman', Times, serif;
     font-size: 12pt;
     margin-top: 50px;
+    
+    @media screen {
+        border: 1px solid $black;
+    }
 }
 
 .printable-document-content {
@@ -11,7 +15,7 @@
 }
 
 .printable-document-footer {
-    border-top: 1px solid black;
+    border-top: 1px solid $black;
     text-align: center;
     font-style: italic;
     line-height: 100%;

@@ -9,7 +9,7 @@ const Loader = (props) => {
     `;
 
     const fullScreenCss = `
-        background-color: rgba(90, 90, 90, 0.3);
+        background-color: rgba(150, 150, 150, 0.5);
         position: fixed;
         top: 0;
         left: 0;
@@ -27,7 +27,7 @@ const Loader = (props) => {
         <ScaleLoader 
             loading={props.loading} 
             css={override} 
-            color={"#6A89FD"} 
+            color={"#A2C614"} 
         />
     );
 

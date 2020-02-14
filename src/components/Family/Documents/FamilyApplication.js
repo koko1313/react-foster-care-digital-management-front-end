@@ -6,6 +6,7 @@ import networkClient from '../../../network/network-client';
 import { useParams, useHistory } from 'react-router-dom';
 import actions from '../../../redux/actions';
 import Loader from '../../base-components/Loader';
+import BackButton from '../../base-components/BackButton';
 
 const FamilyApplication = (props) => {
 
@@ -75,7 +76,7 @@ const FamilyApplication = (props) => {
 
         return (
             <>
-                <table className="printable-document">
+                <table id="printable-document" className="printable-document">
                     <thead>
                         <tr>
                             <th>
@@ -151,7 +152,11 @@ const FamilyApplication = (props) => {
 
     return (
         <>
-            <button className="btn btn-primary pull-right mb-4 d-print-none" onClick={print}>Разпечатай</button>
+            <div className="pull-right mb-4 d-print-none">
+                <button className="btn btn-primary" onClick={print}>Разпечатай</button>
+                <BackButton />
+            </div>
+
             {renderDocument()}
             <Loader loading={isLoading} fullScreen={true} />
         </>
