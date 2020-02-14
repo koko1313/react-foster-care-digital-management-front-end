@@ -17,13 +17,15 @@ const CitiesSelect = (props) => {
 
         setIsLoading(true);
 
-        networkClient.get("/city/all", null, (cities) => {
-            dispatch(actions.setCities(cities));
-        })
-        .finally(()=> {
-            setIsLoading(false);
-        });
-
+        networkClient.get("/city/all", null, 
+            (cities) => {
+                dispatch(actions.setCities(cities));
+                setIsLoading(false);
+            },
+            () => {
+                setIsLoading(false);
+            }
+        );
         // eslint-disable-next-line
     }, []);
 

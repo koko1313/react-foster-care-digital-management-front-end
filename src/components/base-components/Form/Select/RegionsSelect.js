@@ -17,13 +17,15 @@ const RegionsSelect = (props) => {
 
         setIsLoading(true);
 
-        networkClient.get("/region/all", null, (regions) => {
-            dispatch(actions.setRegions(regions));
-        })
-        .finally(()=> {
-            setIsLoading(false);
-        });
-        
+        networkClient.get("/region/all", null, 
+            (regions) => {
+                dispatch(actions.setRegions(regions));
+                setIsLoading(false);
+            },
+            () => {
+                setIsLoading(false);
+            }
+        );
         // eslint-disable-next-line
     }, []);
 

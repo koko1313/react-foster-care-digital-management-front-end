@@ -3,7 +3,18 @@
  * @param {Object} object 
  */
 export function objectIsEmpty(object) {
-    return Object.entries(object).length === 0;
+    // ECMA SCRIPT 6 - just one line
+    // return Object.entries(object).length === 0;
+
+    // whitout using ECMA SCRIPT 6 - all below
+    if (object == null) return true;
+    if (object.length > 0)    return false;
+    if (object.length === 0)  return true;
+    if (typeof object !== "object") return true;
+    for (var key in object) {
+        if (hasOwnProperty.call(object, key)) return false;
+    }
+    return true;
 }
 
 
@@ -22,4 +33,15 @@ export function userHasRole(user, roleAsString) {
     });
 
     return userHasRole;
+}
+
+
+/**
+ * Check if object has role
+ * @param {Object} route Example: { roles: [role.GUEST] }
+ * @param {String} role 
+ */
+export function objectHasRole(route, role) {
+    // return route.roles.includes(role); // ECMA SCRIPT 6
+    return route.roles.indexOf(role) !== -1; // whitout using ECMA SCRIPT 6
 }

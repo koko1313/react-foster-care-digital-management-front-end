@@ -43,14 +43,14 @@ const FamilyApplication = (props) => {
         
         networkClient.get(`/family/${id}`, null, 
             (family) => {
-                setFamily(family)
+                setFamily(family);
+                setIsLoading(false);
             },
             (error) => {
                 processErrorMessages(error);
+                setIsLoading(false);
             }
-        ).finally(() => {
-            setIsLoading(false);
-        });
+        );
 
         // eslint-disable-next-line
     }, []);

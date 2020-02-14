@@ -134,15 +134,14 @@ const FormComponent = () => {
             (response) => {
                 setAlert({color: "success", message: "Успешно редактиран потребител!"});
                 history.push("/employee-oepg/all");
+                setIsLoading(false);
             },
             // error
             (error) => {
                 processErrorMessages(error);
+                setIsLoading(false);
             }
-        )
-        .finally(()=> {
-            setIsLoading(false);
-        });
+        );
     }
 
     return (

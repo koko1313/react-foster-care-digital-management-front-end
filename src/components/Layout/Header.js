@@ -7,7 +7,7 @@ import {
     NavItem,
     NavLink
 } from 'reactstrap';
-import { objectIsEmpty, userHasRole } from '../../helpers';
+import { objectIsEmpty, userHasRole, objectHasRole } from '../../helpers';
 import role from '../../roles';
 
 import {NavLink as RRNavLink} from 'react-router-dom';
@@ -72,31 +72,31 @@ const Header = () => {
 
     const renderNavItems = () => {
         const navButtons = buttons.map((button, index) => {
-            if(button.roles.includes(role.ALL)) {
+            if(objectHasRole(button, role.ALL)) {
                 return <NavItem key={index}>
                     <NavLink tag={RRNavLink} exact={button.exact} to={button.to} activeClassName="active">{button.label}</NavLink>
                 </NavItem>
             }
             // role logged
-            else if(button.roles.includes(role.LOGGED) && !objectIsEmpty(loggedUser)) {
+            else if(objectHasRole(button, role.LOGGED) && !objectIsEmpty(loggedUser)) {
                 return <NavItem key={index}>
                     <NavLink tag={RRNavLink} exact={button.exact} to={button.to} activeClassName="active">{button.label}</NavLink>
                 </NavItem>
             }
             // role guest
-            else if(button.roles.includes(role.GUEST) && objectIsEmpty(loggedUser)) {
+            else if(objectHasRole(button, role.GUEST) && objectIsEmpty(loggedUser)) {
                 return <NavItem key={index}>
                     <NavLink tag={RRNavLink} exact={button.exact} to={button.to} activeClassName="active">{button.label}</NavLink>
                 </NavItem>
             }
             // role admin
-            else if(button.roles.includes(role.ADMIN) && !objectIsEmpty(loggedUser) && userHasRole(loggedUser, role.ADMIN)) {
+            else if(objectHasRole(button, role.ADMIN) && !objectIsEmpty(loggedUser) && userHasRole(loggedUser, role.ADMIN)) {
                 return <NavItem key={index}>
                     <NavLink tag={RRNavLink} exact={button.exact} to={button.to} activeClassName="active">{button.label}</NavLink>
                 </NavItem>
             }
             // role OEPG
-            else if(button.roles.includes(role.OEPG) && !objectIsEmpty(loggedUser) && userHasRole(loggedUser, role.OEPG)) {
+            else if(objectHasRole(button, role.OEPG) && !objectIsEmpty(loggedUser) && userHasRole(loggedUser, role.OEPG)) {
                 return <NavItem key={index}>
                     <NavLink tag={RRNavLink} exact={button.exact} to={button.to} activeClassName="active">{button.label}</NavLink>
                 </NavItem>

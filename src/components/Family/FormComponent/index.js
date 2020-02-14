@@ -227,14 +227,13 @@ const FormComponent = () => {
             (response) => {
                 setAlert({color: "success", message: "Успешно редактирано семейство!"});
                 history.goBack();
+                setIsLoading(false);
             },
             (error) => {
                 processErrorMessages(error);
+                setIsLoading(false);
             }
-        )
-        .finally(()=> {
-            setIsLoading(false);
-        });
+        );
     }
 
     return (

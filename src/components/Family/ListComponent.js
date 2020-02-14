@@ -19,6 +19,7 @@ const ListComponent = () => {
         networkClient.get('/family/all', null, 
             (families) => {
                 dispatch(actions.setFamilies(families));
+                setIsLoading(false);
             },
             (error) => {
                 if(error.response) {
@@ -34,10 +35,9 @@ const ListComponent = () => {
                 } else {
                     dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));
                 }
+                setIsLoading(false);
             }
-        ).finally(() => {
-            setIsLoading(false);
-        });
+        );
 
         // eslint-disable-next-line
     }, []);

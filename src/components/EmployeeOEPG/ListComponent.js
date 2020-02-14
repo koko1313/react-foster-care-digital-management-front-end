@@ -35,13 +35,13 @@ const ListComponent = () => {
         networkClient.get('/employee-oepg/all', null, 
             (users) => {
                 dispatch(actions.setEmployeesOEPG(users));
+                setIsLoading(false);
             },
             (error) => {
                 processErrorMessages(error);
+                setIsLoading(false);
             }
-        ).finally(() => {
-            setIsLoading(false);
-        });
+        );
     
         // eslint-disable-next-line
     }, []);
@@ -61,14 +61,14 @@ const ListComponent = () => {
         
         networkClient.delete(`/employee-oepg/delete/${id}`, null, 
             () => { 
-                dispatch(actions.deleteEmployeeOEPG(id)) 
+                dispatch(actions.deleteEmployeeOEPG(id));
+                setIsLoading(false);
             },
             (error) => {
                 processErrorMessages(error);
+                setIsLoading(false);
             }
-        ).finally(() => { 
-            setIsLoading(false);
-        });
+        );
     }
     
     const renderUsersList = () => {

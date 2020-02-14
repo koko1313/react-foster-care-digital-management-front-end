@@ -12,7 +12,7 @@ import networkClient from './network/network-client';
   
 import Header from './components/Layout/Header';
 import role from './roles';
-import { objectIsEmpty, userHasRole } from './helpers';
+import { objectIsEmpty, userHasRole, objectHasRole } from './helpers';
 
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
@@ -47,13 +47,15 @@ const Router = () => {
 
     useEffect(() => {
         // check if there is logged user
-        networkClient.get("/user/logged", null, (loggedUser) => {
-            dispatch(actions.setLoggedUser(loggedUser));
-        })
-        .finally(() => {
-            setCheckedForLoggedUser(true);
-        });
-
+        networkClient.get("/user/logged", null, 
+            (loggedUser) => {
+                dispatch(actions.setLoggedUser(loggedUser));
+                setCheckedForLoggedUser(true);
+            },
+            () => {
+                setCheckedForLoggedUser(true);
+            }
+        );
         // eslint-disable-next-line
     }, []);
 
@@ -180,37 +182,38 @@ const Router = () => {
         if(!checkedForLoggedUser) {
             return <Loader loading={true} fullScreen={true} />;
         }
+        if(!routes) return;
 
         return routes.map((route, index) => {
             if(route.path === '*') {
                 return <Redirect key={index} to='/' />;
             }
             // all roles
-            else if(route.roles.includes(role.ALL)) {
+            else if(objectHasRole(route, role.ALL)) {
                 return <Route key={index} exact={route.exact} path={route.path}>
                     {route.main}
                 </Route>;
             }
             // role logged
-            else if(route.roles.includes(role.LOGGED) && !objectIsEmpty(loggedUser)) {
+            else if(objectHasRole(route, role.LOGGED) && !objectIsEmpty(loggedUser)) {
                 return <Route key={index} exact={route.exact} path={route.path}>
                     {route.main}
                 </Route>;
             }
             // role guest
-            else if(route.roles.includes(role.GUEST) && objectIsEmpty(loggedUser)) {
+            else if(objectHasRole(route, role.GUEST) && objectIsEmpty(loggedUser)) {
                 return <Route key={index} exact={route.exact} path={route.path}>
                     {route.main}
                 </Route>;
             }
             // role admin
-            else if(route.roles.includes(role.ADMIN) && !objectIsEmpty(loggedUser) && userHasRole(loggedUser, role.ADMIN)) {
+            else if(objectHasRole(route, role.ADMIN) && !objectIsEmpty(loggedUser) && userHasRole(loggedUser, role.ADMIN)) {
                 return <Route key={index} exact={route.exact} path={route.path}>
                     {route.main}
                 </Route>;
             }
             // role OEPG
-            else if(route.roles.includes(role.OEPG) && !objectIsEmpty(loggedUser) && userHasRole(loggedUser, role.OEPG)) {
+            else if(objectHasRole(route, role.OEPG) && !objectIsEmpty(loggedUser) && userHasRole(loggedUser, role.OEPG)) {
                 return <Route key={index} exact={route.exact} path={route.path}>
                     {route.main}
                 </Route>;

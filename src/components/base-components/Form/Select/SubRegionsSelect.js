@@ -17,12 +17,15 @@ const SubRegionsSelect = (props) => {
 
         setIsLoading(true);
 
-        networkClient.get("/sub-region/all", null, (subRegions) => {
-            dispatch(actions.setSubRegions(subRegions));
-        })
-        .finally(()=> {
-            setIsLoading(false);
-        });
+        networkClient.get("/sub-region/all", null, 
+            (subRegions) => {
+                dispatch(actions.setSubRegions(subRegions));
+                setIsLoading(false);
+            },
+            () => {
+                setIsLoading(false);
+            }
+        );
 
         // eslint-disable-next-line
     }, []);
