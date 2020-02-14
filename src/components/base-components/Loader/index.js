@@ -9,7 +9,7 @@ const Loader = (props) => {
     `;
 
     const fullScreenCss = `
-        background-color: rgba(150, 150, 150, 0.5);
+        background-color: rgba(225, 225, 225, 0.8);
         position: fixed;
         top: 0;
         left: 0;
