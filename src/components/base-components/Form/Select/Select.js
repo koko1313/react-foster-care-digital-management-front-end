@@ -14,7 +14,7 @@ const Select = (props) => {
                 {props.label}
                 {ifRequired()}
             </label>
-            <select id={props.id} className="form-control" onChange={props.onChange} value={props.value}>
+            <select id={props.id} className={`form-control ${props.className}`} onChange={props.onChange} value={props.value}>
                 {props.loading ?
                         <option defaultValue value="">Зареждане ...</option>
                     :
@@ -24,6 +24,16 @@ const Select = (props) => {
                     </>
                 }
             </select>
+
+            {props.isInvalid &&
+                    <div className="invalid-feedback">
+                        {props.invalidMessage ?
+                            props.invalidMessage
+                            :
+                            "Полето трябва да бъде попълнено."
+                        }
+                    </div>
+                }
         </div>
     );
 

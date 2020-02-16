@@ -9,6 +9,9 @@ import React from 'react';
  * @param {function} onChange
  * @param {bool} required
  * @param {bool} disabled
+ * 
+ * @param {bool} isInvalid
+ * @param {string} invalidMessage
  */
 const Input = (props) => {
 
@@ -24,15 +27,26 @@ const Input = (props) => {
                 {props.label}
                 {ifRequired()}
             </label>
+
             <input 
                 type={props.type} 
-                className="form-control" 
+                className={`form-control ${props.isInvalid ? "is-invalid" : ""}`} 
                 id={props.id} 
                 placeholder={props.placeholder} 
                 onChange={props.onChange} 
                 value={props.value}
                 disabled={props.disabled ? true : false}
             />
+
+            {props.isInvalid &&
+                <div className="invalid-feedback">
+                    {props.invalidMessage ?
+                        props.invalidMessage
+                        :
+                        "Полето трябва да бъде попълнено."
+                    }
+                </div>
+            }
         </div>
     );
 

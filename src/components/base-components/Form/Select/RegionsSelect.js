@@ -38,7 +38,17 @@ const RegionsSelect = (props) => {
     }
 
     return (
-        <Select id={props.id} label={props.label} placeholder={props.placeholder} required={props.required} onChange={props.onChange} loading={isLoading} value={props.value}>
+        <Select 
+            id = {props.id} 
+            className = {props.className} 
+            label = {props.label} 
+            placeholder = {props.placeholder} 
+            required = {props.required} 
+            onChange = {props.onChange} 
+            loading = {isLoading} 
+            value = {props.value}
+            isInvalid = {props.isInvalid}
+        >
             {renderRegions()}
         </Select>
     );

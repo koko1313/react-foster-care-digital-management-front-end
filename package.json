@@ -20,7 +20,8 @@
     "react-spinners": "^0.8.0",
     "reactstrap": "^8.4.0",
     "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "validator": "^12.2.0"
   },
   "scripts": {
     "start": "react-scripts start",

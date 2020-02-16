@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import networkClient from '../../network/network-client';
 import { Alert } from 'reactstrap';
 import Input from '../base-components/Form/Input';
@@ -7,6 +7,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import Loader from '../base-components/Loader';
 import { useDispatch } from 'react-redux';
 import actions from "../../redux/actions";
+import Validator from 'validator';
 import BackButton from '../base-components/BackButton';
 import AddressInput from '../base-components/Form/AddressInput';
 
@@ -31,7 +32,18 @@ const FormComponent = () => {
     const [region, setRegion] = useState("");
     const [subRegion, setSubRegion] = useState("");
     const [city, setCity] = useState("");
-    const [address, setAddress] = useState("");
+    
+    const [validFields, setValidFields] = useState({
+        isEmailValid: true,
+        isPasswordValid: true,
+        isRePasswordValid: true,
+        isFirstNameValid: true,
+        isSecondNameValid: true,
+        isLastNameValid: true,
+        isRegionValid: true,
+        isSubRegionValid: true,
+        isCityValid: true,
+    });
 
     const { id } = useParams(); // get parameter from url
 
@@ -44,8 +56,38 @@ const FormComponent = () => {
         regionId: region,
         subRegionId: subRegion,
         cityId: city,
-        address: address,
     };
+
+    /**
+     * @returns True when all fields are valid and False when some of the fields is not valid
+     */
+    const validate = () => {
+        const validFields = {
+            isEmailValid: Validator.isEmail(email),
+            isFirstNameValid: !Validator.isEmpty(firstName, {ignore_whitespace: false}),
+            isSecondNameValid: !Validator.isEmpty(secondName, {ignore_whitespace: false}),
+            isLastNameValid: !Validator.isEmpty(lastName, {ignore_whitespace: false}),
+            isRegionValid: !Validator.isEmpty(region + ""),
+            isSubRegionValid: !Validator.isEmpty(subRegion + ""),
+            isCityValid: !Validator.isEmpty(city + ""),
+        }
+
+        // if not editing user, validate the password too
+        if(!isEditingUser) {
+            Object.assign(validate, {
+                isPasswordValid: !Validator.isEmpty(password),
+                isRePasswordValid: !Validator.isEmpty(rePassword),
+            });
+        }
+
+        setValidFields(validFields);
+
+        for(const field in validFields) {
+            if(validFields[field] === false) return false;
+        }
+
+        return true;
+    }
     
     const processErrorMessages = (error) => {
         if(error.response) {
@@ -73,7 +115,7 @@ const FormComponent = () => {
         }
     }
 
-    useState(() => {
+    useEffect(() => {
         if(id) {
             setIsEditingUser(true);
             setIsLoading(true);
@@ -87,7 +129,6 @@ const FormComponent = () => {
                     setRegion(user.region.id);
                     setSubRegion(user.sub_region.id);
                     setCity(user.city.id);
-                    setAddress(user.address);
                     setIsLoading(false);
                 },
                 (error) => {
@@ -95,13 +136,17 @@ const FormComponent = () => {
                 }
             );
         }
+
+        // eslint-disable-next-line
     }, [id]);
     
 
     const registerUser = () => {
+        if(!validate()) return;
+
         if(password !== rePassword) {
             setAlert({color: "danger", message: "Паролите не съвпадат!"});
-            return null;
+            return;
         }
 
         setIsLoading(true);
@@ -122,10 +167,7 @@ const FormComponent = () => {
     }
 
     const updateUser = () => {
-        if(password !== rePassword) {
-            setAlert({color: "danger", message: "Паролите не съвпадат!"});
-            return null;
-        }
+        if(!validate()) return;
 
         setIsLoading(true);
         
@@ -151,12 +193,38 @@ const FormComponent = () => {
             </Alert>
 
             <form>
-                <Input id="email" label="Email" type="email" placeholder="Email ..." required={true} onChange={(e) => setEmail(e.target.value)} value={email} />
+                <Input 
+                    id = "email" 
+                    label = "Email" 
+                    type = "email" 
+                    placeholder = "Email ..." 
+                    required = {true} 
+                    onChange = {(e) => setEmail(e.target.value)} value={email} 
+                    isInvalid = {!validFields.isEmailValid}
+                    invalidMessage = {"Невалиден Email."}
+                />
 
                 {isEditingUser ? null :
                     <>
-                        <Input id="password" label="Парола" type="password" placeholder="Парола ..." required={true} onChange={(e) => setPassword(e.target.value)} />
-                        <Input id="rePassword" label="Повтори парола" type="password" placeholder="Повтори парола ..." required={true} onChange={(e) => setRePassword(e.target.value)} />
+                        <Input 
+                            id = "password" 
+                            label = "Парола" 
+                            type = "password" 
+                            placeholder = "Парола ..." 
+                            required = {true} 
+                            onChange = {(e) => setPassword(e.target.value)} 
+                            isInvalid = {!validFields.isPasswordValid}
+                        />
+
+                        <Input 
+                            id="rePassword" 
+                            label="Повтори парола" 
+                            type="password" 
+                            placeholder="Повтори парола ..." 
+                            required={true} 
+                            onChange={(e) => setRePassword(e.target.value)} 
+                            isInvalid = {!validFields.isPasswordValid}
+                        />
                     </>
                 }
 
@@ -170,18 +238,22 @@ const FormComponent = () => {
                     onChangeFirstName = {(e) => setFirstName(e.target.value)}
                     onChangeSecondName = {(e) => setSecondName(e.target.value)}
                     onChangeLastName = {(e) => setLastName(e.target.value)}
+                    isFirstNameInvalid = {!validFields.isFirstNameValid}
+                    isSecondNameInvalid = {!validFields.isSecondNameValid}
+                    isLastNameInvalid = {!validFields.isLastNameValid}
                 />
 
                 <AddressInput 
                     region = {region}
                     subRegion = {subRegion}
                     city = {city}
-                    address = {address}
                     regionOnChange = {(e) => setRegion(e.target.value)}
                     subRegionOnChange = {(e) => setSubRegion(e.target.value)}
                     cityOnChange = {(e) => setCity(e.target.value)}
-                    addressOnChange = {(e) => setAddress(e.target.value)}
                     required = {true}
+                    isRegionInvalid = {!validFields.isRegionValid}
+                    isSubRegionInvalid = {!validFields.isSubRegionValid}
+                    isCityInvalid = {!validFields.isCityValid}
                 />
 
                 <div className="pull-right">

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import networkClient from '../../../network/network-client';
 import { Alert } from 'reactstrap';
 import Input from '../../base-components/Form/Input';
@@ -137,7 +137,7 @@ const FormComponent = () => {
         }
     }
 
-    useState(() => {
+    useEffect(() => {
         if(id) {
             setIsEditing(true);
             setIsLoading(true);
@@ -201,7 +201,9 @@ const FormComponent = () => {
         } else {
             setWardenId(loggedUser.id);
             setWarden(loggedUser); // when registering family, warden is current logged user
-        }     
+        }
+        
+        // eslint-disable-next-line
     }, [id]);
     
     const register = () => {
