@@ -80,6 +80,12 @@ const FormComponent = () => {
         isManPhoneValid: true,
         isManEducationValid: true,
 
+        isPreferKidMinAgeValid: true,
+        isPreferKidMaxAgeValid: true,
+
+        isAverageMonthlyIncomePerFamilyMemberValid: true,
+        isAnotherIncomeValid: true,
+
         isRegionValid: true,
         isSubRegionValid: true,
         isCityValid: true,
@@ -154,6 +160,12 @@ const FormComponent = () => {
             isManEgnValid: validator.isLength(manEgn, {min:10, max: 10}),
             isManPhoneValid: validator.isMobilePhone(manPhone),
             isManEducationValid: !validator.isEmpty(manEducation + ""),
+
+            isPreferKidMinAgeValid: preferKidMinAge === null || validator.isEmpty(preferKidMinAge) || (validator.isNumeric(preferKidMinAge) && preferKidMinAge > 0),
+            isPreferKidMaxAgeValid: preferKidMaxAge === null || validator.isEmpty(preferKidMaxAge) || (validator.isNumeric(preferKidMaxAge) && preferKidMaxAge > 0),
+
+            isAverageMonthlyIncomePerFamilyMemberValid: averageMonthlyIncomePerFamilyMember === null || validator.isEmpty(averageMonthlyIncomePerFamilyMember || (validator.isNumeric(averageMonthlyIncomePerFamilyMember) && averageMonthlyIncomePerFamilyMember > 0)),
+            isAnotherIncomeValid: anotherIncome === null || validator.isEmpty(anotherIncome) || (validator.isNumeric(anotherIncome) && anotherIncome > 0),
 
             isRegionValid: !validator.isEmpty(region + ""),
             isSubRegionValid: !validator.isEmpty(subRegion + ""),
@@ -403,16 +415,42 @@ const FormComponent = () => {
                     <p><strong>За какво дете бихте желали да се грижите</strong></p>
                     <div className="form-row">
                         <div className="form-group col-md">
-                            <Select id="preferKidGender" label="Предпочитан пол" placeholder="Избери предпочитан пол ..." onChange={(e) => setPreferKidGender(e.target.value)} value={preferKidGender}>
+                            <Select 
+                                id="preferKidGender" 
+                                label="Предпочитан пол" 
+                                placeholder="Избери предпочитан пол ..." 
+                                onChange={(e) => setPreferKidGender(e.target.value)} 
+                                value={preferKidGender}
+                            >
                                 <option value="Момче">Момче</option>
                                 <option value="Момиче">Момиче</option>
                             </Select>
                         </div>
+
                         <div className="form-group col-md">
-                            <Input id="preferKidMinAge" label="Минимална възраст" type="number" placeholder="Минимална възраст ..." onChange={(e) => setPreferKidMinAge(e.target.value)} value={preferKidMinAge} />
+                            <Input 
+                                id="preferKidMinAge" 
+                                label="Минимална възраст" 
+                                type="number" 
+                                placeholder="Минимална възраст ..." 
+                                onChange={(e) => setPreferKidMinAge(e.target.value)} 
+                                value={preferKidMinAge} 
+                                isInvalid = {!validFields.isPreferKidMinAgeValid}
+                                invalidMessage = "Невалидна стойност."
+                            />
                         </div>
+
                         <div className="form-group col-md">
-                            <Input id="preferKidMaxAge" label="Максимална възраст" type="number" placeholder="Максимална възраст ..." onChange={(e) => setPreferKidMaxAge(e.target.value)} value={preferKidMaxAge} />
+                            <Input 
+                                id="preferKidMaxAge" 
+                                label="Максимална възраст" 
+                                type="number" 
+                                placeholder="Максимална възраст ..." 
+                                onChange={(e) => setPreferKidMaxAge(e.target.value)} 
+                                value={preferKidMaxAge} 
+                                isInvalid = {!validFields.isPreferKidMaxAgeValid}
+                                invalidMessage = "Невалидна стойност."
+                            />
                         </div>
                     </div>
                     <hr />
@@ -439,17 +477,54 @@ const FormComponent = () => {
                         isAddressInvalid = {!validFields.isAddressValid}
                     />
                     
-                    <Input id="language" label="На какъв език се говори в семейството" type="text" placeholder="На какъв език се говори в семейството ..." value={language} onChange={(e) => setLanguage(e.target.value)} />
-                    <Input id="levelOfBulgarianLanguage" label="Владеете ли български език добре?" type="text" placeholder="Да / не ..." value={levelOfBulgarianLanguage} onChange={(e) => setLevelOfBulgarianLanguage(e.target.value)} />
-                    <Input id="religion" label="Религия" type="text" placeholder="Религия ..." value={religion} onChange={(e) => setReligion(e.target.value)} />
+                    <Input 
+                        id="language" 
+                        label="На какъв език се говори в семейството" 
+                        type="text" 
+                        placeholder="На какъв език се говори в семейството ..." 
+                        value={language} onChange={(e) => setLanguage(e.target.value)} 
+                    />
+
+                    <Input 
+                        id="levelOfBulgarianLanguage" 
+                        label="Владеете ли български език добре?" 
+                        type="text" placeholder="Да / не ..." 
+                        value={levelOfBulgarianLanguage} onChange={(e) => setLevelOfBulgarianLanguage(e.target.value)} 
+                    />
+
+                    <Input 
+                        id="religion" 
+                        label="Религия" 
+                        type="text" 
+                        placeholder="Религия ..." 
+                        value={religion} 
+                        onChange={(e) => setReligion(e.target.value)} 
+                    />
                     
                     <Select id="familyType" label="Желая да предоставям приемна грижа като" placeholder="Желая да предоставям приемна грижа като ..." onChange={(e) => setFamilyType(e.target.value)} value={familyType}>
                         <option value="Доброволно приемно семейство">Доброволно приемно семейство</option>
                         <option value="Професионално приемно семейство">Професионално приемно семейство</option>
                     </Select>
 
-                    <Input id="monthlyIncomePerFamilyMember" label="Среден месечен доход на член от семейството (в лева)" type="number" placeholder="Среден месечен доход на член от семейството (в лева) ..." value={averageMonthlyIncomePerFamilyMember} onChange={(e) => setAverageMonthlyIncomePerFamilyMember(e.target.value)} />
-                    <Input id="anotherIncome" label="Доходи от други източници" type="number" placeholder="Доходи от други източници ..." value={anotherIncome} onChange={(e) => setAnotherIncome(e.target.value)} />
+                    <Input 
+                        id="averageMonthlyIncomePerFamilyMember" 
+                        label="Среден месечен доход на член от семейството (в лева)" 
+                        type="number" 
+                        placeholder="Среден месечен доход на член от семейството (в лева) ..." 
+                        value={averageMonthlyIncomePerFamilyMember} onChange={(e) => setAverageMonthlyIncomePerFamilyMember(e.target.value)} 
+                        isInvalid = {!validFields.isAverageMonthlyIncomePerFamilyMemberValid}
+                        invalidMessage = "Невалидна стойност."
+                    />
+
+                    <Input 
+                        id="anotherIncome" 
+                        label="Доходи от други източници" 
+                        type="number" 
+                        placeholder="Доходи от други източници ..." 
+                        value={anotherIncome} onChange={(e) => setAnotherIncome(e.target.value)} 
+                        isInvalid = {!validFields.isAnotherIncomeValid}
+                        invalidMessage = "Невалидна стойност."
+                    />
                     
                     <Input id="houseType" label="Жилище" type="text" placeholder="Собствено / под наем, брой стаи ..." value={houseType} onChange={(e) => setHouseType(e.target.value)} />
                     <hr />
