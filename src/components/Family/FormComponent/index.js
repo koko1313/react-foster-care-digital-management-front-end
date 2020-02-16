@@ -164,7 +164,7 @@ const FormComponent = () => {
             isPreferKidMinAgeValid: preferKidMinAge === null || validator.isEmpty(preferKidMinAge) || (validator.isNumeric(preferKidMinAge) && preferKidMinAge > 0),
             isPreferKidMaxAgeValid: preferKidMaxAge === null || validator.isEmpty(preferKidMaxAge) || (validator.isNumeric(preferKidMaxAge) && preferKidMaxAge > 0),
 
-            isAverageMonthlyIncomePerFamilyMemberValid: averageMonthlyIncomePerFamilyMember === null || validator.isEmpty(averageMonthlyIncomePerFamilyMember || (validator.isNumeric(averageMonthlyIncomePerFamilyMember) && averageMonthlyIncomePerFamilyMember > 0)),
+            isAverageMonthlyIncomePerFamilyMemberValid: averageMonthlyIncomePerFamilyMember === null || validator.isEmpty(averageMonthlyIncomePerFamilyMember) || (validator.isNumeric(averageMonthlyIncomePerFamilyMember) && averageMonthlyIncomePerFamilyMember > 0),
             isAnotherIncomeValid: anotherIncome === null || validator.isEmpty(anotherIncome) || (validator.isNumeric(anotherIncome) && anotherIncome > 0),
 
             isRegionValid: !validator.isEmpty(region + ""),
