@@ -41,7 +41,6 @@ const SubRegionsSelect = (props) => {
     return (
         <Select 
             id = {props.id} 
-            className = {props.className}
             label = {props.label} 
             placeholder = {props.placeholder} 
             required = {props.required} 

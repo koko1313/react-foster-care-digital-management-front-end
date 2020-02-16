@@ -10,6 +10,7 @@ import actions from "../../../redux/actions";
 import BackButton from '../../base-components/BackButton';
 import ParentInput from './ParentInputs';
 import AddressInput from '../../base-components/Form/AddressInput';
+import validator from 'validator';
 
 const FormComponent = () => {
 
@@ -64,6 +65,27 @@ const FormComponent = () => {
 
     const [warden, setWarden] = useState();
 
+    const [validFields, setValidFields] = useState({
+        isWomanFirstNameValid: true,
+        isWomanSecondNameValid: true,
+        isWomanLastNameValid: true,
+        isWomanEgnValid: true,
+        isWomanPhoneValid: true,
+        isWomanEducationValid: true,
+
+        isManFirstNameValid: true,
+        isManSecondNameValid: true,
+        isManLastNameValid: true,
+        isManEgnValid: true,
+        isManPhoneValid: true,
+        isManEducationValid: true,
+
+        isRegionValid: true,
+        isSubRegionValid: true,
+        isCityValid: true,
+        isAddressValid: true,
+    });
+
     const { id } = useParams(); // get parameter from url
     const history = useHistory();
     const dispatch = useDispatch();
@@ -113,6 +135,40 @@ const FormComponent = () => {
 
         wardenId: wardenId,
     };
+
+    /**
+     * @returns True when all fields are valid and False when some of the fields is not valid
+     */
+    const validate = () => {
+        const validFields = {
+            isWomanFirstNameValid: !validator.isEmpty(womanFirstName),
+            isWomanSecondNameValid: !validator.isEmpty(womanSecondName),
+            isWomanLastNameValid: !validator.isEmpty(womanLastName),
+            isWomanEgnValid: validator.isLength(womanEgn, {min:10, max: 10}),
+            isWomanPhoneValid: validator.isMobilePhone(womanPhone),
+            isWomanEducationValid: !validator.isEmpty(womanEducation + ""),
+
+            isManFirstNameValid: !validator.isEmpty(manFirstName),
+            isManSecondNameValid: !validator.isEmpty(manSecondName),
+            isManLastNameValid: !validator.isEmpty(manLastName),
+            isManEgnValid: validator.isLength(manEgn, {min:10, max: 10}),
+            isManPhoneValid: validator.isMobilePhone(manPhone),
+            isManEducationValid: !validator.isEmpty(manEducation + ""),
+
+            isRegionValid: !validator.isEmpty(region + ""),
+            isSubRegionValid: !validator.isEmpty(subRegion + ""),
+            isCityValid: !validator.isEmpty(city + ""),
+            isAddressValid: !validator.isEmpty(address),
+        }
+
+        setValidFields(validFields);
+
+        for(const field in validFields) {
+            if(validFields[field] === false) return false;
+        }
+
+        return true;
+    }
 
     const processErrorMessages = (error) => {
         if(error.response) {
@@ -207,6 +263,13 @@ const FormComponent = () => {
     }, [id]);
     
     const register = () => {
+        if(!validate()) return;
+
+        if(titular === "") {
+            setAlert({color: "danger", message: "Не е избран титуляр!"});
+            return;
+        }
+
         setIsLoading(true);
         networkClient.post("/family/register", data,
             // success
@@ -224,6 +287,13 @@ const FormComponent = () => {
     }
 
     const update = () => {
+        if(!validate()) return;
+
+        if(titular === "") {
+            setAlert({color: "danger", message: "Не е избран титуляр!"});
+            return;
+        }
+
         setIsLoading(true);
         networkClient.put(`/family/update/${id}`, data,
             (response) => {
@@ -277,6 +347,13 @@ const FormComponent = () => {
                             titularRadioValue = "woman"
                             titularChecked = {titular === "woman"}
                             titularOnSelect = {(e) => setTitular(e.target.value)}
+
+                            isFirstNameInvalid = {!validFields.isWomanFirstNameValid}
+                            isSecondNameInvalid = {!validFields.isWomanSecondNameValid}
+                            isLastNameInvalid = {!validFields.isWomanLastNameValid}
+                            isEgnInvalid = {!validFields.isWomanEgnValid}
+                            isPhoneInvalid = {!validFields.isWomanPhoneValid}
+                            isEducationInvalid = {!validFields.isWomanEducationValid}
                         />
                         <hr />
                     </div>
@@ -310,6 +387,13 @@ const FormComponent = () => {
                             titularRadioValue = "man"
                             titularChecked = {titular === "man"}
                             titularOnSelect = {(e) => setTitular(e.target.value)}
+
+                            isFirstNameInvalid = {!validFields.isManFirstNameValid}
+                            isSecondNameInvalid = {!validFields.isManSecondNameValid}
+                            isLastNameInvalid = {!validFields.isManLastNameValid}
+                            isEgnInvalid = {!validFields.isManEgnValid}
+                            isPhoneInvalid = {!validFields.isManPhoneValid}
+                            isEducationInvalid = {!validFields.isManEducationValid}
                         />
                         <hr />
                     </div>
@@ -341,12 +425,18 @@ const FormComponent = () => {
                         region = {region}
                         subRegion = {subRegion}
                         city = {city}
+                        fullAddress = {true}
                         address = {address}
                         regionOnChange = {(e) => setRegion(e.target.value)}
                         subRegionOnChange = {(e) => setSubRegion(e.target.value)}
                         cityOnChange = {(e) => setCity(e.target.value)}
                         addressOnChange = {(e) => setAddress(e.target.value)}
                         required = {true}
+
+                        isRegionInvalid = {!validFields.isRegionValid}
+                        isSubRegionInvalid = {!validFields.isSubRegionValid}
+                        isCityInvalid = {!validFields.isCityValid}
+                        isAddressInvalid = {!validFields.isAddressValid}
                     />
                     
                     <Input id="language" label="На какъв език се говори в семейството" type="text" placeholder="На какъв език се говори в семейството ..." value={language} onChange={(e) => setLanguage(e.target.value)} />

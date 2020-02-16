@@ -30,7 +30,6 @@ const AddressInput = (props) => {
                 <div className="col-md">
                     <RegionsSelect 
                         id = {`region_${props.id}`} 
-                        className = {props.isRegionInvalid ? "is-invalid" : ""}
                         label = "Област" 
                         placeholder = "Избери област ..." 
                         onChange = {props.regionOnChange} 
@@ -43,7 +42,6 @@ const AddressInput = (props) => {
                 <div className="col-md">
                     <SubRegionsSelect 
                         id = {`subRegion_${props.id}`} 
-                        className = {props.isSubRegionInvalid ? "is-invalid" : ""}
                         label = "Община" 
                         placeholder = "Избери община ..." 
                         onChange = {props.subRegionOnChange} 
@@ -56,7 +54,6 @@ const AddressInput = (props) => {
                 <div className="col-md">
                     <CitiesSelect 
                         id = {`city_${props.id}`} 
-                        className = {props.isCityInvalid ? "is-invalid" : ""}
                         label = "Град" 
                         placeholder = "Избери град ..." 
                         onChange = {props.cityOnChange} 
