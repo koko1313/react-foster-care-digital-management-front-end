@@ -101,7 +101,7 @@ const DetailsPage = () => {
 
             </div>
 
-            <div className="row pull-right mt-4">
+            <div className="pull-right mt-4">
                 <button type="button" className="btn btn-warning mr-1" onClick={() => { editFamily(family.id) }}>Редактирай</button>
                 <button type="button" className="btn btn-danger" onClick={() => { deleteFamily(family.id) }}>Изтрий</button>
                 <BackButton />

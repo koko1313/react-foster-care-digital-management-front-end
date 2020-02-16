@@ -74,7 +74,7 @@ const FormComponent = () => {
 
         // if not editing user, validate the password too
         if(!isEditingUser) {
-            Object.assign(validate, {
+            Object.assign(validFields, {
                 isPasswordValid: !Validator.isEmpty(password),
                 isRePasswordValid: !Validator.isEmpty(rePassword),
             });
@@ -223,7 +223,7 @@ const FormComponent = () => {
                             placeholder="Повтори парола ..." 
                             required={true} 
                             onChange={(e) => setRePassword(e.target.value)} 
-                            isInvalid = {!validFields.isPasswordValid}
+                            isInvalid = {!validFields.isRePasswordValid}
                         />
                     </>
                 }
