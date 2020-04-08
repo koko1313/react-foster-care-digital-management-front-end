@@ -20,6 +20,7 @@ import Logout from './components/Session/Logout';
 
 import ChildrenListPage from './pages/Children/ListPage';
 import ChildrenFormPage from './pages/Children/FormPage';
+import ChildDetailsPage from './pages/Children/DetailsPage'
 
 import FamiliesListPage from './pages/Family/ListPage';
 import FamiliesFormPage from './pages/Family/FormPage';
@@ -149,6 +150,14 @@ const Router = () => {
             roles: [role.OEPG],
             main: () => <Layout>
                 <ChildrenFormPage />
+            </Layout>
+        },
+        {
+            path: '/child/details/:id',
+            exact: true,
+            roles: [role.OEPG],
+            main: () => <Layout>
+                <ChildDetailsPage />
             </Layout>
         },
         {
