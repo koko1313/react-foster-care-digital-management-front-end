@@ -18,10 +18,10 @@ import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import Logout from './components/Session/Logout';
 
-import ChildrenListPage from './pages/Children/ChildrenListPage';
+import ChildrenListPage from './pages/Children/ListPage';
 import ChildrenFormPage from './pages/Children/FormPage';
 
-import FamiliesListPage from './pages/Family/FamiliesListPage';
+import FamiliesListPage from './pages/Family/ListPage';
 import FamiliesFormPage from './pages/Family/FormPage';
 import FamilyDetailsPage from './pages/Family/DetailsPage';
 
