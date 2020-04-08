@@ -1,10 +1,15 @@
 import React from 'react';
+import ChildrenListComponent from '../../components/Children/ListComponent';
 
-const ChildrenListPage = () => {
+const ListPage = () => {
 
     return (
-        <div>Тук ще има страница с деца</div>
+        <>
+            <h1>Деца</h1>
+
+            <ChildrenListComponent />
+        </>
     );
 }
 
-export default ChildrenListPage;
+export default ListPage;
