@@ -6,6 +6,7 @@ import networkClient from '../../network/network-client';
 import FamilyDetailsComponent from '../../components/Family/DetailsComponent';
 import Loader from '../../components/base-components/Loader';
 import BackButton from '../../components/base-components/BackButton';
+import OwnChildrenList from '../../components/Family/DetailsComponent/OwnChildrenListComponent';
 
 const DetailsPage = () => {
 
@@ -107,9 +108,7 @@ const DetailsPage = () => {
                         <div className="col">
                             <h2>Деца</h2>
 
-                            <div className="list-group">
-                                {/* <button className="list-group-item list-group-item-action" onClick={() => {history.push(`/family/document/family-application/${family.id}`)}}>Заявление</button> */}
-                            </div>
+                            <OwnChildrenList family={family} />
                         </div>
                     </div>
                 </div>
