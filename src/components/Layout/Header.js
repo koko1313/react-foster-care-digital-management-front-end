@@ -40,7 +40,7 @@ const Header = () => {
         },
         {
             exact: true,
-            to: "/children",
+            to: "/child/all",
             label: "Деца",
             roles: [role.OEPG],
         },

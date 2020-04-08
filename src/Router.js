@@ -19,6 +19,7 @@ import LoginPage from './pages/LoginPage';
 import Logout from './components/Session/Logout';
 
 import ChildrenListPage from './pages/Children/ChildrenListPage';
+import ChildrenFormPage from './pages/Children/FormPage';
 
 import FamiliesListPage from './pages/Family/FamiliesListPage';
 import FamiliesFormPage from './pages/Family/FormPage';
@@ -127,11 +128,27 @@ const Router = () => {
             </Layout>
         },
         {
-            path: '/children',
+            path: '/child/all',
             exact: true,
             roles: [role.OEPG],
             main: () => <Layout>
                 <ChildrenListPage />
+            </Layout>
+        },
+        {
+            path: '/child/register',
+            exact: true,
+            roles: [role.OEPG],
+            main: () => <Layout>
+                <ChildrenFormPage />
+            </Layout>
+        },
+        {
+            path: '/child/edit/:id',
+            exact: true,
+            roles: [role.OEPG],
+            main: () => <Layout>
+                <ChildrenFormPage />
             </Layout>
         },
         {
