@@ -8,10 +8,10 @@ import { useHistory } from 'react-router-dom';
 const OwnChildrenList = (props) => {
     const history = useHistory();
 
-    if(!props.family) return null;
-    if(props.family.children.length === 0) return null;
-
     const renderChildrenList = () => {
+        if(!props.family) return null;
+        if(props.family.children.length === 0) return null;
+
         return props.family.children.map((child) => {
             return (
                 <button 
@@ -29,7 +29,7 @@ const OwnChildrenList = (props) => {
             {renderChildrenList()}
 
             <button 
-                className = "list-group-item list-group-item-action" 
+                className = "list-group-item list-group-item-action list-group-item-light" 
                 onClick = {() => {history.push(`/child/register`)}}>
                     Добави дете
             </button>
