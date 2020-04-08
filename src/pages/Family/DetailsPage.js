@@ -91,12 +91,27 @@ const DetailsPage = () => {
                 </div>
 
                 <div className="col-md">
-                    <h2>Документи</h2>
+                    <div className="row">
+                        <div className="col">
+                            <h2>Документи</h2>
 
-                    <div className="list-group">
-                        <button className="list-group-item list-group-item-action" onClick={() => {history.push(`/family/document/family-application/${family.id}`)}}>Заявление</button>
+                            <div className="list-group">
+                                <button className="list-group-item list-group-item-action" onClick={() => {history.push(`/family/document/family-application/${family.id}`)}}>Заявление</button>
+                            </div>
+                        </div>
                     </div>
                     
+                    <hr />
+
+                    <div className="row">
+                        <div className="col">
+                            <h2>Деца</h2>
+
+                            <div className="list-group">
+                                {/* <button className="list-group-item list-group-item-action" onClick={() => {history.push(`/family/document/family-application/${family.id}`)}}>Заявление</button> */}
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </div>
