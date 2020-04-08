@@ -104,6 +104,14 @@ const Router = () => {
             </Layout>
         },
         {
+            path: '/employee-oepg/all',
+            exact: true,
+            roles: [role.ADMIN],
+            main: () => <Layout>
+                <EmployeeOEPGListPage />
+            </Layout>
+        },
+        {
             path: '/employee-oepg/register',
             exact: true,
             roles: [role.ADMIN],
@@ -117,14 +125,6 @@ const Router = () => {
             roles: [role.ADMIN],
             main: () => <Layout>
                 <EmployeeOEPGFormPage />
-            </Layout>
-        },
-        {
-            path: '/employee-oepg/all',
-            exact: true,
-            roles: [role.ADMIN],
-            main: () => <Layout>
-                <EmployeeOEPGListPage />
             </Layout>
         },
         {
