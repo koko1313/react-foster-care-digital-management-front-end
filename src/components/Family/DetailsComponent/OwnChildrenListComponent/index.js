@@ -14,26 +14,28 @@ const OwnChildrenList = (props) => {
 
         return props.family.children.map((child) => {
             return (
-                <button 
-                    key = {child.id}
-                    className = "list-group-item list-group-item-action" 
-                    onClick = {() => {history.push(`/child/details/${child.id}`)}}>
-                        {child.first_name} {child.second_name} {child.last_name}
-                </button>
+                <li key={child.id} className="row child-item">
+                    <div 
+                        className = "col child-name" 
+                        onClick = {() => {history.push(`/child/details/${child.id}`)}}>
+                            {child.first_name} {child.second_name} {child.last_name}
+                    </div>
+                    <div className="col-3 child-remove"><i className="fa fa-user-times"></i></div>
+                </li>
             );
         });
     }
 
     return (
-        <div className="list-group">
+        <ul className="family-children-list">
             {renderChildrenList()}
 
-            <button 
-                className = "list-group-item list-group-item-action list-group-item-light" 
+            <li 
+                className = "child-item child-add" 
                 onClick = {() => {history.push(`/child/register`)}}>
                     Добави дете
-            </button>
-        </div>
+            </li>
+        </ul>
     );
 }
 

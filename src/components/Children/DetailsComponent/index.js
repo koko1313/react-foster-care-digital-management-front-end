@@ -48,6 +48,12 @@ const DetailsComponent = (props) => {
                                 {child.family && child.family.man 
                                     && `${child.family.man.first_name} ${child.family.man.second_name} ${child.family.man.last_name}`}
                             </button>
+
+                            <button 
+                                className = "btn btn-warning" 
+                                onClick = {() => {history.push(`TODO`)}}>
+                                    <i className="fa fa-edit"></i>
+                            </button>
                         </div>
                     </div>
                 </div>

@@ -1,0 +1,57 @@
+.family-children-list {
+    padding: 0;
+    border: 1px solid #DFDFDF;
+    border-radius: 0.25rem;
+
+    .child-item {    
+        list-style-type: none;
+        margin: 0;
+        border-bottom: 1px solid #DFDFDF;
+        
+        .child-name {
+            padding: 1rem 0.5rem 1rem 0.5rem;
+            border-right: 1px solid #DFDFDF;
+            cursor: pointer;
+
+            &:hover {
+                background-color: #F8F9FA;
+            }
+        }
+
+        .child-remove {
+            padding: 0 1rem 0 1rem;
+            font-size: 1.3em;
+            color: $danger;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            
+            * {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translateY(-50%) translateX(-50%);
+            }
+
+            &:hover {
+                background-color: #F8F9FA;
+            } 
+        }  
+    }
+
+    .child-item:last-child { 
+        border-bottom: none;
+    }
+
+    .child-add {
+        text-align: center;
+        padding: 1rem 0 1rem 0;
+        margin: 0;
+        color: $secondary;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #F8F9FA;
+        }
+    }
+}
