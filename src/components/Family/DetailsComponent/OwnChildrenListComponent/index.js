@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { Alert } from 'reactstrap';
+import AddChildToFamilyComponent from './AddChildToFamilyComponent';
 
 /**
  * @param {Object} family 
@@ -7,6 +9,12 @@ import { useHistory } from 'react-router-dom';
  */
 const OwnChildrenList = (props) => {
     const history = useHistory();
+
+    const [alert, setAlert] = useState({color: null, message: null});
+    const onDismiss = () => setAlert({color: null, message: null});
+
+    // If adding child, this flag will be set to true
+    const [isAddingChild, setIsAddingChild] = useState();
 
     const renderChildrenList = () => {
         if(!props.family) return null;
@@ -26,16 +34,38 @@ const OwnChildrenList = (props) => {
         });
     }
 
-    return (
-        <ul className="family-children-list">
-            {renderChildrenList()}
+    const renderAddChildButton = () => {
+        if(isAddingChild) {
+            return (
+                <li className="child-item child-add-select-item" >
+                    <AddChildToFamilyComponent 
+                        setAlert = {setAlert}
+                        closeFunction = {() => {setIsAddingChild(false)}} />
+                </li>
+            );
+        }
 
+        return (
             <li 
-                className = "child-item child-add" 
-                onClick = {() => {history.push(`/child/register`)}}>
+                className = "child-item child-add-button-item" 
+                onClick = {() => {setIsAddingChild(true)}}>
                     Добави дете
             </li>
-        </ul>
+        );
+    }
+
+    return (
+        <>
+            <Alert color={alert.color} isOpen={alert.message ? true : false} toggle={onDismiss}>
+                {alert.message}
+            </Alert>
+
+            <ul className="family-children-list">
+                {renderChildrenList()}
+
+                {renderAddChildButton()}
+            </ul>
+        </>
     );
 }
 
