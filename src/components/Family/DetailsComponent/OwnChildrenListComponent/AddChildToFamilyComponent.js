@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Alert } from 'reactstrap';
 import Select from '../../../base-components/Form/Select/Select';
 import networkClient from '../../../../network/network-client';
 
@@ -54,7 +53,7 @@ const AddChildToFamilyComponent = (props) => {
                     <div className="col">
                         <div className="pull-right">
                             <button type="button" className="btn btn-light mx-1" onClick={props.closeFunction}>Отказ</button>
-                            <button type="button" className="btn btn-primary" onClick={addChildToFamily}>Добави</button>
+                            <button type="button" className="btn btn-primary" onClick={addChildToFamily}>Добави дете</button>
                         </div>
                     </div>
                 </div>
