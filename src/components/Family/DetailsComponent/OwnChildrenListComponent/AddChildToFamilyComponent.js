@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import Select from '../../../base-components/Form/Select/Select';
 import networkClient from '../../../../network/network-client';
+import Loader from '../../../base-components/Loader';
 
 /**
  * @param {function} closeFunction 
  */
 const AddChildToFamilyComponent = (props) => {
+    const [isLoading, setIsLoading] = useState(false);
+
     const [childId, setChildId] = useState();
 
-    // TODO - loadging bar
     const addChildToFamily = () => {
+        setIsLoading(true);
 
         // TODO - 12 is hardcored
         const data = {childId: 12};
@@ -19,13 +22,14 @@ const AddChildToFamilyComponent = (props) => {
             // success
             (response) => {
                 props.setAlert({color: "success", message: "Детето беше успешно добавено!"});
+                setIsLoading(false);
                 props.closeFunction();
             },
             // error
             (error) => {
                 props.setAlert({color: "danger", message: "Нещо се обърка!"});
                 // processErrorMessages(error);
-                // setIsLoading(false);
+                setIsLoading(false);
                 props.closeFunction();
             }
         );
@@ -33,6 +37,8 @@ const AddChildToFamilyComponent = (props) => {
 
     return (
         <>
+            <Loader loading={isLoading} />
+
             <div className="container">
                 <div className="row">
                     <div className="col">
