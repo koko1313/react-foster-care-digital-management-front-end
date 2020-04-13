@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import networkClient from '../../network/network-client';
+import networkClient from '../../../network/network-client';
 import { Alert } from 'reactstrap';
-import Input from '../base-components/Form/Input';
+import Input from '../../base-components/Form/Input';
 import { useParams, useHistory } from 'react-router-dom';
-import Loader from '../base-components/Loader';
-import Select from '../base-components/Form/Select/Select';
-import NamesInput from '../base-components/Form/NamesInput';
-import AddressInput from '../base-components/Form/AddressInput';
+import Loader from '../../base-components/Loader';
+import Select from '../../base-components/Form/Select/Select';
+import NamesInput from '../../base-components/Form/NamesInput';
+import AddressInput from '../../base-components/Form/AddressInput';
 import { useSelector, useDispatch } from 'react-redux';
-import actions from "../../redux/actions";
-import BackButton from '../base-components/BackButton';
+import actions from "../../../redux/actions";
+import BackButton from '../../base-components/BackButton';
 import validator from 'validator';
+import FamilySelect from './FamilySelect';
 
 const FormComponent = () => {
 
@@ -26,6 +27,7 @@ const FormComponent = () => {
     const [lastName, setLastName] = useState("");
     const [egn, setEgn] = useState("");
     const [gender, setGender] = useState("");
+    const [familyId, setFamilyId] = useState("");
     const [region, setRegion] = useState("");
     const [subRegion, setSubRegion] = useState("");
     const [city, setCity] = useState("");
@@ -58,6 +60,7 @@ const FormComponent = () => {
         lastName: lastName,
         egn: egn,
         gender: gender,
+        familyId: familyId,
         regionId: region,
         subRegionId: subRegion,
         cityId: city,
@@ -128,6 +131,7 @@ const FormComponent = () => {
                     setLastName(child.last_name);
                     setEgn(child.egn);
                     setGender(child.gender);
+                    setFamilyId(child.familyId);
 
                     setRegion(child.region.id);
                     setSubRegion(child.sub_region.id);
@@ -225,6 +229,8 @@ const FormComponent = () => {
                     <option value="Момиче">Момиче</option>
                     <option value="Момче">Момче</option>
                 </Select>
+
+                <FamilySelect onChange={(e) => setFamilyId(e.target.value)} />
 
                 <AddressInput 
                     fullAddress = {true}
