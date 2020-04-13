@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Alert } from 'reactstrap';
 import AddChildToFamilyComponent from './AddChildToFamilyComponent';
+import Loader from '../../../base-components/Loader';
+import networkClient from '../../../../network/network-client';
+import actions from '../../../../redux/actions';
 
 const OwnChildrenListComponent = () => {
     const history = useHistory();
+
+    const [isLoading, setIsLoading] = useState(false);
 
     const [alert, setAlert] = useState({color: null, message: null});
     const onDismiss = () => setAlert({color: null, message: null});
@@ -14,6 +19,25 @@ const OwnChildrenListComponent = () => {
     const [isAddingChild, setIsAddingChild] = useState();
     
     const family = useSelector(state => state.currentFamily);
+
+    const dispatch = useDispatch();
+
+    const removeChildFromFamily = (childId) => {
+        setIsLoading(true);
+
+        const data = {childId: childId};
+
+        networkClient.post(`/family/${family.id}/remove_child`, data, 
+            (child) => {
+                dispatch(actions.removeChildFromCurrentFamily(child));
+                setIsLoading(false);
+            },
+            (error) => {
+                //processErrorMessages(error);
+                setIsLoading(false);
+            }
+        );
+    }
 
     const renderChildrenList = () => {
         if(!family) return;
@@ -27,7 +51,7 @@ const OwnChildrenListComponent = () => {
                         onClick = {() => {history.push(`/child/details/${child.id}`)}}>
                             {child.first_name} {child.second_name} {child.last_name}
                     </div>
-                    <div className="col-3 child-remove"><i className="fa fa-user-times"></i></div>
+                    <div className="col-3 child-remove" onClick={() => {removeChildFromFamily(child.id)}}><i className="fa fa-user-times"></i></div>
                 </li>
             );
         });
@@ -58,6 +82,8 @@ const OwnChildrenListComponent = () => {
             <Alert color={alert.color} isOpen={alert.message ? true : false} toggle={onDismiss}>
                 {alert.message}
             </Alert>
+
+            <Loader loading={isLoading} />
 
             <ul className="family-children-list">
                 {renderChildrenList()}

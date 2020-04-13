@@ -9,6 +9,10 @@ export function currentFamily(state = {}, action) {
             state.children.push(action.payload);
             return state; 
         }
+        case types.REMOVE_CHILD_FROM_CURRENT_FAMILY: {
+            state.children = state.children.filter(item => item.id !== action.payload.id);
+            return state;
+        }
         default: return state;
     }
 }

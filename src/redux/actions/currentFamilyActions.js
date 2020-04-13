@@ -7,3 +7,7 @@ export function setCurrentFamily (family) {
 export function addChildToCurrentFamily (child) {
     return {type: types.ADD_CHILD_TO_CURRENT_FAMILY, payload: child};
 }
+
+export function removeChildFromCurrentFamily (child) {
+    return {type: types.REMOVE_CHILD_FROM_CURRENT_FAMILY, payload: child};
+}
