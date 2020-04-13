@@ -131,7 +131,11 @@ const FormComponent = () => {
                     setLastName(child.last_name);
                     setEgn(child.egn);
                     setGender(child.gender);
-                    setFamilyId(child.family.id);
+                    
+                    if(child.family) {
+                        setFamilyId(child.family.id);
+                        console.log(child.family.id);
+                    }
 
                     setRegion(child.region.id);
                     setSubRegion(child.sub_region.id);
