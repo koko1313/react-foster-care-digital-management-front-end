@@ -1,5 +1,18 @@
 import React from 'react';
 
+/**
+ * @param {string} id
+ * @param {string} label
+ * @param {string} value
+ * @param {string} placeholder
+ * @param {string} invalidMessage
+ * @param {function} onChange
+ * @param {bool} required
+ * @param {bool} fullAddress include address field
+ * 
+ * @param {bool} isInvalid
+ * @param {bool} loading
+ */
 const Select = (props) => {
 
     const ifRequired = () => {
