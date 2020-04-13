@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Select from '../../../base-components/Form/Select/Select';
 import networkClient from '../../../../network/network-client';
-import Loader from '../../../base-components/Loader';
+import { useDispatch, useSelector } from 'react-redux';
+import actions from '../../../../redux/actions';
 
 /**
  * @param {function} closeFunction 
@@ -11,34 +12,61 @@ const AddChildToFamilyComponent = (props) => {
 
     const [childId, setChildId] = useState();
 
+    const dispatch = useDispatch();
+
+    const children = useSelector(state => state.children);
+    const family = useSelector(state => state.currentFamily);
+
+    useEffect(() => {
+        setIsLoading(true);
+        
+        networkClient.get(`/child/all-free`, null, 
+            (children) => {
+                dispatch(actions.setChildren(children));
+                setIsLoading(false);
+            },
+            (error) => {
+                //processErrorMessages(error);
+                setIsLoading(false);
+            }
+        );
+
+        //eslint-disable-next-line
+    }, []);
+
+    const renderChildrenOptions = () => {
+        if(!children) return;
+
+        return children.map((child) => {
+            return <option key={child.id} value={child.id}>{`[${child.egn}] ${child.first_name} ${child.last_name}`}</option>
+        });
+    }
+
     const addChildToFamily = () => {
         setIsLoading(true);
 
-        // TODO - 12 is hardcored
-        const data = {childId: 12};
+        const data = {childId: childId};
 
-        // TODO - 3 is hardcored
-        networkClient.post("/family/3/add_child", data,
+        networkClient.post(`/family/${family.id}/add_child`, data,
             // success
             (response) => {
                 props.setAlert({color: "success", message: "Детето беше успешно добавено!"});
-                setIsLoading(false);
+                dispatch(actions.addChildToCurrentFamily(response));
                 props.closeFunction();
+                setIsLoading(false);
             },
             // error
             (error) => {
                 props.setAlert({color: "danger", message: "Нещо се обърка!"});
                 // processErrorMessages(error);
-                setIsLoading(false);
                 props.closeFunction();
+                setIsLoading(false);
             }
         );
     }
 
     return (
         <>
-            <Loader loading={isLoading} />
-
             <div className="container">
                 <div className="row">
                     <div className="col">
@@ -48,9 +76,9 @@ const AddChildToFamilyComponent = (props) => {
                             placeholder = "Избери дете ..." 
                             onChange = {(e) => setChildId(e.target.value)} 
                             value = {childId}
+                            loading = {isLoading}
                         >
-                            <option value="Момче">Дете 1</option>
-                            <option value="Момиче">Дете 2</option>
+                            {renderChildrenOptions()}
                         </Select>
                     </div>
                 </div>

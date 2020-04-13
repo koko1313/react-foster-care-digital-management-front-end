@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { Alert } from 'reactstrap';
 import AddChildToFamilyComponent from './AddChildToFamilyComponent';
 
-/**
- * @param {Object} family 
- * @returns List of family's children
- */
-const OwnChildrenList = (props) => {
+const OwnChildrenListComponent = () => {
     const history = useHistory();
 
     const [alert, setAlert] = useState({color: null, message: null});
@@ -15,12 +12,14 @@ const OwnChildrenList = (props) => {
 
     // If adding child, this flag will be set to true
     const [isAddingChild, setIsAddingChild] = useState();
+    
+    const family = useSelector(state => state.currentFamily);
 
     const renderChildrenList = () => {
-        if(!props.family) return null;
-        if(props.family.children.length === 0) return null;
+        if(!family) return;
+        if(!family.children) return;
 
-        return props.family.children.map((child) => {
+        return family.children.map((child) => {
             return (
                 <li key={child.id} className="row child-item">
                     <div 
@@ -69,4 +68,4 @@ const OwnChildrenList = (props) => {
     );
 }
 
-export default OwnChildrenList;
+export default OwnChildrenListComponent;

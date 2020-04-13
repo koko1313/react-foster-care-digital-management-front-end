@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import actions from '../../redux/actions';
 import networkClient from '../../network/network-client';
 import FamilyDetailsComponent from '../../components/Family/DetailsComponent';
 import Loader from '../../components/base-components/Loader';
 import BackButton from '../../components/base-components/BackButton';
-import OwnChildrenList from '../../components/Family/DetailsComponent/OwnChildrenListComponent';
+import OwnChildrenListComponent from '../../components/Family/DetailsComponent/OwnChildrenListComponent';
 
 const DetailsPage = () => {
 
     const [isLoading, setIsLoading] = useState(false);
-    const [family, setFamily] = useState();
+
+    const family = useSelector(state => state.currentFamily);
 
     const dispatch = useDispatch();
     const history = useHistory();
@@ -43,7 +44,7 @@ const DetailsPage = () => {
         
         networkClient.get(`/family/${id}`, null, 
             (family) => {
-                setFamily(family);
+                dispatch(actions.setCurrentFamily(family));
                 setIsLoading(false);
             },
             (error) => {
@@ -88,7 +89,7 @@ const DetailsPage = () => {
             <div className="row">
 
                 <div className="col-md-8">
-                    <FamilyDetailsComponent family={family} />
+                    <FamilyDetailsComponent />
                 </div>
 
                 <div className="col-md">
@@ -108,7 +109,7 @@ const DetailsPage = () => {
                         <div className="col">
                             <h2>Деца</h2>
 
-                            <OwnChildrenList family={family} />
+                            <OwnChildrenListComponent />
                         </div>
                     </div>
                 </div>
