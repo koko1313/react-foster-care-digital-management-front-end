@@ -29,7 +29,7 @@ const DetailsComponent = (props) => {
                     </div>
                     <div className="row">
                         <div className="col-md-3 info-header info-heading">Пол</div>
-                        <div className="col info-body">{child.gender}</div>
+                        <div className="col info-body">{child.gender ? child.gender : "-"}</div>
                     </div>
                     <div className="row">
                         <div className="col-md-3 info-header info-heading">Адрес</div>
@@ -38,16 +38,20 @@ const DetailsComponent = (props) => {
                     <div className="row">
                         <div className="col-md-3 info-header info-heading">Семейство</div>
                         <div className="col info-body">
-                            <button className="btn btn-link" onClick={() => {history.push(`/family/details/${child.family.id}`)}}>
-                                {child.family && child.family.woman 
-                                    && `${child.family.woman.first_name} ${child.family.woman.second_name} ${child.family.woman.last_name}`}
-                                    
-                                {child.family 
-                                    && child.family.woman && child.family.man && ' и '} 
+                            {!child.family && "-"}
 
-                                {child.family && child.family.man 
-                                    && `${child.family.man.first_name} ${child.family.man.second_name} ${child.family.man.last_name}`}
-                            </button>
+                            {child.family &&
+                                <button className="btn btn-link" onClick={() => {history.push(`/family/details/${child.family.id}`)}}>
+                                    {child.family && child.family.woman 
+                                        && `${child.family.woman.first_name} ${child.family.woman.second_name} ${child.family.woman.last_name}`}
+                                        
+                                    {child.family 
+                                        && child.family.woman && child.family.man && ' и '} 
+
+                                    {child.family && child.family.man 
+                                        && `${child.family.man.first_name} ${child.family.man.second_name} ${child.family.man.last_name}`}
+                                </button>
+                            }
                         </div>
                     </div>
                 </div>
