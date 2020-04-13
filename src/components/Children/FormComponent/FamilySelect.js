@@ -3,6 +3,7 @@ import Select from "../../base-components/Form/Select/Select";
 import networkClient from "../../../network/network-client";
 
 /**
+ * @param {string} value
  * @param {function} onChange
  */
 const FamilySelect = (props) => {
@@ -45,6 +46,7 @@ const FamilySelect = (props) => {
         <Select 
             label = "Семейство"
             placeholder = "Избери семейство ..."
+            value = {props.value}
             onChange = {props.onChange}
             loading = {isLoading}
             >

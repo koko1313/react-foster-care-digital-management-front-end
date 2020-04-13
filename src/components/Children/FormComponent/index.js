@@ -131,7 +131,7 @@ const FormComponent = () => {
                     setLastName(child.last_name);
                     setEgn(child.egn);
                     setGender(child.gender);
-                    setFamilyId(child.familyId);
+                    setFamilyId(child.family.id);
 
                     setRegion(child.region.id);
                     setSubRegion(child.sub_region.id);
@@ -230,7 +230,7 @@ const FormComponent = () => {
                     <option value="Момче">Момче</option>
                 </Select>
 
-                <FamilySelect onChange={(e) => setFamilyId(e.target.value)} />
+                <FamilySelect value={familyId} onChange={(e) => setFamilyId(e.target.value)} />
 
                 <AddressInput 
                     fullAddress = {true}
