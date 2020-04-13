@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Alert } from 'reactstrap';
 import AddChildToFamilyComponent from './AddChildToFamilyComponent';
-import Loader from '../../../base-components/Loader';
 import networkClient from '../../../../network/network-client';
 import actions from '../../../../redux/actions';
 
@@ -83,9 +82,7 @@ const OwnChildrenListComponent = () => {
                 {alert.message}
             </Alert>
 
-            <Loader loading={isLoading} />
-
-            <ul className="family-children-list">
+            <ul className={`family-children-list ${isLoading ? "loading" : ""}`}>
                 {renderChildrenList()}
 
                 {renderAddChildButton()}

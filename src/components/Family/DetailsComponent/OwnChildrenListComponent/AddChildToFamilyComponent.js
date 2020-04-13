@@ -50,7 +50,6 @@ const AddChildToFamilyComponent = (props) => {
         networkClient.post(`/family/${family.id}/add_child`, data,
             // success
             (response) => {
-                props.setAlert({color: "success", message: "Детето беше успешно добавено!"});
                 dispatch(actions.addChildToCurrentFamily(response));
                 props.closeFunction();
                 setIsLoading(false);

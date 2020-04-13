@@ -2,6 +2,13 @@
     padding: 0;
     border: 1px solid #DFDFDF;
     border-radius: 0.25rem;
+    z-index: 1;
+
+    &.loading * {
+        opacity: 0.5;
+        animation-duration: 1s;
+        cursor: progress;
+    }
 
     .child-item {    
         list-style-type: none;
