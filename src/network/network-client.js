@@ -47,7 +47,7 @@ export default {
         const data = Object.assign({
             method: 'get',
             baseURL: "http://127.0.0.1:8000/",
-            //baseURL: "https://koko.projects.bgschool.bg/foster-care-rest/",
+            // baseURL: "https://koko.projects.bgschool.bg/foster-care-rest/",
             withCredentials: true,
         }, options);
 
