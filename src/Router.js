@@ -191,7 +191,7 @@ const Router = () => {
             </Layout>
         },
         {
-            path: '/family/details',
+            path: '/family/details/:id',
             exact: true,
             roles: [role.OEPG],
             main: () => <Layout>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { objectIsEmpty } from '../../helpers';
 import actions from '../../redux/actions';
@@ -17,6 +17,8 @@ const DetailsPage = () => {
 
     const dispatch = useDispatch();
     const history = useHistory();
+
+    const { id } = useParams(); // get parameter from url
 
     const processErrorMessages = (error) => {
         if(error.response) {
@@ -39,14 +41,27 @@ const DetailsPage = () => {
     }
 
     useEffect(() => {
-        if(objectIsEmpty(family)) {
-            history.goBack();
+        if((!objectIsEmpty(family) && Number(family.id) !== Number(id)) || objectIsEmpty(family)) {
+            setIsLoading(true);
+        
+            networkClient.get(`/family/${id}`, null, 
+                (family) => {
+                    dispatch(actions.setCurrentFamily(family));
+                    setIsLoading(false);
+                },
+                (error) => {
+                    processErrorMessages(error);
+                    setIsLoading(false);
+                }
+            );
         }
-    }, [dispatch, family, history]);
+
+        // eslint-disable-next-line
+    }, [dispatch, family, history, id]);
 
     const editFamily = (family) => {
         dispatch(actions.setCurrentFamily(family));
-        history.push(`/family/edit`);
+        history.push(`/family/edit/`);
     }
 
     const deleteFamily = (family) => {

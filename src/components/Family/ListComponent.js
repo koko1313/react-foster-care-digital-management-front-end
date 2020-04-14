@@ -45,7 +45,7 @@ const ListComponent = () => {
 
     const viewDetails = (family) => {
         dispatch(actions.setCurrentFamily(family));
-        history.push(`/family/details`);
+        history.push(`/family/details/${family.id}`);
     }
     
     const renderFamiliesList = () => {

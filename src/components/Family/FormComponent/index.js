@@ -260,10 +260,6 @@ const FormComponent = () => {
             setWarden(family.warden); // when editing, warden is family warden
 
             setIsLoading(false);
-
-            return () => {
-                dispatch(actions.setCurrentFamily({}));
-            }
         } else {
             setWardenId(loggedUser.id);
             setWarden(loggedUser); // when registering family, warden is current logged user
