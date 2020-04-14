@@ -14,36 +14,38 @@ const ListComponent = () => {
     const dispatch = useDispatch();
 
     useEffect(()=> {
-        setIsLoading(true);
-        
-        networkClient.get('/family/all', null, 
-            (families) => {
-                dispatch(actions.setFamilies(families));
-                setIsLoading(false);
-            },
-            (error) => {
-                if(error.response) {
-                    switch(error.response.status) {
-                        case 401:
-                            dispatch(actions.setAlert({title: "Грешка!", message: "Сесията ви изтече!"}));
-                            dispatch(actions.deleteLoggedUser());
-                            break;
-                        default:
-                            dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
-                            break;
+        if(families.length === 0) {
+            setIsLoading(true);
+            
+            networkClient.get('/family/all', null, 
+                (families) => {
+                    dispatch(actions.setFamilies(families));
+                    setIsLoading(false);
+                },
+                (error) => {
+                    if(error.response) {
+                        switch(error.response.status) {
+                            case 401:
+                                dispatch(actions.setAlert({title: "Грешка!", message: "Сесията ви изтече!"}));
+                                dispatch(actions.deleteLoggedUser());
+                                break;
+                            default:
+                                dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
+                                break;
+                        }
+                    } else {
+                        dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));
                     }
-                } else {
-                    dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));
+                    setIsLoading(false);
                 }
-                setIsLoading(false);
-            }
-        );
+            );
+        }
 
-        // eslint-disable-next-line
-    }, []);
+    }, [families, dispatch]);
 
-    const viewDetails = (id) => {
-        history.push(`/family/details/${id}`);
+    const viewDetails = (family) => {
+        dispatch(actions.setCurrentFamily(family));
+        history.push(`/family/details`);
     }
     
     const renderFamiliesList = () => {
@@ -61,16 +63,21 @@ const ListComponent = () => {
                         }
                     </td>
                     <td>
-                        <button type="button" className="btn btn-info mr-1 mb-1" onClick={() => { viewDetails(family.id) }}><i className="fa fa-info-circle"></i></button>
+                        <button type="button" className="btn btn-info mr-1 mb-1" onClick={() => { viewDetails(family) }}><i className="fa fa-info-circle"></i></button>
                     </td>
                 </tr>
             );
         });
     }
 
+    const remountComponent = () => {
+        dispatch(actions.setFamilies([]));
+    }
+
     return (
         <>
             <button className="btn btn-link" onClick={()=>history.push("/family/register")}>Добави семейство</button>
+            <button className="btn btn-info pull-right mb-2" onClick={remountComponent}><i className="fa fa-refresh"></i></button>
             
             <div className="table-responsive">
                 <table className="table">

@@ -12,7 +12,7 @@ import * as currentEmployeeOEPG from './employeeOEPG/currentEmployeeOEPG';
 import * as families from './family/families';
 import * as currentFamily from './family/currentFamily';
 
-import * as children from './children';
+import * as children from './child/children';
 
 
 

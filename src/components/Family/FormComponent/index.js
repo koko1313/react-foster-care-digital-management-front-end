@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { objectIsEmpty } from '../../../helpers';
 import networkClient from '../../../network/network-client';
 import { Alert } from 'reactstrap';
 import Input from '../../base-components/Form/Input';
-import { useParams, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Loader from '../../base-components/Loader';
 import Select from '../../base-components/Form/Select/Select';
 import { useSelector, useDispatch } from 'react-redux';
@@ -92,10 +93,10 @@ const FormComponent = () => {
         isAddressValid: true,
     });
 
-    const { id } = useParams(); // get parameter from url
     const history = useHistory();
     const dispatch = useDispatch();
     const loggedUser = useSelector(state => state.loggedUser); // get logged user, it have to be EmployeeOEPG
+    const family = useSelector(state => state.currentFamily);
 
     // data that will be send to server
     const data = {
@@ -206,73 +207,70 @@ const FormComponent = () => {
     }
 
     useEffect(() => {
-        if(id) {
+        if(!objectIsEmpty(family)) {
             setIsEditing(true);
             setIsLoading(true);
 
-            networkClient.get(`/family/${id}`, null, 
-                (family) => {
-                    setTitular(family.titular);
+            setTitular(family.titular);
 
-                    if(family.woman) {
-                        setWomanFirstName(family.woman.first_name);
-                        setWomanSecondName(family.woman.second_name);
-                        setWomanLastName(family.woman.last_name);
-                        setWomanEgn(family.woman.egn);
-                        setWomanPhone(family.woman.phone);
-                        setWomanEducation(family.woman.education);
-                        setWomanWork(family.woman.work);
-                        setWomanEmploymentType(family.woman.employment_type);
-                        setWomanCitizenship(family.woman.citizenship);
-                    }
+            if(family.woman) {
+                setWomanFirstName(family.woman.first_name);
+                setWomanSecondName(family.woman.second_name);
+                setWomanLastName(family.woman.last_name);
+                setWomanEgn(family.woman.egn);
+                setWomanPhone(family.woman.phone);
+                setWomanEducation(family.woman.education);
+                setWomanWork(family.woman.work);
+                setWomanEmploymentType(family.woman.employment_type);
+                setWomanCitizenship(family.woman.citizenship);
+            }
 
-                    if(family.man) {
-                        setManFirstName(family.man.first_name);
-                        setManSecondName(family.man.second_name);
-                        setManLastName(family.man.last_name);
-                        setManEgn(family.man.egn);
-                        setManPhone(family.man.phone);
-                        setManEducation(family.man.education);
-                        setManWork(family.man.work);
-                        setManEmploymentType(family.man.employment_type);
-                        setManCitizenship(family.man.citizenship);
-                    }
+            if(family.man) {
+                setManFirstName(family.man.first_name);
+                setManSecondName(family.man.second_name);
+                setManLastName(family.man.last_name);
+                setManEgn(family.man.egn);
+                setManPhone(family.man.phone);
+                setManEducation(family.man.education);
+                setManWork(family.man.work);
+                setManEmploymentType(family.man.employment_type);
+                setManCitizenship(family.man.citizenship);
+            }
 
-                    setPreferKidGender(family.prefer_kid_gender);
-                    setPreferKidMinAge(family.prefer_kid_min_age);
-                    setPreferKidMaxAge(family.prefer_kid_max_age);
+            setPreferKidGender(family.prefer_kid_gender);
+            setPreferKidMinAge(family.prefer_kid_min_age);
+            setPreferKidMaxAge(family.prefer_kid_max_age);
 
-                    if(family.region) setRegion(family.region.id);
-                    if(family.sub_region) setSubRegion(family.sub_region.id);
-                    if(family.city) setCity(family.city.id);
-                    setAddress(family.address);
+            if(family.region) setRegion(family.region.id);
+            if(family.sub_region) setSubRegion(family.sub_region.id);
+            if(family.city) setCity(family.city.id);
+            setAddress(family.address);
 
-                    setLanguage(family.language);
-                    setLevelOfBulgarianLanguage(family.level_of_bulgarian_language);
-                    setReligion(family.religion);
+            setLanguage(family.language);
+            setLevelOfBulgarianLanguage(family.level_of_bulgarian_language);
+            setReligion(family.religion);
 
-                    setFamilyType(family.family_type);
-                    setAverageMonthlyIncomePerFamilyMember(family.average_monthly_income_per_family_member);
-                    setAnotherIncome(family.another_income);
-                    setHouseType(family.house_type);
+            setFamilyType(family.family_type);
+            setAverageMonthlyIncomePerFamilyMember(family.average_monthly_income_per_family_member);
+            setAnotherIncome(family.another_income);
+            setHouseType(family.house_type);
 
-                    setWardenId(family.warden.id);
+            setWardenId(family.warden.id);
 
-                    setWarden(family.warden); // when editing, warden is family warden
+            setWarden(family.warden); // when editing, warden is family warden
 
-                    setIsLoading(false);
-                },
-                (error) => {
-                    processErrorMessages(error);
-                }
-            );
+            setIsLoading(false);
+
+            return () => {
+                dispatch(actions.setCurrentFamily({}));
+            }
         } else {
             setWardenId(loggedUser.id);
             setWarden(loggedUser); // when registering family, warden is current logged user
         }
         
-        // eslint-disable-next-line
-    }, [id]);
+        
+    }, [dispatch, family, loggedUser]);
     
     const register = () => {
         if(!validate()) return;
@@ -284,12 +282,11 @@ const FormComponent = () => {
 
         setIsLoading(true);
         networkClient.post("/family/register", data,
-            // success
-            (response) => {
+            (registeredFamily) => {
                 setAlert({color: "success", message: "Успешно регистрирано семейство!"});
+                dispatch(actions.addFamily(registeredFamily));
                 history.push("/family/all");
             },
-            // error
             (error) => {
                 processErrorMessages(error);
 
@@ -307,9 +304,10 @@ const FormComponent = () => {
         }
 
         setIsLoading(true);
-        networkClient.put(`/family/update/${id}`, data,
-            (response) => {
+        networkClient.put(`/family/update/${family.id}`, data,
+            (updatedFamily) => {
                 setAlert({color: "success", message: "Успешно редактирано семейство!"});
+                dispatch(actions.updateFamily(family.id, updatedFamily));
                 history.goBack();
                 setIsLoading(false);
             },

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { objectIsEmpty } from '../../helpers';
 import actions from '../../redux/actions';
 import networkClient from '../../network/network-client';
 import FamilyDetailsComponent from '../../components/Family/DetailsComponent';
@@ -16,8 +17,6 @@ const DetailsPage = () => {
 
     const dispatch = useDispatch();
     const history = useHistory();
-
-    const { id } = useParams(); // get parameter from url
 
     const processErrorMessages = (error) => {
         if(error.response) {
@@ -40,27 +39,17 @@ const DetailsPage = () => {
     }
 
     useEffect(() => {
-        setIsLoading(true);
-        
-        networkClient.get(`/family/${id}`, null, 
-            (family) => {
-                dispatch(actions.setCurrentFamily(family));
-                setIsLoading(false);
-            },
-            (error) => {
-                processErrorMessages(error);
-                setIsLoading(false);
-            }
-        );
+        if(objectIsEmpty(family)) {
+            history.goBack();
+        }
+    }, [dispatch, family, history]);
 
-        // eslint-disable-next-line
-    }, []);
-
-    const editFamily = (id) => {
-        history.push(`/family/edit/${id}`);
+    const editFamily = (family) => {
+        dispatch(actions.setCurrentFamily(family));
+        history.push(`/family/edit`);
     }
 
-    const deleteFamily = (id) => {
+    const deleteFamily = (family) => {
         let confirm = window.confirm("Сигурни ли сте?");
 
         if(!confirm) {
@@ -69,9 +58,9 @@ const DetailsPage = () => {
 
         setIsLoading(true);
         
-        networkClient.delete(`/family/delete/${id}`, null, 
+        networkClient.delete(`/family/delete/${family.id}`, null, 
             () => { 
-                dispatch(actions.deleteFamily(id));
+                dispatch(actions.deleteFamily(family.id));
                 history.push("/family/all");
                 setIsLoading(false);
             },
@@ -119,8 +108,8 @@ const DetailsPage = () => {
             <hr />
 
             <div className="pull-right mt-4">
-                <button type="button" className="btn btn-warning mr-1" onClick={() => { editFamily(family.id) }}>Редактирай</button>
-                <button type="button" className="btn btn-danger" onClick={() => { deleteFamily(family.id) }}>Изтрий</button>
+                <button type="button" className="btn btn-warning mr-1" onClick={() => { editFamily(family) }}>Редактирай</button>
+                <button type="button" className="btn btn-danger" onClick={() => { deleteFamily(family) }}>Изтрий</button>
                 <BackButton />
             </div>
 
