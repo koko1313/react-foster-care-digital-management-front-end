@@ -95,9 +95,14 @@ const ListComponent = () => {
         });
     }
 
+    const remountComponent = () => {
+        dispatch(actions.setEmployeesOEPG([]));
+    }
+
     return (
         <>
             <button className="btn btn-link" onClick={()=>history.push("/employee-oepg/register")}>Регистрация на потребител</button>
+            <button className="btn btn-info pull-right mb-2" onClick={remountComponent}><i className="fa fa-refresh"></i></button>
             
             <div className="table-responsive">
                 <table className="table">
