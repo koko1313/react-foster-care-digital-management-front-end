@@ -16,8 +16,8 @@ const Logout = () => {
             // success
             (loggedUser) => {
                 // remove logged user from redux
-                dispatch(actions.deleteLoggedUser());
-                history.push("/");
+                //dispatch(actions.deleteLoggedUser());
+                window.location.href = "/"; // refresh the page, so clear all the reducers
             },
             // fail
             () => {
