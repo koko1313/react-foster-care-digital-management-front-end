@@ -169,7 +169,7 @@ const FormComponent = () => {
 
         setIsLoading(true);
         
-        networkClient.put(`/employee-oepg/update/${id}`, data,
+        networkClient.put(`/employee-oepg/update/${employee.id}`, data,
             // success
             (response) => {
                 setAlert({color: "success", message: "Успешно редактиран потребител!"});
