@@ -41,7 +41,7 @@ const DetailsComponent = (props) => {
                             {!child.family && "-"}
 
                             {child.family &&
-                                <button className="btn btn-link" onClick={() => {history.push(`/family/details/${child.family.id}`)}}>
+                                <button className="btn btn-link text-left p-0" onClick={() => {history.push(`/family/details/${child.family.id}`)}}>
                                     {child.family && child.family.woman 
                                         && `${child.family.woman.first_name} ${child.family.woman.second_name} ${child.family.woman.last_name}`}
                                         
