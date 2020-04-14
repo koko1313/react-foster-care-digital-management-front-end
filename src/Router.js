@@ -72,6 +72,7 @@ const Router = () => {
                 <HomePage />
             </Layout>
         },
+
         {
             path: '/user/profile',
             exact: true,
@@ -80,6 +81,7 @@ const Router = () => {
                 Тук ще има профил страница
             </Layout>
         },
+
         {
             path: '/login',
             exact: true,
@@ -96,6 +98,7 @@ const Router = () => {
                 <Logout />
             </Layout>
         },
+
         {
             path: '/user-manager',
             exact: true,
@@ -104,6 +107,7 @@ const Router = () => {
                 <ManageUsersPage />
             </Layout>
         },
+
         {
             path: '/employee-oepg/all',
             exact: true,
@@ -121,13 +125,14 @@ const Router = () => {
             </Layout>
         },
         {
-            path: '/employee-oepg/edit/:id',
+            path: '/employee-oepg/edit',
             exact: true,
             roles: [role.ADMIN],
             main: () => <Layout>
                 <EmployeeOEPGFormPage />
             </Layout>
         },
+
         {
             path: '/child/all',
             exact: true,
@@ -160,6 +165,7 @@ const Router = () => {
                 <ChildDetailsPage />
             </Layout>
         },
+
         {
             path: '/family/all',
             exact: true,
@@ -200,6 +206,7 @@ const Router = () => {
                 <DocumentPage />
             </Layout>
         },
+        
         // path if non of above are reached
         { path: '*' },
     ];

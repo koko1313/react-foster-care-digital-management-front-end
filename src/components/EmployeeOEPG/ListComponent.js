@@ -50,7 +50,7 @@ const ListComponent = () => {
 
     const editUser = (employee) => {
         dispatch(actions.setCurrentEmployeeOEPG(employee));
-        history.push(`/employee-oepg/edit/${employee.id}`);
+        history.push(`/employee-oepg/edit`);
     }
 
     const deleteUser = (id) => {
