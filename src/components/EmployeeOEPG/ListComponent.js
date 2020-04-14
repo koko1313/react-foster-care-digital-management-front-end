@@ -30,21 +30,23 @@ const ListComponent = () => {
     }
 
     useEffect(()=> {
-        setIsLoading(true);
+        if(users.length === 0) {
+            setIsLoading(true);
 
-        networkClient.get('/employee-oepg/all', null, 
-            (users) => {
-                dispatch(actions.setEmployeesOEPG(users));
-                setIsLoading(false);
-            },
-            (error) => {
-                processErrorMessages(error);
-                setIsLoading(false);
-            }
-        );
+            networkClient.get('/employee-oepg/all', null, 
+                (users) => {
+                    dispatch(actions.setEmployeesOEPG(users));
+                    setIsLoading(false);
+                },
+                (error) => {
+                    processErrorMessages(error);
+                    setIsLoading(false);
+                }
+            );
+        }
     
         // eslint-disable-next-line
-    }, []);
+    }, [users]);
 
     const editUser = (id) => {
         history.push(`/employee-oepg/edit/${id}`);

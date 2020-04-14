@@ -1,4 +1,4 @@
-import types from '../action-types';
+import types from '../../action-types';
 
 export function setFamilies (families) {
     return {type: types.SET_FAMILIES, payload: families};

@@ -6,8 +6,8 @@ import * as subRegions from './subRegions';
 import * as cities from './cities';
 import * as loggedUser from './loggedUser';
 import * as employeesOEPG from "./employeesOEPG";
-import * as families from './families';
-import * as currentFamily from './currentFamily';
+import * as families from './family/families';
+import * as currentFamily from './family/currentFamily';
 import * as children from './children';
 
 

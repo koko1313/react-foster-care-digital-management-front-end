@@ -1,4 +1,4 @@
-import types from "../action-types";
+import types from "../../action-types";
 
 export function currentFamily(state = {}, action) {
     switch(action.type) {
