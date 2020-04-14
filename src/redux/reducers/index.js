@@ -5,9 +5,13 @@ import * as regions from './regions';
 import * as subRegions from './subRegions';
 import * as cities from './cities';
 import * as loggedUser from './loggedUser';
-import * as employeesOEPG from "./employeesOEPG";
+
+import * as employeesOEPG from "./employeeOEPG/employeesOEPG";
+import * as currentEmployeeOEPG from './employeeOEPG/currentEmployeeOEPG';
+
 import * as families from './family/families';
 import * as currentFamily from './family/currentFamily';
+
 import * as children from './children';
 
 
@@ -18,8 +22,12 @@ export default combineReducers(Object.assign(
     subRegions,
     cities,
     loggedUser, 
+
     employeesOEPG, 
+    currentEmployeeOEPG,
+
     families,
     currentFamily,
+
     children
 ));

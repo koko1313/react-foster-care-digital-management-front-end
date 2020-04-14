@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { objectIsEmpty } from '../../helpers';
 import networkClient from '../../network/network-client';
 import { Alert } from 'reactstrap';
 import Input from '../base-components/Form/Input';
 import NamesInput from '../base-components/Form/NamesInput';
 import { useParams, useHistory } from 'react-router-dom';
 import Loader from '../base-components/Loader';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import actions from "../../redux/actions";
 import Validator from 'validator';
 import BackButton from '../base-components/BackButton';
@@ -19,6 +20,8 @@ const FormComponent = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     const [isEditingUser, setIsEditingUser] = useState(false);
+
+    const employee = useSelector(state => state.currentEmployeeOEPG);
 
     const dispatch = useDispatch();
     const history = useHistory();
@@ -116,29 +119,23 @@ const FormComponent = () => {
     }
 
     useEffect(() => {
-        if(id) {
+        if(!objectIsEmpty(employee)) {
             setIsEditingUser(true);
-            setIsLoading(true);
 
-            networkClient.get(`/employee-oepg/${id}`, null, 
-                (user) => {
-                    setEmail(user.email);
-                    setFirstName(user.first_name);
-                    setSecondName(user.second_name);
-                    setLastName(user.last_name);
-                    setRegion(user.region.id);
-                    setSubRegion(user.sub_region.id);
-                    setCity(user.city.id);
-                    setIsLoading(false);
-                },
-                (error) => {
-                    processErrorMessages(error);
-                }
-            );
+            setEmail(employee.email);
+            setFirstName(employee.first_name);
+            setSecondName(employee.second_name);
+            setLastName(employee.last_name);
+            setRegion(employee.region.id);
+            setSubRegion(employee.sub_region.id);
+            setCity(employee.city.id);
         }
 
-        // eslint-disable-next-line
-    }, [id]);
+        // willUnmount
+        return () => {
+            dispatch(actions.setCurrentEmployeeOEPG({}));
+        }        
+    }, [dispatch, employee]);
     
 
     const registerUser = () => {
@@ -153,8 +150,9 @@ const FormComponent = () => {
 
         networkClient.post("/employee-oepg/register", data,
             // success
-            (response) => {
+            (employee) => {
                 setAlert({color: "success", message: "Успешно регистриран потребител!"});
+                dispatch(actions.addEmployeeOEPG(employee));
                 history.push("/employee-oepg/all");
             },
             // error

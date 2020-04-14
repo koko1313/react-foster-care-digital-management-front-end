@@ -8,7 +8,7 @@ import { useHistory } from 'react-router-dom';
 const ListComponent = () => {
 
     const [isLoading, setIsLoading] = useState(false);
-    const users = useSelector(state => state.employeesOEPG);
+    const employees = useSelector(state => state.employeesOEPG);
 
     const history = useHistory();
     const dispatch = useDispatch();
@@ -30,12 +30,12 @@ const ListComponent = () => {
     }
 
     useEffect(()=> {
-        if(users.length === 0) {
+        if(employees.length === 0) {
             setIsLoading(true);
 
             networkClient.get('/employee-oepg/all', null, 
-                (users) => {
-                    dispatch(actions.setEmployeesOEPG(users));
+                (employees) => {
+                    dispatch(actions.setEmployeesOEPG(employees));
                     setIsLoading(false);
                 },
                 (error) => {
@@ -46,10 +46,11 @@ const ListComponent = () => {
         }
     
         // eslint-disable-next-line
-    }, [users]);
+    }, [employees]);
 
-    const editUser = (id) => {
-        history.push(`/employee-oepg/edit/${id}`);
+    const editUser = (employee) => {
+        dispatch(actions.setCurrentEmployeeOEPG(employee));
+        history.push(`/employee-oepg/edit/${employee.id}`);
     }
 
     const deleteUser = (id) => {
@@ -74,21 +75,21 @@ const ListComponent = () => {
     }
     
     const renderUsersList = () => {
-        if(!users) return null;
+        if(!employees) return null;
 
-        return users.map((user) => {
+        return employees.map((employee) => {
             return (
-                <tr key={user.id}>
-                    <td>{`${user.first_name} ${user.second_name} ${user.last_name}`}</td>
-                    <td>{user.email}</td>
+                <tr key={employee.id}>
+                    <td>{`${employee.first_name} ${employee.second_name} ${employee.last_name}`}</td>
+                    <td>{employee.email}</td>
                     <td>
-                        {user.city ? user.city.name + ", " : null}
-                        {user.sub_region ? user.sub_region.name + ", " : null}
-                        {user.region ? user.region.name : null}
+                        {employee.city ? employee.city.name + ", " : null}
+                        {employee.sub_region ? employee.sub_region.name + ", " : null}
+                        {employee.region ? employee.region.name : null}
                     </td>
                     <td>
-                        <button type="button" className="btn btn-warning mr-1 mb-1" onClick={() => { editUser(user.id) }}><i className="fa fa-edit"></i></button>
-                        <button type="button" className="btn btn-danger mb-1" onClick={() => { deleteUser(user.id) }}><i className="fa fa-trash"></i></button>
+                        <button type="button" className="btn btn-warning mr-1 mb-1" onClick={() => { editUser(employee) }}><i className="fa fa-edit"></i></button>
+                        <button type="button" className="btn btn-danger mb-1" onClick={() => { deleteUser(employee.id) }}><i className="fa fa-trash"></i></button>
                     </td>
                 </tr>
             );
