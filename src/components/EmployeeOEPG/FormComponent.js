@@ -48,8 +48,6 @@ const FormComponent = () => {
         isCityValid: true,
     });
 
-    const { id } = useParams(); // get parameter from url
-
     const data = {
         email: email,
         password: password,
@@ -150,9 +148,9 @@ const FormComponent = () => {
 
         networkClient.post("/employee-oepg/register", data,
             // success
-            (employee) => {
+            (registeredEmployee) => {
                 setAlert({color: "success", message: "Успешно регистриран потребител!"});
-                dispatch(actions.addEmployeeOEPG(employee));
+                dispatch(actions.addEmployeeOEPG(registeredEmployee));
                 history.push("/employee-oepg/all");
             },
             // error
@@ -171,8 +169,9 @@ const FormComponent = () => {
         
         networkClient.put(`/employee-oepg/update/${employee.id}`, data,
             // success
-            (response) => {
+            (updatedEmployee) => {
                 setAlert({color: "success", message: "Успешно редактиран потребител!"});
+                dispatch(actions.updateEmployeeOEPG(employee.id, updatedEmployee));
                 history.push("/employee-oepg/all");
                 setIsLoading(false);
             },

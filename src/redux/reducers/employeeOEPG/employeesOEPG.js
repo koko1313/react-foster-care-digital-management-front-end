@@ -9,6 +9,11 @@ export function employeesOEPG(state = [], action) {
             state.push(action.payload);
             return state;
         }
+        case types.UPDATE_EMPLOYEE_OEPG: {
+            const employeeIndex = state.findIndex(employee => employee.id === action.id);
+            state[employeeIndex] = action.updatedEmployee;
+            return state;
+        }
         case types.DELETE_EMPLOYEE_OEPG: {
             return state.filter(item => item.id !== action.payload);
         }
