@@ -10,7 +10,9 @@ import * as currentEmployeeActions from './employeeOEPG/currentEmployeeOEPG';
 import * as familiesActions from './family/families';
 import * as currentFamilyActions from './family/currentFamily';
 
-import * as childrenActions from './childrenActions';
+import * as childrenActions from './child/children';
+import * as currentChildActions from './child/currentChild';
+
 import * as userSessionActions from './userSessionActions';
 
 
@@ -28,5 +30,7 @@ export default Object.assign(
     currentFamilyActions,
 
     childrenActions,
+    currentChildActions,
+
     userSessionActions
 );
