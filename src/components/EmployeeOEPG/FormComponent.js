@@ -4,7 +4,7 @@ import networkClient from '../../network/network-client';
 import { Alert } from 'reactstrap';
 import Input from '../base-components/Form/Input';
 import NamesInput from '../base-components/Form/NamesInput';
-import { useParams, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Loader from '../base-components/Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import actions from "../../redux/actions";
