@@ -55,7 +55,6 @@ const DetailsPage = () => {
             );
         }
 
-        console.log(child);
         // eslint-disable-next-line
     }, [dispatch, child]);
 
