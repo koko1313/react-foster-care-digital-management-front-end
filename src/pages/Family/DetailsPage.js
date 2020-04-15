@@ -59,8 +59,8 @@ const DetailsPage = () => {
         // eslint-disable-next-line
     }, [dispatch, family, id]);
 
-    const editFamily = () => {
-        history.push(`/family/edit`);
+    const editFamily = (family) => {
+        history.push(`/family/edit/${family.id}`);
     }
 
     const deleteFamily = () => {
@@ -122,7 +122,7 @@ const DetailsPage = () => {
             <hr />
 
             <div className="pull-right mt-4">
-                <button type="button" className="btn btn-warning mr-1" onClick={() => { editFamily() }}>Редактирай</button>
+                <button type="button" className="btn btn-warning mr-1" onClick={() => { editFamily(family) }}>Редактирай</button>
                 <button type="button" className="btn btn-danger" onClick={() => { deleteFamily() }}>Изтрий</button>
                 <BackButton />
             </div>

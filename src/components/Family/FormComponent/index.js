@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { objectIsEmpty } from '../../../helpers';
 import networkClient from '../../../network/network-client';
 import { Alert } from 'reactstrap';
 import Input from '../../base-components/Form/Input';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import Loader from '../../base-components/Loader';
 import Select from '../../base-components/Form/Select/Select';
 import { useSelector, useDispatch } from 'react-redux';
@@ -92,6 +93,8 @@ const FormComponent = (props) => {
         isCityValid: true,
         isAddressValid: true,
     });
+
+    const { id } = useParams(); // get parameter from url
 
     const history = useHistory();
     const dispatch = useDispatch();
@@ -207,6 +210,23 @@ const FormComponent = (props) => {
     }
 
     useEffect(() => {
+        if((!objectIsEmpty(family) && Number(family.id) !== Number(id)) || objectIsEmpty(family)) {
+            setIsLoading(true);
+        
+            networkClient.get(`/family/${id}`, null, 
+                (family) => {
+                    dispatch(actions.setCurrentFamily(family));
+                    setIsLoading(false);
+                },
+                (error) => {
+                    processErrorMessages(error);
+                    setIsLoading(false);
+                }
+            );
+        }
+
+        if(objectIsEmpty(family)) return; // when form page is loaded in edit mode and there is no current familly, so we wait for family from server
+
         if(props.isEditing) {
             setIsLoading(true);
 

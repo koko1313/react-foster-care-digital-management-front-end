@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { objectIsEmpty } from '../../../helpers';
 import networkClient from '../../../network/network-client';
 import { Alert } from 'reactstrap';
 import Input from '../../base-components/Form/Input';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import Loader from '../../base-components/Loader';
 import Select from '../../base-components/Form/Select/Select';
 import NamesInput from '../../base-components/Form/NamesInput';
@@ -49,6 +50,8 @@ const FormComponent = (props) => {
         isCityValid: true,
         isAddressValid: true,
     });
+
+    const { id } = useParams(); // get parameter from url
 
     const history = useHistory();
     const dispatch = useDispatch();
@@ -122,6 +125,23 @@ const FormComponent = (props) => {
     }
 
     useEffect(() => {
+        if((!objectIsEmpty(child) && Number(child.id) !== Number(id)) || objectIsEmpty(child)) {
+            setIsLoading(true);
+        
+            networkClient.get(`/child/${id}`, null, 
+                (child) => {
+                    dispatch(actions.setCurrentChild(child));
+                    setIsLoading(false);
+                },
+                (error) => {
+                    processErrorMessages(error);
+                    setIsLoading(false);
+                }
+            );
+        }
+
+        if(objectIsEmpty(child)) return; // when form page is loaded in edit mode and there is no current child, so we wait for child from server
+
         if(props.isEditing) {
             setIsLoading(true);
 
