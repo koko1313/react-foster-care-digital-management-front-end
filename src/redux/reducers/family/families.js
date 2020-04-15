@@ -62,6 +62,19 @@ export function families(state = [], action) {
             return state;
         }
 
+        case types.REMOVE_CHILD_FROM_CURRENT_FAMILY: {
+            console.log(state);
+            console.log(action);
+
+            const removedChild = action.payload;
+
+            state.forEach((family) => {
+                family.children = family.children.filter(child => child.id !== removedChild.id);
+            })
+
+            return state;
+        }
+
         default: return state;
     }
 }

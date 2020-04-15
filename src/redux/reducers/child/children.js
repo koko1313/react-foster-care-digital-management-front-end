@@ -29,6 +29,30 @@ export function children(state = [], action) {
             return state;
         }
 
+        case types.ADD_CHILD_TO_CURRENT_FAMILY: {
+            const addedChild = action.payload;
+
+            state.forEach((child) => {
+                if(child.id === addedChild.id) {
+                    child.family = addedChild.family;
+                }
+            });
+
+            return state;
+        }
+
+        case types.REMOVE_CHILD_FROM_CURRENT_FAMILY: {
+            const removedChild = action.payload;
+
+            state.forEach((child) => {
+                if(child.id === removedChild.id) {
+                    child.family = null;
+                }
+            });
+
+            return state;
+        }
+
         default: return state;
     }
 }

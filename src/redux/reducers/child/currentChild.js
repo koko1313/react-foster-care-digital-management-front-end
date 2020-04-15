@@ -9,8 +9,6 @@ export function currentChild(state = {}, action) {
 
         // when update family, update it in the child's details
         case types.UPDATE_FAMILY: {
-            console.log(state);
-
             if(objectIsEmpty(state)) return state;
             return {...action.payload}
         }
