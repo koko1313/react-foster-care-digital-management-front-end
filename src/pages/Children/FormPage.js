@@ -1,13 +1,16 @@
 import React from 'react';
 import ChildFormComponent from '../../components/Children/FormComponent';
 
-const FormPage = () => {
+/**
+ * @param {boolean} isEditing 
+ */
+const FormPage = (props) => {
 
     return (
         <>
             <h1>Дете</h1>
             
-            <ChildFormComponent />
+            <ChildFormComponent isEditing={props.isEditing}/>
         </>
     );
 

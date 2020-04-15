@@ -154,7 +154,7 @@ const Router = () => {
             exact: true,
             roles: [role.OEPG],
             main: () => <Layout>
-                <ChildrenFormPage />
+                <ChildrenFormPage isEditing={true} />
             </Layout>
         },
         {
@@ -187,7 +187,7 @@ const Router = () => {
             exact: true,
             roles: [role.OEPG],
             main: () => <Layout>
-                <FamiliesFormPage />
+                <FamiliesFormPage isEditing={true} />
             </Layout>
         },
         {

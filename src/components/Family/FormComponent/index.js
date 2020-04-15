@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { objectIsEmpty } from '../../../helpers';
 import networkClient from '../../../network/network-client';
 import { Alert } from 'reactstrap';
 import Input from '../../base-components/Form/Input';
@@ -13,14 +12,15 @@ import ParentInput from './ParentInputs';
 import AddressInput from '../../base-components/Form/AddressInput';
 import validator from 'validator';
 
-const FormComponent = () => {
+/**
+ * @param {boolean} isEditing
+ */
+const FormComponent = (props) => {
 
     const [alert, setAlert] = useState({color: null, message: null});
     const onDismiss = () => setAlert({color: null, message: null});
 
     const [isLoading, setIsLoading] = useState(false);
-
-    const [isEditing, setIsEditing] = useState(false);
 
     const [titular, setTitular] = useState("");
 
@@ -207,8 +207,7 @@ const FormComponent = () => {
     }
 
     useEffect(() => {
-        if(!objectIsEmpty(family)) {
-            setIsEditing(true);
+        if(props.isEditing) {
             setIsLoading(true);
 
             setTitular(family.titular);
@@ -266,7 +265,7 @@ const FormComponent = () => {
         }
         
         
-    }, [family, loggedUser]);
+    }, [family, loggedUser, props]);
     
     const register = () => {
         if(!validate()) return;
@@ -534,7 +533,7 @@ const FormComponent = () => {
                 </div>
 
                 <div className="pull-right">
-                    {isEditing ?
+                    {props.isEditing ?
                         <button type="button" className="btn btn-warning" onClick={update}>Редактирай</button>
                         :
                         <button type="button" className="btn btn-primary" onClick={register}>Регистрирай</button>
