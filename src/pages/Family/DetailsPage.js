@@ -57,14 +57,13 @@ const DetailsPage = () => {
         }
 
         // eslint-disable-next-line
-    }, [dispatch, family, history, id]);
+    }, [dispatch, family, id]);
 
-    const editFamily = (family) => {
-        dispatch(actions.setCurrentFamily(family));
-        history.push(`/family/edit/`);
+    const editFamily = () => {
+        history.push(`/family/edit`);
     }
 
-    const deleteFamily = (family) => {
+    const deleteFamily = () => {
         let confirm = window.confirm("Сигурни ли сте?");
 
         if(!confirm) {
@@ -123,8 +122,8 @@ const DetailsPage = () => {
             <hr />
 
             <div className="pull-right mt-4">
-                <button type="button" className="btn btn-warning mr-1" onClick={() => { editFamily(family) }}>Редактирай</button>
-                <button type="button" className="btn btn-danger" onClick={() => { deleteFamily(family) }}>Изтрий</button>
+                <button type="button" className="btn btn-warning mr-1" onClick={() => { editFamily() }}>Редактирай</button>
+                <button type="button" className="btn btn-danger" onClick={() => { deleteFamily() }}>Изтрий</button>
                 <BackButton />
             </div>
 

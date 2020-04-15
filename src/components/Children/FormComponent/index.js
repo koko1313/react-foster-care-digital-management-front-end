@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { objectIsEmpty } from '../../../helpers';
 import networkClient from '../../../network/network-client';
 import { Alert } from 'reactstrap';
 import Input from '../../base-components/Form/Input';
-import { useParams, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Loader from '../../base-components/Loader';
 import Select from '../../base-components/Form/Select/Select';
 import NamesInput from '../../base-components/Form/NamesInput';
@@ -48,10 +49,10 @@ const FormComponent = () => {
         isAddressValid: true,
     });
 
-    const { id } = useParams(); // get parameter from url
     const history = useHistory();
     const dispatch = useDispatch();
     const loggedUser = useSelector(state => state.loggedUser); // get logged user, it have to be EmployeeOEPG
+    const child = useSelector(state => state.currentChild);
 
     // data that will be send to server
     const data = {
@@ -120,57 +121,48 @@ const FormComponent = () => {
     }
 
     useEffect(() => {
-        if(id) {
+        if(!objectIsEmpty(child)) {
             setIsEditing(true);
             setIsLoading(true);
 
-            networkClient.get(`/child/${id}`, null, 
-                (child) => {
-                    setFirstName(child.first_name);
-                    setSecondName(child.second_name);
-                    setLastName(child.last_name);
-                    setEgn(child.egn);
-                    setGender(child.gender);
-                    
-                    if(child.family) {
-                        setFamilyId(child.family.id);
-                        console.log(child.family.id);
-                    }
+            setFirstName(child.first_name);
+            setSecondName(child.second_name);
+            setLastName(child.last_name);
+            setEgn(child.egn);
+            setGender(child.gender);
+            
+            if(child.family) {
+                setFamilyId(child.family.id);
+                console.log(child.family.id);
+            }
 
-                    setRegion(child.region.id);
-                    setSubRegion(child.sub_region.id);
-                    setCity(child.city.id);
-                    setAddress(child.address);
+            setRegion(child.region.id);
+            setSubRegion(child.sub_region.id);
+            setCity(child.city.id);
+            setAddress(child.address);
 
-                    setWardenId(child.warden.id);
+            setWardenId(child.warden.id);
 
-                    setWarden(child.warden); // when editing, warden is family warden
+            setWarden(child.warden); // when editing, warden is family warden
 
-                    setIsLoading(false);
-                },
-                (error) => {
-                    processErrorMessages(error);
-                }
-            );
+            setIsLoading(false);
         } else {
             setWardenId(loggedUser.id);
             setWarden(loggedUser); // when registering family, warden is current logged user
         }
-        
-        // eslint-disable-next-line
-    }, [id]);
+
+    }, [child, loggedUser]);
     
     const register = () => {
         if(!validate()) return;
 
         setIsLoading(true);
         networkClient.post("/child/register", data,
-            // success
-            (response) => {
+            (registeredChild) => {
                 setAlert({color: "success", message: "Успешно регистрирано дете!"});
+                dispatch(actions.addChild(registeredChild));
                 history.push("/child/all");
             },
-            // error
             (error) => {
                 processErrorMessages(error);
 
@@ -183,9 +175,10 @@ const FormComponent = () => {
         if(!validate()) return;
 
         setIsLoading(true);
-        networkClient.put(`/child/update/${id}`, data,
-            (response) => {
+        networkClient.put(`/child/update/${child.id}`, data,
+            (updatedChild) => {
                 setAlert({color: "success", message: "Успешно редактирано дете!"});
+                dispatch(actions.updateChild(child.id, updatedChild));
                 history.goBack();
                 setIsLoading(false);
             },

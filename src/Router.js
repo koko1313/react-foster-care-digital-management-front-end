@@ -150,7 +150,7 @@ const Router = () => {
             </Layout>
         },
         {
-            path: '/child/edit/:id',
+            path: '/child/edit',
             exact: true,
             roles: [role.OEPG],
             main: () => <Layout>

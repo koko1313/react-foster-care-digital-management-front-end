@@ -266,7 +266,7 @@ const FormComponent = () => {
         }
         
         
-    }, [dispatch, family, loggedUser]);
+    }, [family, loggedUser]);
     
     const register = () => {
         if(!validate()) return;

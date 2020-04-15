@@ -13,7 +13,7 @@ import * as families from './family/families';
 import * as currentFamily from './family/currentFamily';
 
 import * as children from './child/children';
-
+import * as currentChild from './child/currentChild';
 
 
 export default combineReducers(Object.assign(
@@ -29,5 +29,6 @@ export default combineReducers(Object.assign(
     families,
     currentFamily,
 
-    children
+    children,
+    currentChild
 ));

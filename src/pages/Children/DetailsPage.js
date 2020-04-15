@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { objectIsEmpty } from '../../helpers';
 import { useParams, useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import actions from '../../redux/actions';
 import networkClient from '../../network/network-client';
 import ChildDetailsComponent from '../../components/Children/DetailsComponent';
@@ -10,7 +11,8 @@ import BackButton from '../../components/base-components/BackButton';
 const DetailsPage = () => {
 
     const [isLoading, setIsLoading] = useState(false);
-    const [child, setChild] = useState();
+    
+    const child = useSelector(state => state.currentChild);
 
     const dispatch = useDispatch();
     const history = useHistory();
@@ -38,27 +40,28 @@ const DetailsPage = () => {
     }
 
     useEffect(() => {
-        setIsLoading(true);
-        
-        networkClient.get(`/child/${id}`, null, 
-            (child) => {
-                setChild(child);
-                setIsLoading(false);
-            },
-            (error) => {
-                processErrorMessages(error);
-                setIsLoading(false);
-            }
-        );
-
+        if((!objectIsEmpty(child) && Number(child.id) !== Number(id)) || objectIsEmpty(child)) {
+            setIsLoading(true);
+            
+            networkClient.get(`/child/${id}`, null, 
+                (child) => {
+                    dispatch(actions.setCurrentChild(child));
+                    setIsLoading(false);
+                },
+                (error) => {
+                    processErrorMessages(error);
+                    setIsLoading(false);
+                }
+            );
+        }
         // eslint-disable-next-line
-    }, []);
+    }, [dispatch, child, id]);
 
-    const editChild = (id) => {
-        history.push(`/child/edit/${id}`);
+    const editChild = () => {
+        history.push(`/child/edit`);
     }
 
-    const deleteChild = (id) => {
+    const deleteChild = () => {
         let confirm = window.confirm("Сигурни ли сте?");
 
         if(!confirm) {
@@ -67,9 +70,9 @@ const DetailsPage = () => {
 
         setIsLoading(true);
         
-        networkClient.delete(`/child/delete/${id}`, null, 
+        networkClient.delete(`/child/delete/${child.id}`, null, 
             () => { 
-                dispatch(actions.deleteChild(id));
+                dispatch(actions.deleteChild(child.id));
                 history.push("/child/all");
                 setIsLoading(false);
             },
@@ -102,8 +105,8 @@ const DetailsPage = () => {
             <hr />
 
             <div className="pull-right mt-4">
-                <button type="button" className="btn btn-warning mr-1" onClick={() => { editChild(child.id) }}>Редактирай</button>
-                <button type="button" className="btn btn-danger" onClick={() => { deleteChild(child.id) }}>Изтрий</button>
+                <button type="button" className="btn btn-warning mr-1" onClick={() => { editChild() }}>Редактирай</button>
+                <button type="button" className="btn btn-danger" onClick={() => { deleteChild() }}>Изтрий</button>
                 <BackButton />
             </div>
 

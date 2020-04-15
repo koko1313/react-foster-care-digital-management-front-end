@@ -1,5 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { objectIsEmpty } from '../../../helpers';
 import './style.scss';
 
 /**
@@ -10,7 +11,7 @@ const DetailsComponent = (props) => {
     const history = useHistory();
 
     const renderChildInformation = () => {
-        if(!props.child) return;
+        if(objectIsEmpty(props.child)) return;
 
         const child = props.child;
 
