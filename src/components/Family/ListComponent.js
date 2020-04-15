@@ -19,8 +19,9 @@ const ListComponent = () => {
             
             networkClient.get('/family/all', null, 
                 (families) => {
-                    dispatch(actions.setFamilies(families));
                     setIsLoading(false);
+                    if(families.length === 0) return; // return null when there are no families in database, otherwise it will cause infinite loop
+                    dispatch(actions.setFamilies(families));
                 },
                 (error) => {
                     if(error.response) {

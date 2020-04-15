@@ -19,8 +19,9 @@ const ListComponent = () => {
             
             networkClient.get('/child/all', null, 
                 (children) => {
-                    dispatch(actions.setChildren(children));
                     setIsLoading(false);
+                    if(children.length === 0) return; // return null when there are no childrens in database, otherwise it will cause infinite loop
+                    dispatch(actions.setChildren(children));
                 },
                 (error) => {
                     if(error.response) {
