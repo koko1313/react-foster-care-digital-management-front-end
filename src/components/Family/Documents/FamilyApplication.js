@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { objectIsEmpty } from '../../../helpers';
 import euFlagImege from '../../../assets/images/document-images/eu_flag.png';
 import hrLogo from '../../../assets/images/document-images/hr_logo.png';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import networkClient from '../../../network/network-client';
 import { useParams, useHistory } from 'react-router-dom';
 import actions from '../../../redux/actions';
@@ -11,7 +12,8 @@ import BackButton from '../../base-components/BackButton';
 const FamilyApplication = (props) => {
 
     const [isLoading, setIsLoading] = useState(false);
-    const [family, setFamily] = useState();
+
+    const family = useSelector(state => state.currentFamily);
 
     const dispatch = useDispatch();
     const history = useHistory();
@@ -39,18 +41,20 @@ const FamilyApplication = (props) => {
     }
 
     useEffect(() => {
-        setIsLoading(true);
-        
-        networkClient.get(`/family/${id}`, null, 
-            (family) => {
-                setFamily(family);
-                setIsLoading(false);
-            },
-            (error) => {
-                processErrorMessages(error);
-                setIsLoading(false);
-            }
-        );
+        if((!objectIsEmpty(family) && Number(family.id) !== Number(id)) || objectIsEmpty(family)) {
+            setIsLoading(true);
+            
+            networkClient.get(`/family/${id}`, null, 
+                (family) => {
+                    dispatch(actions.setCurrentFamily(family));
+                    setIsLoading(false);
+                },
+                (error) => {
+                    processErrorMessages(error);
+                    setIsLoading(false);
+                }
+            );
+        }
 
         // eslint-disable-next-line
     }, []);
@@ -60,7 +64,7 @@ const FamilyApplication = (props) => {
     }
 
     const renderDocument = () => {
-        if(!family) return;
+        if(objectIsEmpty(family)) return;
 
         let titular;
         let anotherParent;
