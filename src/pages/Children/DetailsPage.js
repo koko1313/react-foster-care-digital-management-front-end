@@ -54,8 +54,10 @@ const DetailsPage = () => {
                 }
             );
         }
+
+        console.log(child);
         // eslint-disable-next-line
-    }, [dispatch, child, id]);
+    }, [dispatch, child]);
 
     const editChild = () => {
         history.push(`/child/edit`);

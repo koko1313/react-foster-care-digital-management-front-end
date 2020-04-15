@@ -133,7 +133,6 @@ const FormComponent = () => {
             
             if(child.family) {
                 setFamilyId(child.family.id);
-                console.log(child.family.id);
             }
 
             setRegion(child.region.id);
@@ -178,6 +177,7 @@ const FormComponent = () => {
         networkClient.put(`/child/update/${child.id}`, data,
             (updatedChild) => {
                 setAlert({color: "success", message: "Успешно редактирано дете!"});
+                dispatch(actions.setCurrentChild(updatedChild)); // update the current child too
                 dispatch(actions.updateChild(child.id, updatedChild));
                 history.goBack();
                 setIsLoading(false);

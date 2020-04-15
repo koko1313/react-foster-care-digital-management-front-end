@@ -303,6 +303,7 @@ const FormComponent = () => {
         networkClient.put(`/family/update/${family.id}`, data,
             (updatedFamily) => {
                 setAlert({color: "success", message: "Успешно редактирано семейство!"});
+                dispatch(actions.setCurrentFamily(updatedFamily)); // update the current family too
                 dispatch(actions.updateFamily(family.id, updatedFamily));
                 history.goBack();
                 setIsLoading(false);
