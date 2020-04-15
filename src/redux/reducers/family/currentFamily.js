@@ -19,8 +19,19 @@ export function currentFamily(state = {}, action) {
         case types.UPDATE_CHILD: {
             if(objectIsEmpty(state)) return state;
 
-            const childIndex = state.children.findIndex(child => child.id === action.id);
-            state.children[childIndex] = action.updatedChild;
+            const updatedChild = action.updatedChild;
+
+            // if updated child has no family, return the state with removed child
+            if(!updatedChild.family) {
+                state.children = state.children.filter(child => child.id !== action.id);
+                return state;
+            } 
+
+            // if the current family id is different than updated child family id
+            if(state.id !== updatedChild.family.id) {
+                state.children = state.children.filter(child => child.id !== action.id); // remove the child
+            }
+
             return state;
         }
 
