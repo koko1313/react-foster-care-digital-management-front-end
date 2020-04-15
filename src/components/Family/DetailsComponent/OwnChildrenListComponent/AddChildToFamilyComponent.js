@@ -10,11 +10,11 @@ import actions from '../../../../redux/actions';
 const AddChildToFamilyComponent = (props) => {
     const [isLoading, setIsLoading] = useState(false);
 
+    const [children, setChildren] = useState();
     const [childId, setChildId] = useState();
 
     const dispatch = useDispatch();
 
-    const children = useSelector(state => state.children);
     const family = useSelector(state => state.currentFamily);
 
     useEffect(() => {
@@ -22,7 +22,7 @@ const AddChildToFamilyComponent = (props) => {
         
         networkClient.get(`/child/all-free`, null, 
             (children) => {
-                dispatch(actions.setChildren(children));
+                setChildren(children);
                 setIsLoading(false);
             },
             (error) => {
