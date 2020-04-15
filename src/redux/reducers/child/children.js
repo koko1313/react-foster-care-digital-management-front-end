@@ -17,6 +17,18 @@ export function children(state = [], action) {
         case types.DELETE_CHILD: {
             return state.filter(item => item.id !== action.payload);
         }
+
+        // when update family, update it in the children details
+        case types.UPDATE_FAMILY: {
+            state.forEach((child) => {
+                if(child.family.id === action.id) {
+                    child.family = action.updatedFamily;
+                }
+            });
+
+            return state;
+        }
+
         default: return state;
     }
 }

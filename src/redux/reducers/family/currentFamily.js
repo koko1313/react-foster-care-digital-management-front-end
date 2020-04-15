@@ -1,4 +1,5 @@
 import types from "../../action-types";
+import { objectIsEmpty } from '../../../helpers';
 
 export function currentFamily(state = {}, action) {
     switch(action.type) {
@@ -13,6 +14,16 @@ export function currentFamily(state = {}, action) {
             state.children = state.children.filter(item => item.id !== action.payload.id);
             return state;
         }
+
+        // when update child, update it in the family's array of children
+        case types.UPDATE_CHILD: {
+            if(objectIsEmpty(state)) return state;
+
+            const childIndex = state.children.findIndex(child => child.id === action.id);
+            state.children[childIndex] = action.updatedChild;
+            return state;
+        }
+
         default: return state;
     }
 }
