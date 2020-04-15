@@ -125,24 +125,24 @@ const FormComponent = (props) => {
     }
 
     useEffect(() => {
-        if((!objectIsEmpty(child) && Number(child.id) !== Number(id)) || objectIsEmpty(child)) {
-            setIsLoading(true);
-        
-            networkClient.get(`/child/${id}`, null, 
-                (child) => {
-                    dispatch(actions.setCurrentChild(child));
-                    setIsLoading(false);
-                },
-                (error) => {
-                    processErrorMessages(error);
-                    setIsLoading(false);
-                }
-            );
-        }
-
-        if(objectIsEmpty(child)) return; // when form page is loaded in edit mode and there is no current child, so we wait for child from server
-
         if(props.isEditing) {
+            if((!objectIsEmpty(child) && Number(child.id) !== Number(id)) || objectIsEmpty(child)) {
+                setIsLoading(true);
+            
+                networkClient.get(`/child/${id}`, null, 
+                    (child) => {
+                        dispatch(actions.setCurrentChild(child));
+                        setIsLoading(false);
+                    },
+                    (error) => {
+                        processErrorMessages(error);
+                        setIsLoading(false);
+                    }
+                );
+            }
+    
+            if(objectIsEmpty(child)) return; // when form page is loaded in edit mode and there is no current child, so we wait for child from server
+
             setIsLoading(true);
 
             setFirstName(child.first_name);
@@ -170,6 +170,7 @@ const FormComponent = (props) => {
             setWarden(loggedUser); // when registering family, warden is current logged user
         }
 
+        // eslint-disable-next-line
     }, [child, loggedUser, props]);
     
     const register = () => {
