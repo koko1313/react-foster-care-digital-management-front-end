@@ -20,6 +20,8 @@ export function families(state = [], action) {
 
         // when add child, add it in the family's array of children too
         case types.ADD_CHILD: {
+            if(state.length === 0) return state;
+
             const familyOfAddedChild = action.payload.family;
 
             if(!familyOfAddedChild) return state; // if added child has no family, do nothing
@@ -63,9 +65,6 @@ export function families(state = [], action) {
         }
 
         case types.REMOVE_CHILD_FROM_CURRENT_FAMILY: {
-            console.log(state);
-            console.log(action);
-
             const removedChild = action.payload;
 
             state.forEach((family) => {
