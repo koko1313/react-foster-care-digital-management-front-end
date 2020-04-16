@@ -21,7 +21,7 @@ export function children(state = [], action) {
         // when update family, update it in the children details
         case types.UPDATE_FAMILY: {
             state.forEach((child) => {
-                if(child.family.id === action.id) {
+                if(child.family && child.family.id === action.id) {
                     child.family = action.updatedFamily;
                 }
             });
