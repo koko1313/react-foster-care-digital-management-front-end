@@ -101,7 +101,7 @@ const FamilyApplication = (props) => {
                                     <strong>Месторабота:</strong> {titular.work} <br />
                                     <strong>Гражданство:</strong> {titular.citizenship} <br />
                                     <strong>Адрес:</strong> {family.city.name}, {family.sub_region.name}, {family.region.name}, {family.address} <br />
-                                    <strong>Адрес:</strong> {titular.phone} <br />
+                                    <strong>Телефон:</strong> {titular.phone} <br />
                                     <strong>На какъв език се говори в семейството:</strong> {family.language} <br />
                                     <strong>Владеете ли български език добре:</strong> {family.level_of_bulgarian_language} <br />
                                     <strong>Религия:</strong> {family.religion} <br />
