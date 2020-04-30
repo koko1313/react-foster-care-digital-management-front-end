@@ -55,7 +55,11 @@ const DetailsComponent = (props) => {
         </>;
     }
 
-    return renderChildInformation();
+    return <>
+        <div className="details">
+            {renderChildInformation()}
+        </div>
+    </>;
 
 }
 
