@@ -3,14 +3,19 @@ import FamilyListComponent from '../../components/Family/ListComponent';
 
 const FamilyListPage = () => {
 
-    return (
-        <>
-            <h1>Семейства</h1>
+    return <>
+        <div className="row">
+            <div className="col">
+                <h1>Семейства</h1>
+            </div>
+        </div>
 
-            <FamilyListComponent />
-        </>
-    );
-
+        <div className="row">
+            <div className="col">
+                <FamilyListComponent />
+            </div>
+        </div>
+    </>;
 }
 
 export default FamilyListPage;

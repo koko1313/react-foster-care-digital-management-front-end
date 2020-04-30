@@ -3,13 +3,19 @@ import ChildrenListComponent from '../../components/Children/ListComponent';
 
 const ListPage = () => {
 
-    return (
-        <>
-            <h1>Деца</h1>
+    return <>
+        <div className="row">
+            <div className="col">
+                <h1>Деца</h1>
+            </div>
+        </div>
 
-            <ChildrenListComponent />
-        </>
-    );
+        <div className="row">
+            <div className="col">
+                <ChildrenListComponent />
+            </div>
+        </div>
+    </>;
 }
 
 export default ListPage;

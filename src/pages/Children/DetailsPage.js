@@ -84,37 +84,42 @@ const DetailsPage = () => {
         );
     }
 
-    return (
-        <>
-            <h1>Дете</h1>
+    return <>
+        <div className="row">
+            <div className="col">
+                <h1>Дете</h1>
+            </div>
+        </div>
 
-            <div className="row">
-                <div className="col-md-8">
-                    <ChildDetailsComponent child={child} />
-                </div>
-
-                <div className="col-md">
-                    <h2>Документи</h2>
-
-                    <div className="list-group">
-                        {/* <button className="list-group-item list-group-item-action" onClick={() => {history.push(`/family/document/family-application/${family.id}`)}}>Заявление</button> */}
-                    </div>
-                    
-                </div>
+        <div className="row">
+            <div className="col-md-8">
+                <ChildDetailsComponent child={child} />
             </div>
 
-            <hr />
+            <div className="col-md">
+                <h2>Документи</h2>
 
-            <div className="pull-right mt-4">
-                <button type="button" className="btn btn-warning mr-1" onClick={() => { editChild(child) }}>Редактирай</button>
-                <button type="button" className="btn btn-danger" onClick={() => { deleteChild() }}>Изтрий</button>
-                <BackButton />
+                <div className="list-group">
+                    {/* <button className="list-group-item list-group-item-action" onClick={() => {history.push(`/family/document/family-application/${family.id}`)}}>Заявление</button> */}
+                </div>
+                
             </div>
+        </div>
 
-            <Loader loading={isLoading} fullScreen={true} />
-        </>
-    );
+        <hr />
 
+        <div className="row">
+            <div className="col">
+                <div className="pull-right mt-4">
+                    <button type="button" className="btn btn-warning mr-1" onClick={() => { editChild(child) }}>Редактирай</button>
+                    <button type="button" className="btn btn-danger" onClick={() => { deleteChild() }}>Изтрий</button>
+                    <BackButton />
+                </div>
+            </div>
+        </div>
+
+        <Loader loading={isLoading} fullScreen={true} />
+    </>;
 }
 
 export default DetailsPage;

@@ -3,14 +3,19 @@ import EmployeeOEPGListComponent from '../../../components/EmployeeOEPG/ListComp
 
 const ListPage = () => {
 
-    return (
-        <>
-            <h1>Потребители ОЕПГ</h1>
+    return <>
+        <div className="row">
+            <div className="col">
+                <h1>Потребители ОЕПГ</h1>
+            </div>
+        </div>
 
-            <EmployeeOEPGListComponent />
-        </>
-    );
-
+        <div className="row">
+            <div className="col">
+                <EmployeeOEPGListComponent />
+            </div>
+        </div>
+    </>;
 }
 
 export default ListPage;

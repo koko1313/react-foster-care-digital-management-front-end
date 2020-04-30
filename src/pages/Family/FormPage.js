@@ -6,14 +6,19 @@ import FamilyFormComponent from '../../components/Family/FormComponent';
  */
 const FormPage = (props) => {
 
-    return (
-        <>
-            <h1>Семейство</h1>
-            
-            <FamilyFormComponent isEditing={props.isEditing} />
-        </>
-    );
-
+    return <>
+        <div className="row">
+            <div className="col">
+                <h1>Семейство</h1>
+            </div>
+        </div>
+        
+        <div className="row">
+            <div className="col">
+                <FamilyFormComponent isEditing={props.isEditing} />
+            </div>
+        </div>
+    </>;
 }
 
 export default FormPage;

@@ -21,8 +21,13 @@ const DocumentPage = () => {
         }    
     }
 
-    return renderDocument();
-
+    return <>
+        <div className="row">
+            <div className="col">
+                {renderDocument()}
+            </div>
+        </div>
+    </>;
 }
 
 export default DocumentPage;

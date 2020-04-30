@@ -6,14 +6,19 @@ import ChildFormComponent from '../../components/Children/FormComponent';
  */
 const FormPage = (props) => {
 
-    return (
-        <>
-            <h1>Дете</h1>
-            
-            <ChildFormComponent isEditing={props.isEditing}/>
-        </>
-    );
+    return <>
+        <div className="row">
+            <div className="col">
+                <h1>Дете</h1>
+            </div>
+        </div>
 
+        <div className="row">
+            <div className="col">
+                <ChildFormComponent isEditing={props.isEditing} />
+            </div>
+        </div>
+    </>;
 }
 
 export default FormPage;
