@@ -16,16 +16,16 @@
 
 // Bootstrap components override
 @import "./bootstrap-components/navbar";
-// @import "bootstrap-components/card";
 
 // Import custom components
-@import "./custom-components/footer";
-@import "./custom-components/printableDocument";
-@import "./custom-components/familyChildrenList";
-
 @import "./custom-components/root";
-@import "./custom-components/home-page";
 @import "./custom-components/main-container";
+@import "./custom-components/footer";
+@import "./custom-components/home-page";
 @import "./custom-components/details";
+@import "./custom-components/printable-document";
+@import "./custom-components/family-children-list";
 
+
+// Import font awesome
 @import "~font-awesome/scss/font-awesome";
