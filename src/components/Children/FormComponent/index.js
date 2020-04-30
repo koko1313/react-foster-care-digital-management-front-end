@@ -210,84 +210,82 @@ const FormComponent = (props) => {
         );
     }
 
-    return (
-        <>
-            <Alert color={alert.color} isOpen={alert.message ? true : false} toggle={onDismiss}>
-                {alert.message}
-            </Alert>
+    return <>
+        <Alert color={alert.color} isOpen={alert.message ? true : false} toggle={onDismiss}>
+            {alert.message}
+        </Alert>
 
-            <form>
-                <NamesInput 
-                    id = "name" 
-                    label = "Име ..." 
-                    required = {true} 
-                    firstName = {firstName} 
-                    secondName = {secondName} 
-                    lastName = {lastName} 
-                    onChangeFirstName = {(e) => setFirstName(e.target.value)}
-                    onChangeSecondName = {(e) => setSecondName(e.target.value)}
-                    onChangeLastName = {(e) => setLastName(e.target.value)}
-                    isFirstNameInvalid = {!validFields.isFirstNameValid}
-                    isSecondNameInvalid = {!validFields.isSecondNameValid}
-                    isLastNameInvalid = {!validFields.isLastNameValid}
-                />
+        <form>
+            <NamesInput 
+                id = "name" 
+                label = "Име ..." 
+                required = {true} 
+                firstName = {firstName} 
+                secondName = {secondName} 
+                lastName = {lastName} 
+                onChangeFirstName = {(e) => setFirstName(e.target.value)}
+                onChangeSecondName = {(e) => setSecondName(e.target.value)}
+                onChangeLastName = {(e) => setLastName(e.target.value)}
+                isFirstNameInvalid = {!validFields.isFirstNameValid}
+                isSecondNameInvalid = {!validFields.isSecondNameValid}
+                isLastNameInvalid = {!validFields.isLastNameValid}
+            />
 
-                <Input 
-                    label = "ЕГН" 
-                    type = "number" 
-                    placeholder = "ЕГН ..." 
-                    value = {egn} 
-                    onChange = {(e) => setEgn(e.target.value)} 
-                    required = {true} 
-                    isInvalid = {!validFields.isEgnValid}
-                    invalidMessage = "Невалидно ЕГН."
-                />
+            <Input 
+                label = "ЕГН" 
+                type = "number" 
+                placeholder = "ЕГН ..." 
+                value = {egn} 
+                onChange = {(e) => setEgn(e.target.value)} 
+                required = {true} 
+                isInvalid = {!validFields.isEgnValid}
+                invalidMessage = "Невалидно ЕГН."
+            />
 
-                <Select id="gender" label="Пол" placeholder="Изберете пол ..." onChange={(e) => setGender(e.target.value)} value={gender}>
-                    <option value="Момиче">Момиче</option>
-                    <option value="Момче">Момче</option>
-                </Select>
+            <Select id="gender" label="Пол" placeholder="Изберете пол ..." onChange={(e) => setGender(e.target.value)} value={gender}>
+                <option value="Момиче">Момиче</option>
+                <option value="Момче">Момче</option>
+            </Select>
 
-                <FamilySelect value={familyId} onChange={(e) => setFamilyId(e.target.value)} />
+            <FamilySelect value={familyId} onChange={(e) => setFamilyId(e.target.value)} />
 
-                <AddressInput 
-                    fullAddress = {true}
-                    region = {region}
-                    subRegion = {subRegion}
-                    city = {city}
-                    address = {address}
-                    regionOnChange = {(e) => setRegion(e.target.value)}
-                    subRegionOnChange = {(e) => setSubRegion(e.target.value)}
-                    cityOnChange = {(e) => setCity(e.target.value)}
-                    addressOnChange = {(e) => setAddress(e.target.value)}
-                    required = {true}
-                    isRegionInvalid = {!validFields.isRegionValid}
-                    isSubRegionInvalid = {!validFields.isSubRegionValid}
-                    isCityInvalid = {!validFields.isCityValid}
-                    isAddressInvalid = {!validFields.isAddressValid}
-                />
+            <AddressInput 
+                fullAddress = {true}
+                region = {region}
+                subRegion = {subRegion}
+                city = {city}
+                address = {address}
+                regionOnChange = {(e) => setRegion(e.target.value)}
+                subRegionOnChange = {(e) => setSubRegion(e.target.value)}
+                cityOnChange = {(e) => setCity(e.target.value)}
+                addressOnChange = {(e) => setAddress(e.target.value)}
+                required = {true}
+                isRegionInvalid = {!validFields.isRegionValid}
+                isSubRegionInvalid = {!validFields.isSubRegionValid}
+                isCityInvalid = {!validFields.isCityValid}
+                isAddressInvalid = {!validFields.isAddressValid}
+            />
 
-                <Input 
-                    id="warden" 
-                    label="Социален работник" 
-                    type="text" 
-                    value={warden ? `${warden.first_name} ${warden.second_name} ${warden.last_name}` : ""} 
-                    disabled={true} />
+            <Input 
+                id="warden" 
+                label="Социален работник" 
+                type="text" 
+                value={warden ? `${warden.first_name} ${warden.second_name} ${warden.last_name}` : ""} 
+                disabled={true} />
 
-                <div className="pull-right">
-                    {props.isEditing ?
-                        <button type="button" className="btn btn-warning" onClick={update}>Редактирай</button>
-                        :
-                        <button type="button" className="btn btn-primary" onClick={register}>Регистрирай</button>
-                    }
+            <div className="pull-right">
+                {props.isEditing ?
+                    <button type="button" className="btn btn-warning" onClick={update}>Редактирай</button>
+                    :
+                    <button type="button" className="btn btn-primary" onClick={register}>Регистрирай</button>
+                }
 
-                    <BackButton />
-                </div>
-            </form>
+                <BackButton />
+            </div>
+        </form>
 
-            <Loader loading={isLoading} fullScreen={true} />
-        </>
-    );
+        <Loader loading={isLoading} fullScreen={true} />
+    </>;
 
 }
 

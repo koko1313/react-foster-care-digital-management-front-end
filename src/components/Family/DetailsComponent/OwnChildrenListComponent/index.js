@@ -76,19 +76,17 @@ const OwnChildrenListComponent = () => {
         );
     }
 
-    return (
-        <>
-            <Alert color={alert.color} isOpen={alert.message ? true : false} toggle={onDismiss}>
-                {alert.message}
-            </Alert>
+    return <>
+        <Alert color={alert.color} isOpen={alert.message ? true : false} toggle={onDismiss}>
+            {alert.message}
+        </Alert>
 
-            <ul className={`family-children-list ${isLoading ? "loading" : ""}`}>
-                {renderChildrenList()}
+        <ul className={`family-children-list ${isLoading ? "loading" : ""}`}>
+            {renderChildrenList()}
 
-                {renderAddChildButton()}
-            </ul>
-        </>
-    );
+            {renderAddChildButton()}
+        </ul>
+    </>;
 }
 
 export default OwnChildrenListComponent;

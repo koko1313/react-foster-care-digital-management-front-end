@@ -73,29 +73,33 @@ const ListComponent = () => {
         dispatch(actions.setChildren([]));
     }
 
-    return (
-        <>
-            <button className="btn btn-link" onClick={()=>history.push("/child/register")}>Добави дете</button>
-            <button className="btn btn-info pull-right mb-2" onClick={remountComponent}><i className="fa fa-refresh"></i></button>
+    return <>
+        <div className="content-list d-flex flex-column">
+            <div className="content-list-options">
+                <button className="btn btn-link" onClick={()=>history.push("/child/register")}>Добави дете</button>
+                <button className="btn btn-info pull-right mb-2" onClick={remountComponent}><i className="fa fa-refresh"></i></button>
+            </div>
             
-            <div className="table-responsive">
-                <table className="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Име</th>
-                            <th scope="col">Семейство</th>
-                            <th scope="col">Действия</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {renderChildrenList()}
-                    </tbody>
-                </table>
+            <div className="content-list-results">
+                <div className="table-responsive">
+                    <table className="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Име</th>
+                                <th scope="col">Семейство</th>
+                                <th scope="col">Действия</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {renderChildrenList()}
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <Loader loading={isLoading} />
-        </>
-    );
+        </div>
+    </>;
 
 }
 

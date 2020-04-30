@@ -183,89 +183,87 @@ const FormComponent = () => {
         );
     }
 
-    return (
-        <>
-            <Alert color={alert.color} isOpen={alert.message ? true : false} toggle={onDismiss}>
-                {alert.message}
-            </Alert>
+    return <>
+        <Alert color={alert.color} isOpen={alert.message ? true : false} toggle={onDismiss}>
+            {alert.message}
+        </Alert>
 
-            <form>
-                <Input 
-                    id = "email" 
-                    label = "Email" 
-                    type = "email" 
-                    placeholder = "Email ..." 
-                    required = {true} 
-                    onChange = {(e) => setEmail(e.target.value)} value={email} 
-                    isInvalid = {!validFields.isEmailValid}
-                    invalidMessage = {"Невалиден Email."}
-                />
+        <form>
+            <Input 
+                id = "email" 
+                label = "Email" 
+                type = "email" 
+                placeholder = "Email ..." 
+                required = {true} 
+                onChange = {(e) => setEmail(e.target.value)} value={email} 
+                isInvalid = {!validFields.isEmailValid}
+                invalidMessage = {"Невалиден Email."}
+            />
 
-                {isEditingUser ? null :
-                    <>
-                        <Input 
-                            id = "password" 
-                            label = "Парола" 
-                            type = "password" 
-                            placeholder = "Парола ..." 
-                            required = {true} 
-                            onChange = {(e) => setPassword(e.target.value)} 
-                            isInvalid = {!validFields.isPasswordValid}
-                        />
+            {isEditingUser ? null :
+                <>
+                    <Input 
+                        id = "password" 
+                        label = "Парола" 
+                        type = "password" 
+                        placeholder = "Парола ..." 
+                        required = {true} 
+                        onChange = {(e) => setPassword(e.target.value)} 
+                        isInvalid = {!validFields.isPasswordValid}
+                    />
 
-                        <Input 
-                            id="rePassword" 
-                            label="Повтори парола" 
-                            type="password" 
-                            placeholder="Повтори парола ..." 
-                            required={true} 
-                            onChange={(e) => setRePassword(e.target.value)} 
-                            isInvalid = {!validFields.isRePasswordValid}
-                        />
-                    </>
+                    <Input 
+                        id="rePassword" 
+                        label="Повтори парола" 
+                        type="password" 
+                        placeholder="Повтори парола ..." 
+                        required={true} 
+                        onChange={(e) => setRePassword(e.target.value)} 
+                        isInvalid = {!validFields.isRePasswordValid}
+                    />
+                </>
+            }
+
+            <NamesInput 
+                id = "name" 
+                label = "Име" 
+                required = {true} 
+                firstName = {firstName} 
+                secondName = {secondName} 
+                lastName = {lastName} 
+                onChangeFirstName = {(e) => setFirstName(e.target.value)}
+                onChangeSecondName = {(e) => setSecondName(e.target.value)}
+                onChangeLastName = {(e) => setLastName(e.target.value)}
+                isFirstNameInvalid = {!validFields.isFirstNameValid}
+                isSecondNameInvalid = {!validFields.isSecondNameValid}
+                isLastNameInvalid = {!validFields.isLastNameValid}
+            />
+
+            <AddressInput 
+                region = {region}
+                subRegion = {subRegion}
+                city = {city}
+                regionOnChange = {(e) => setRegion(e.target.value)}
+                subRegionOnChange = {(e) => setSubRegion(e.target.value)}
+                cityOnChange = {(e) => setCity(e.target.value)}
+                required = {true}
+                isRegionInvalid = {!validFields.isRegionValid}
+                isSubRegionInvalid = {!validFields.isSubRegionValid}
+                isCityInvalid = {!validFields.isCityValid}
+            />
+
+            <div className="pull-right">
+                {isEditingUser ?
+                    <button type="button" className="btn btn-warning" onClick={updateUser}>Редактирай</button>
+                    :
+                    <button type="button" className="btn btn-primary" onClick={registerUser}>Регистрирай</button>
                 }
+                <BackButton />
+            </div>
+        </form>
 
-                <NamesInput 
-                    id = "name" 
-                    label = "Име" 
-                    required = {true} 
-                    firstName = {firstName} 
-                    secondName = {secondName} 
-                    lastName = {lastName} 
-                    onChangeFirstName = {(e) => setFirstName(e.target.value)}
-                    onChangeSecondName = {(e) => setSecondName(e.target.value)}
-                    onChangeLastName = {(e) => setLastName(e.target.value)}
-                    isFirstNameInvalid = {!validFields.isFirstNameValid}
-                    isSecondNameInvalid = {!validFields.isSecondNameValid}
-                    isLastNameInvalid = {!validFields.isLastNameValid}
-                />
-
-                <AddressInput 
-                    region = {region}
-                    subRegion = {subRegion}
-                    city = {city}
-                    regionOnChange = {(e) => setRegion(e.target.value)}
-                    subRegionOnChange = {(e) => setSubRegion(e.target.value)}
-                    cityOnChange = {(e) => setCity(e.target.value)}
-                    required = {true}
-                    isRegionInvalid = {!validFields.isRegionValid}
-                    isSubRegionInvalid = {!validFields.isSubRegionValid}
-                    isCityInvalid = {!validFields.isCityValid}
-                />
-
-                <div className="pull-right">
-                    {isEditingUser ?
-                        <button type="button" className="btn btn-warning" onClick={updateUser}>Редактирай</button>
-                        :
-                        <button type="button" className="btn btn-primary" onClick={registerUser}>Регистрирай</button>
-                    }
-                    <BackButton />
-                </div>
-            </form>
-
-            <Loader loading={isLoading} fullScreen={true} />
-        </>
-    );
+        <Loader loading={isLoading} fullScreen={true} />
+    </>;
 
 }
 

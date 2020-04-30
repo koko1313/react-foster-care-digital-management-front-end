@@ -42,7 +42,7 @@ const FamilySelect = (props) => {
         });
     }
 
-    return (
+    return <>
         <Select 
             label = "Семейство"
             placeholder = "Избери семейство ..."
@@ -52,7 +52,7 @@ const FamilySelect = (props) => {
             >
             {renderFamiliesOptions()}
         </Select>
-    );
+    </>;
 
 }
 

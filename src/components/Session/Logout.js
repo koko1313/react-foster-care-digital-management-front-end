@@ -34,7 +34,7 @@ const Logout = () => {
 
         <Loader loading={true} />
     </>;
-
+    
 }
 
 export default Logout;

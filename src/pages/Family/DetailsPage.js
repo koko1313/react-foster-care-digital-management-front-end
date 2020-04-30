@@ -94,6 +94,8 @@ const DetailsPage = () => {
 
         <div className="row">
             <div className="col-md-8">
+                <h2>Детайли</h2>
+                
                 <FamilyDetailsComponent />
             </div>
 

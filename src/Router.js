@@ -10,7 +10,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import actions from "./redux/actions";
 import networkClient from './network/network-client';
   
-import Header from './components/Layout/Header';
+import Layout from './components/Layout';
 import role from './roles';
 import { objectIsEmpty, userHasRole, objectHasRole } from './helpers';
 
@@ -34,15 +34,6 @@ import Loader from './components/base-components/Loader';
 import DocumentPage from './pages/Family/DocumentPage';
 
 const Router = () => {
-
-    const Layout = props => (
-        <>
-            <Header/>
-            <div className="container mt-5">
-                {props.children}
-            </div>
-        </>
-    );
 
     const dispatch = useDispatch();
     const [checkedForLoggedUser, setCheckedForLoggedUser] = useState(false);

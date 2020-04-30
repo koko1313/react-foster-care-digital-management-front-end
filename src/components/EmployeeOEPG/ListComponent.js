@@ -100,30 +100,34 @@ const ListComponent = () => {
         dispatch(actions.setEmployeesOEPG([]));
     }
 
-    return (
-        <>
-            <button className="btn btn-link" onClick={()=>history.push("/employee-oepg/register")}>Регистрация на потребител</button>
-            <button className="btn btn-info pull-right mb-2" onClick={remountComponent}><i className="fa fa-refresh"></i></button>
-            
-            <div className="table-responsive">
-                <table className="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Име</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Адрес</th>
-                            <th scope="col">Действия</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {renderUsersList()}
-                    </tbody>
-                </table>
+    return <>
+        <div className="content-list d-flex flex-column">
+            <div className="content-list-options">
+                <button className="btn btn-link" onClick={()=>history.push("/employee-oepg/register")}>Регистрация на потребител</button>
+                <button className="btn btn-info pull-right mb-2" onClick={remountComponent}><i className="fa fa-refresh"></i></button>
+            </div>
+
+            <div className="content-list-results">
+                <div className="table-responsive">
+                    <table className="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Име</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Адрес</th>
+                                <th scope="col">Действия</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {renderUsersList()}
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <Loader loading={isLoading} />
-        </>
-    );
+        </div>
+    </>;
 
 }
 

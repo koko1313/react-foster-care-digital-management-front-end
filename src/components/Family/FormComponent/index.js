@@ -334,238 +334,236 @@ const FormComponent = (props) => {
         );
     }
 
-    return (
-        <>
-            <Alert color={alert.color} isOpen={alert.message ? true : false} toggle={onDismiss}>
-                {alert.message}
-            </Alert>
+    return <>
+        <Alert color={alert.color} isOpen={alert.message ? true : false} toggle={onDismiss}>
+            {alert.message}
+        </Alert>
 
-            <form>
-                <div className="row">
-                    {/* Жена */}
-                    <div className="col-md">
-                        <p><strong>Жена</strong></p>
+        <form>
+            <div className="row">
+                {/* Жена */}
+                <div className="col-md">
+                    <p><strong>Жена</strong></p>
 
-                        <ParentInput 
-                            firstName = {womanFirstName} 
-                            secondName = {womanSecondName} 
-                            lastName = {womanLastName} 
-                            egn = {womanEgn}
-                            phone = {womanPhone}
-                            education = {womanEducation}
-                            work = {womanWork}
-                            employmentType = {womanEmploymentType}
-                            citizenship = {womanCitizenship}
+                    <ParentInput 
+                        firstName = {womanFirstName} 
+                        secondName = {womanSecondName} 
+                        lastName = {womanLastName} 
+                        egn = {womanEgn}
+                        phone = {womanPhone}
+                        education = {womanEducation}
+                        work = {womanWork}
+                        employmentType = {womanEmploymentType}
+                        citizenship = {womanCitizenship}
 
-                            onChangeFirstName = {(e) => setWomanFirstName(e.target.value)}
-                            onChangeSecondName = {(e) => setWomanSecondName(e.target.value)}
-                            onChangeLastName = {(e) => setWomanLastName(e.target.value)}
-                            onChangeEgn = {(e) => setWomanEgn(e.target.value)}
-                            onChangePhone = {(e) => setWomanPhone(e.target.value)}
-                            onChangeEducation = {(e) => setWomanEducation(e.target.value)}
-                            onChangeWork = {(e) => setWomanWork(e.target.value)}
-                            onChangeEmploymentType = {(e) => setWomanEmploymentType(e.target.value)}
-                            onChangeCitizenship = {(e) => setWomanCitizenship(e.target.value)}
+                        onChangeFirstName = {(e) => setWomanFirstName(e.target.value)}
+                        onChangeSecondName = {(e) => setWomanSecondName(e.target.value)}
+                        onChangeLastName = {(e) => setWomanLastName(e.target.value)}
+                        onChangeEgn = {(e) => setWomanEgn(e.target.value)}
+                        onChangePhone = {(e) => setWomanPhone(e.target.value)}
+                        onChangeEducation = {(e) => setWomanEducation(e.target.value)}
+                        onChangeWork = {(e) => setWomanWork(e.target.value)}
+                        onChangeEmploymentType = {(e) => setWomanEmploymentType(e.target.value)}
+                        onChangeCitizenship = {(e) => setWomanCitizenship(e.target.value)}
 
-                            titularRadioId = "womanTitularRadio"
-                            titularRadioValue = "woman"
-                            titularChecked = {titular === "woman"}
-                            titularOnSelect = {(e) => setTitular(e.target.value)}
+                        titularRadioId = "womanTitularRadio"
+                        titularRadioValue = "woman"
+                        titularChecked = {titular === "woman"}
+                        titularOnSelect = {(e) => setTitular(e.target.value)}
 
-                            isFirstNameInvalid = {!validFields.isWomanFirstNameValid}
-                            isSecondNameInvalid = {!validFields.isWomanSecondNameValid}
-                            isLastNameInvalid = {!validFields.isWomanLastNameValid}
-                            isEgnInvalid = {!validFields.isWomanEgnValid}
-                            isPhoneInvalid = {!validFields.isWomanPhoneValid}
-                            isEducationInvalid = {!validFields.isWomanEducationValid}
-                        />
-                        <hr />
-                    </div>
-
-                    {/* Мъж */}
-                    <div className="col-md">
-                        <p><strong>Мъж</strong></p>
-
-                        <ParentInput 
-                            firstName = {manFirstName} 
-                            secondName = {manSecondName} 
-                            lastName = {manLastName} 
-                            egn = {manEgn}
-                            phone = {manPhone}
-                            education = {manEducation}
-                            work = {manWork}
-                            employmentType = {manEmploymentType}
-                            citizenship = {manCitizenship}
-
-                            onChangeFirstName = {(e) => setManFirstName(e.target.value)}
-                            onChangeSecondName = {(e) => setManSecondName(e.target.value)}
-                            onChangeLastName = {(e) => setManLastName(e.target.value)}
-                            onChangeEgn = {(e) => setManEgn(e.target.value)}
-                            onChangePhone = {(e) => setManPhone(e.target.value)}
-                            onChangeEducation = {(e) => setManEducation(e.target.value)}
-                            onChangeWork = {(e) => setManWork(e.target.value)}
-                            onChangeEmploymentType = {(e) => setManEmploymentType(e.target.value)}
-                            onChangeCitizenship = {(e) => setManCitizenship(e.target.value)}
-
-                            titularRadioId = "manTitularRadio"
-                            titularRadioValue = "man"
-                            titularChecked = {titular === "man"}
-                            titularOnSelect = {(e) => setTitular(e.target.value)}
-
-                            isFirstNameInvalid = {!validFields.isManFirstNameValid}
-                            isSecondNameInvalid = {!validFields.isManSecondNameValid}
-                            isLastNameInvalid = {!validFields.isManLastNameValid}
-                            isEgnInvalid = {!validFields.isManEgnValid}
-                            isPhoneInvalid = {!validFields.isManPhoneValid}
-                            isEducationInvalid = {!validFields.isManEducationValid}
-                        />
-                        <hr />
-                    </div>
-                </div>
-
-                <div>
-                    <p><strong>За какво дете бихте желали да се грижите</strong></p>
-                    <div className="form-row">
-                        <div className="form-group col-md">
-                            <Select 
-                                id="preferKidGender" 
-                                label="Предпочитан пол" 
-                                placeholder="Избери предпочитан пол ..." 
-                                onChange={(e) => setPreferKidGender(e.target.value)} 
-                                value={preferKidGender}
-                            >
-                                <option value="Момче">Момче</option>
-                                <option value="Момиче">Момиче</option>
-                            </Select>
-                        </div>
-
-                        <div className="form-group col-md">
-                            <Input 
-                                id="preferKidMinAge" 
-                                label="Минимална възраст" 
-                                type="number" 
-                                placeholder="Минимална възраст ..." 
-                                onChange={(e) => setPreferKidMinAge(e.target.value)} 
-                                value={preferKidMinAge} 
-                                isInvalid = {!validFields.isPreferKidMinAgeValid}
-                                invalidMessage = "Невалидна стойност."
-                            />
-                        </div>
-
-                        <div className="form-group col-md">
-                            <Input 
-                                id="preferKidMaxAge" 
-                                label="Максимална възраст" 
-                                type="number" 
-                                placeholder="Максимална възраст ..." 
-                                onChange={(e) => setPreferKidMaxAge(e.target.value)} 
-                                value={preferKidMaxAge} 
-                                isInvalid = {!validFields.isPreferKidMaxAgeValid}
-                                invalidMessage = "Невалидна стойност."
-                            />
-                        </div>
-                    </div>
+                        isFirstNameInvalid = {!validFields.isWomanFirstNameValid}
+                        isSecondNameInvalid = {!validFields.isWomanSecondNameValid}
+                        isLastNameInvalid = {!validFields.isWomanLastNameValid}
+                        isEgnInvalid = {!validFields.isWomanEgnValid}
+                        isPhoneInvalid = {!validFields.isWomanPhoneValid}
+                        isEducationInvalid = {!validFields.isWomanEducationValid}
+                    />
                     <hr />
                 </div>
 
-                <div>
-                    <p><strong>За семейството</strong></p>
+                {/* Мъж */}
+                <div className="col-md">
+                    <p><strong>Мъж</strong></p>
 
-                    <AddressInput 
-                        region = {region}
-                        subRegion = {subRegion}
-                        city = {city}
-                        fullAddress = {true}
-                        address = {address}
-                        regionOnChange = {(e) => setRegion(e.target.value)}
-                        subRegionOnChange = {(e) => setSubRegion(e.target.value)}
-                        cityOnChange = {(e) => setCity(e.target.value)}
-                        addressOnChange = {(e) => setAddress(e.target.value)}
-                        required = {true}
+                    <ParentInput 
+                        firstName = {manFirstName} 
+                        secondName = {manSecondName} 
+                        lastName = {manLastName} 
+                        egn = {manEgn}
+                        phone = {manPhone}
+                        education = {manEducation}
+                        work = {manWork}
+                        employmentType = {manEmploymentType}
+                        citizenship = {manCitizenship}
 
-                        isRegionInvalid = {!validFields.isRegionValid}
-                        isSubRegionInvalid = {!validFields.isSubRegionValid}
-                        isCityInvalid = {!validFields.isCityValid}
-                        isAddressInvalid = {!validFields.isAddressValid}
-                    />
-                    
-                    <Input 
-                        id="language" 
-                        label="На какъв език се говори в семейството" 
-                        type="text" 
-                        placeholder="На какъв език се говори в семейството ..." 
-                        value={language} onChange={(e) => setLanguage(e.target.value)} 
-                    />
+                        onChangeFirstName = {(e) => setManFirstName(e.target.value)}
+                        onChangeSecondName = {(e) => setManSecondName(e.target.value)}
+                        onChangeLastName = {(e) => setManLastName(e.target.value)}
+                        onChangeEgn = {(e) => setManEgn(e.target.value)}
+                        onChangePhone = {(e) => setManPhone(e.target.value)}
+                        onChangeEducation = {(e) => setManEducation(e.target.value)}
+                        onChangeWork = {(e) => setManWork(e.target.value)}
+                        onChangeEmploymentType = {(e) => setManEmploymentType(e.target.value)}
+                        onChangeCitizenship = {(e) => setManCitizenship(e.target.value)}
 
-                    <Input 
-                        id="levelOfBulgarianLanguage" 
-                        label="Владеете ли български език добре?" 
-                        type="text" placeholder="Да / не ..." 
-                        value={levelOfBulgarianLanguage} onChange={(e) => setLevelOfBulgarianLanguage(e.target.value)} 
-                    />
+                        titularRadioId = "manTitularRadio"
+                        titularRadioValue = "man"
+                        titularChecked = {titular === "man"}
+                        titularOnSelect = {(e) => setTitular(e.target.value)}
 
-                    <Input 
-                        id="religion" 
-                        label="Религия" 
-                        type="text" 
-                        placeholder="Религия ..." 
-                        value={religion} 
-                        onChange={(e) => setReligion(e.target.value)} 
+                        isFirstNameInvalid = {!validFields.isManFirstNameValid}
+                        isSecondNameInvalid = {!validFields.isManSecondNameValid}
+                        isLastNameInvalid = {!validFields.isManLastNameValid}
+                        isEgnInvalid = {!validFields.isManEgnValid}
+                        isPhoneInvalid = {!validFields.isManPhoneValid}
+                        isEducationInvalid = {!validFields.isManEducationValid}
                     />
-                    
-                    <Select id="familyType" label="Желая да предоставям приемна грижа като" placeholder="Желая да предоставям приемна грижа като ..." onChange={(e) => setFamilyType(e.target.value)} value={familyType}>
-                        <option value="Доброволно приемно семейство">Доброволно приемно семейство</option>
-                        <option value="Професионално приемно семейство">Професионално приемно семейство</option>
-                    </Select>
-
-                    <Input 
-                        id="averageMonthlyIncomePerFamilyMember" 
-                        label="Среден месечен доход на член от семейството (в лева)" 
-                        type="number" 
-                        placeholder="Среден месечен доход на член от семейството (в лева) ..." 
-                        value={averageMonthlyIncomePerFamilyMember} onChange={(e) => setAverageMonthlyIncomePerFamilyMember(e.target.value)} 
-                        isInvalid = {!validFields.isAverageMonthlyIncomePerFamilyMemberValid}
-                        invalidMessage = "Невалидна стойност."
-                    />
-
-                    <Input 
-                        id="anotherIncome" 
-                        label="Доходи от други източници" 
-                        type="number" 
-                        placeholder="Доходи от други източници ..." 
-                        value={anotherIncome} onChange={(e) => setAnotherIncome(e.target.value)} 
-                        isInvalid = {!validFields.isAnotherIncomeValid}
-                        invalidMessage = "Невалидна стойност."
-                    />
-                    
-                    <Input id="houseType" label="Жилище" type="text" placeholder="Собствено / под наем, брой стаи ..." value={houseType} onChange={(e) => setHouseType(e.target.value)} />
                     <hr />
                 </div>
+            </div>
 
-                <div>
-                    <p><strong>Социален работник</strong></p>
-                    <Input 
-                        id="warden" 
-                        label="Име" 
-                        type="text" 
-                        value={warden ? `${warden.first_name} ${warden.second_name} ${warden.last_name}` : ""} 
-                        disabled={true} />
+            <div>
+                <p><strong>За какво дете бихте желали да се грижите</strong></p>
+                <div className="form-row">
+                    <div className="form-group col-md">
+                        <Select 
+                            id="preferKidGender" 
+                            label="Предпочитан пол" 
+                            placeholder="Избери предпочитан пол ..." 
+                            onChange={(e) => setPreferKidGender(e.target.value)} 
+                            value={preferKidGender}
+                        >
+                            <option value="Момче">Момче</option>
+                            <option value="Момиче">Момиче</option>
+                        </Select>
+                    </div>
+
+                    <div className="form-group col-md">
+                        <Input 
+                            id="preferKidMinAge" 
+                            label="Минимална възраст" 
+                            type="number" 
+                            placeholder="Минимална възраст ..." 
+                            onChange={(e) => setPreferKidMinAge(e.target.value)} 
+                            value={preferKidMinAge} 
+                            isInvalid = {!validFields.isPreferKidMinAgeValid}
+                            invalidMessage = "Невалидна стойност."
+                        />
+                    </div>
+
+                    <div className="form-group col-md">
+                        <Input 
+                            id="preferKidMaxAge" 
+                            label="Максимална възраст" 
+                            type="number" 
+                            placeholder="Максимална възраст ..." 
+                            onChange={(e) => setPreferKidMaxAge(e.target.value)} 
+                            value={preferKidMaxAge} 
+                            isInvalid = {!validFields.isPreferKidMaxAgeValid}
+                            invalidMessage = "Невалидна стойност."
+                        />
+                    </div>
                 </div>
+                <hr />
+            </div>
 
-                <div className="pull-right">
-                    {props.isEditing ?
-                        <button type="button" className="btn btn-warning" onClick={update}>Редактирай</button>
-                        :
-                        <button type="button" className="btn btn-primary" onClick={register}>Регистрирай</button>
-                    }
+            <div>
+                <p><strong>За семейството</strong></p>
 
-                    <BackButton />
-                </div>
-            </form>
+                <AddressInput 
+                    region = {region}
+                    subRegion = {subRegion}
+                    city = {city}
+                    fullAddress = {true}
+                    address = {address}
+                    regionOnChange = {(e) => setRegion(e.target.value)}
+                    subRegionOnChange = {(e) => setSubRegion(e.target.value)}
+                    cityOnChange = {(e) => setCity(e.target.value)}
+                    addressOnChange = {(e) => setAddress(e.target.value)}
+                    required = {true}
 
-            <Loader loading={isLoading} fullScreen={true} />
-        </>
-    );
+                    isRegionInvalid = {!validFields.isRegionValid}
+                    isSubRegionInvalid = {!validFields.isSubRegionValid}
+                    isCityInvalid = {!validFields.isCityValid}
+                    isAddressInvalid = {!validFields.isAddressValid}
+                />
+                
+                <Input 
+                    id="language" 
+                    label="На какъв език се говори в семейството" 
+                    type="text" 
+                    placeholder="На какъв език се говори в семейството ..." 
+                    value={language} onChange={(e) => setLanguage(e.target.value)} 
+                />
+
+                <Input 
+                    id="levelOfBulgarianLanguage" 
+                    label="Владеете ли български език добре?" 
+                    type="text" placeholder="Да / не ..." 
+                    value={levelOfBulgarianLanguage} onChange={(e) => setLevelOfBulgarianLanguage(e.target.value)} 
+                />
+
+                <Input 
+                    id="religion" 
+                    label="Религия" 
+                    type="text" 
+                    placeholder="Религия ..." 
+                    value={religion} 
+                    onChange={(e) => setReligion(e.target.value)} 
+                />
+                
+                <Select id="familyType" label="Желая да предоставям приемна грижа като" placeholder="Желая да предоставям приемна грижа като ..." onChange={(e) => setFamilyType(e.target.value)} value={familyType}>
+                    <option value="Доброволно приемно семейство">Доброволно приемно семейство</option>
+                    <option value="Професионално приемно семейство">Професионално приемно семейство</option>
+                </Select>
+
+                <Input 
+                    id="averageMonthlyIncomePerFamilyMember" 
+                    label="Среден месечен доход на член от семейството (в лева)" 
+                    type="number" 
+                    placeholder="Среден месечен доход на член от семейството (в лева) ..." 
+                    value={averageMonthlyIncomePerFamilyMember} onChange={(e) => setAverageMonthlyIncomePerFamilyMember(e.target.value)} 
+                    isInvalid = {!validFields.isAverageMonthlyIncomePerFamilyMemberValid}
+                    invalidMessage = "Невалидна стойност."
+                />
+
+                <Input 
+                    id="anotherIncome" 
+                    label="Доходи от други източници" 
+                    type="number" 
+                    placeholder="Доходи от други източници ..." 
+                    value={anotherIncome} onChange={(e) => setAnotherIncome(e.target.value)} 
+                    isInvalid = {!validFields.isAnotherIncomeValid}
+                    invalidMessage = "Невалидна стойност."
+                />
+                
+                <Input id="houseType" label="Жилище" type="text" placeholder="Собствено / под наем, брой стаи ..." value={houseType} onChange={(e) => setHouseType(e.target.value)} />
+                <hr />
+            </div>
+
+            <div>
+                <p><strong>Социален работник</strong></p>
+                <Input 
+                    id="warden" 
+                    label="Име" 
+                    type="text" 
+                    value={warden ? `${warden.first_name} ${warden.second_name} ${warden.last_name}` : ""} 
+                    disabled={true} />
+            </div>
+
+            <div className="pull-right">
+                {props.isEditing ?
+                    <button type="button" className="btn btn-warning" onClick={update}>Редактирай</button>
+                    :
+                    <button type="button" className="btn btn-primary" onClick={register}>Регистрирай</button>
+                }
+
+                <BackButton />
+            </div>
+        </form>
+
+        <Loader loading={isLoading} fullScreen={true} />
+    </>;
 
 }
 

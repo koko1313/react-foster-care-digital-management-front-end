@@ -2,13 +2,17 @@ import React from 'react';
 
 const Footer = () => {
 
-    return (
-        <div className="footer d-print-none">
+    return <>
+        <footer class="footer d-print-none">
             <div className="container">
-                <small>Агенция за социално подпомагане - услуга приемна грижа</small>
+                <div className="row">
+                    <div className="col">
+                        <small>Агенция за социално подпомагане - услуга приемна грижа</small>
+                    </div>
+                </div>
             </div>
-        </div>
-    );
+        </footer>
+    </>;
 
 }
 

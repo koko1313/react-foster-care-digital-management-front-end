@@ -64,35 +64,28 @@ const AddChildToFamilyComponent = (props) => {
         );
     }
 
-    return (
-        <>
-            <div className="container">
-                <div className="row">
-                    <div className="col">
-                        <Select 
-                            id = "addChildToFamilySelect" 
-                            label = "Добави дете" 
-                            placeholder = "Избери дете ..." 
-                            onChange = {(e) => setChildId(e.target.value)} 
-                            value = {childId}
-                            loading = {isLoading}
-                        >
-                            {renderChildrenOptions()}
-                        </Select>
-                    </div>
-                </div>
+    return <>
+        <div className="d-flex flex-column">
+            <Select 
+                id = "addChildToFamilySelect" 
+                label = "Добави дете" 
+                placeholder = "Избери дете ..." 
+                onChange = {(e) => setChildId(e.target.value)} 
+                value = {childId}
+                loading = {isLoading}
+            >
+                {renderChildrenOptions()}
+            </Select>
 
-                <div className="row">
-                    <div className="col">
-                        <div className="pull-right">
-                            <button type="button" className="btn btn-light mx-1" onClick={props.closeFunction}>Отказ</button>
-                            <button type="button" className="btn btn-primary" onClick={addChildToFamily}>Добави дете</button>
-                        </div>
-                    </div>
+            <div>
+                <div className="pull-right">
+                    <button type="button" className="btn btn-light mx-1" onClick={props.closeFunction}>Отказ</button>
+                    <button type="button" className="btn btn-primary" onClick={addChildToFamily}>Добави дете</button>
                 </div>
             </div>
-        </>
-    );
+        </div>
+    </>;
+
 }
 
 export default AddChildToFamilyComponent;

@@ -109,23 +109,25 @@ const Header = () => {
         return navButtons;
     }
 
-    return <Navbar color="primary" dark expand="md">
-        <Container>
-            <NavLink
-                tag={RRNavLink}
-                className="navbar-brand"
-                exact to="/">
-                {/* <i className="fa fa-child mr-3"></i> */}
-                <span className="project-name">Приемна грижа</span>
-            </NavLink>
-            <NavbarToggler onClick={toggleIsOpen} />
-            <Collapse isOpen={isOpen} navbar>
-                <Nav className="ml-auto" navbar>
-                    {renderNavItems()}
-                </Nav>
-            </Collapse>
-        </Container>
-    </Navbar>
+    return <>
+        <Navbar color="primary" dark expand="md">
+            <Container>
+                <NavLink
+                    tag={RRNavLink}
+                    className="navbar-brand"
+                    exact to="/">
+                    {/* <i className="fa fa-child mr-3"></i> */}
+                    <span className="project-name">Приемна грижа</span>
+                </NavLink>
+                <NavbarToggler onClick={toggleIsOpen} />
+                <Collapse isOpen={isOpen} navbar>
+                    <Nav className="ml-auto" navbar>
+                        {renderNavItems()}
+                    </Nav>
+                </Collapse>
+            </Container>
+        </Navbar>
+    </>;
 
 }
 

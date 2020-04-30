@@ -75,28 +75,32 @@ const ListComponent = () => {
         dispatch(actions.setFamilies([]));
     }
 
-    return (
-        <>
-            <button className="btn btn-link" onClick={()=>history.push("/family/register")}>Добави семейство</button>
-            <button className="btn btn-info pull-right mb-2" onClick={remountComponent}><i className="fa fa-refresh"></i></button>
-            
-            <div className="table-responsive">
-                <table className="table">
-                    <thead>
-                        <tr>
-                            <th style={{width: 75+'%'}} scope="col">Титуляр</th>
-                            <th scope="col">Действия</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {renderFamiliesList()}
-                    </tbody>
-                </table>
+    return <>
+        <div className="content-list d-flex flex-column">
+            <div className="content-list-options">
+                <button className="btn btn-link" onClick={()=>history.push("/family/register")}>Добави семейство</button>
+                <button className="btn btn-info pull-right mb-2" onClick={remountComponent}><i className="fa fa-refresh"></i></button>
+            </div>
+        
+            <div className="content-list-results">
+                <div className="table-responsive">
+                    <table className="table">
+                        <thead>
+                            <tr>
+                                <th style={{width: 75+'%'}} scope="col">Титуляр</th>
+                                <th scope="col">Действия</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {renderFamiliesList()}
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <Loader loading={isLoading} />
-        </>
-    );
+        </div>
+    </>;
 
 }
 
