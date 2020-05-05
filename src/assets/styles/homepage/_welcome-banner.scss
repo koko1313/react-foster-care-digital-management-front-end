@@ -1,0 +1,29 @@
+.welcome-banner {
+    max-height: 12rem;
+    display: flex;
+    align-items: center;
+    color: theme-color("title");
+    height: 25rem;
+    margin-bottom: $grid-gutter-width;
+
+    .logo {
+        max-width: 25%;
+        max-height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .motto {
+        margin: auto;
+        font-size: 1.5rem;
+        padding: 1rem;
+        font-weight: 900;
+        text-align: center;
+
+        @include media-breakpoint-down(md) {
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+    }
+}

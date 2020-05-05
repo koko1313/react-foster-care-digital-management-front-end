@@ -64,6 +64,7 @@ const Login = () => {
                     <input type="email" className="form-control" id="email" placeholder="Email ..." onChange={(e) => {setEmail(e.target.value)}} />
                 </div>
             </div>
+            
             <div className="form-group">
                 <label htmlFor="password">Парола</label>
                 <div className="input-group">
@@ -73,7 +74,10 @@ const Login = () => {
                     <input type="password" className="form-control" id="password" placeholder="Парола ..." onChange={(e) => {setPassword(e.target.value);}} />
                 </div>
             </div>
-            <button type="submit" className="btn btn-primary pull-right">Вход</button>
+
+            <div className="d-flex justify-content-end">
+                <button type="submit" className="btn btn-primary">Вход</button>
+            </div>
         </form>
     </>;
     

@@ -17,15 +17,21 @@
 // Bootstrap components override
 @import "./bootstrap-components/navbar";
 
+// Import general styles
+@import "./general/main-container";
+@import "./general/footer";
+@import "./general/root";
+@import "./general/content-container";
+
 // Import custom components
-@import "./custom-components/root";
-@import "./custom-components/main-container";
-@import "./custom-components/footer";
-@import "./custom-components/home-page";
 @import "./custom-components/details";
 @import "./custom-components/printable-document";
 @import "./custom-components/family-children-list";
 
+// homepage
+@import "./homepage/welcome-banner";
+@import "./homepage/homepage-image";
+@import "./homepage/call-banner";
 
 // Import font awesome
 @import "~font-awesome/scss/font-awesome";

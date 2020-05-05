@@ -1,23 +1,10 @@
-// $body-bg: #efefef;
+$body-bg: #efefef;
 
 // Override fonts
 $font-family-sans-serif: 'Open Sans', sans-serif;
 $font-family-serif: Georgia, 'Times New Roman', Times, serif;
-$font-family-monospace: Menlo, Monaco, Consolas, 'Liberation Mono',
-'Courier New', monospace;
+$font-family-monospace: Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
 $font-family-base: $font-family-sans-serif;
-
-// $theme-colors: (
-//     "primary": #6a89fd,
-//     "primary-dark": #5968cb,
-//     "action": #ffd900,
-//     "secondary": #687b86,
-//     "action-secondary": #ff8f2b,
-//     "dark-overlay": #292d29,
-//     "title": #666666,
-//     "border-light": #e6e6e6,
-//     "border-ultra-light": #f1f1f1,
-// );
 
 $theme-colors: (
     "primary": #A2C614,
@@ -28,3 +15,5 @@ $theme-colors: (
     "border-light": #e6e6e6,
     "border-ultra-light": #f1f1f1,
 );
+
+$container-shadow: 2px 2px 5px #999999;

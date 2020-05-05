@@ -1,3 +1,5 @@
+import roles from "../roles";
+
 /**
  * Check if object is empty {}
  * @param {Object} object 
@@ -44,4 +46,19 @@ export function userHasRole(user, roleAsString) {
 export function objectHasRole(route, role) {
     // return route.roles.includes(role); // ECMA SCRIPT 6
     return route.roles.indexOf(role) !== -1; // whitout using ECMA SCRIPT 6
+}
+
+
+/**
+ * Returns user roles labels. Example: ["Служител ОЕПГ"]
+ * @param {Array} userRoles 
+ */
+export function getUserRolesLabels(userRoles) {
+    const rolesLabels = [];
+    
+    userRoles.forEach(role => {
+        rolesLabels.push(roles[role.name].label);
+    });
+
+    return rolesLabels;
 }

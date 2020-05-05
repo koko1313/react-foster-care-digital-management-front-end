@@ -1,0 +1,25 @@
+.content-container {
+    box-shadow: $container-shadow;
+    background-color: $white;
+    padding: 2rem;
+    height: 100%;
+    border-radius: 1rem;
+    overflow: hidden;
+
+    @include media-breakpoint-down(md) {
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+    }
+}
+
+// content-container without padding
+.content-container-p0 {
+    box-shadow: $container-shadow;
+    background-color: $white;
+    border-radius: 1rem;
+    overflow: hidden;
+
+    @include media-breakpoint-down(md) {
+        border-radius: 0.5rem;
+    }
+}

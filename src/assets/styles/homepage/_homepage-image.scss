@@ -1,8 +1,8 @@
-.home-page {
-    .image {
-        border-radius: 15px;
-        position: relative;
-        overflow: hidden;
+.homepage-image {
+    position: relative;
+
+    @include media-breakpoint-down(sm) {
+        margin-top: $grid-gutter-width;
     }
 
     .img-credit {
