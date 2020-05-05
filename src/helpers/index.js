@@ -1,4 +1,4 @@
-import roles from "../roles";
+import rolesLabels from "../rolesLabels";
 
 /**
  * Check if object is empty {}
@@ -54,11 +54,11 @@ export function objectHasRole(route, role) {
  * @param {Array} userRoles 
  */
 export function getUserRolesLabels(userRoles) {
-    const rolesLabels = [];
+    const roles = [];
     
     userRoles.forEach(role => {
-        rolesLabels.push(roles[role.name].label);
+        roles.push(rolesLabels.get(role.name));
     });
 
-    return rolesLabels;
+    return roles;
 }
