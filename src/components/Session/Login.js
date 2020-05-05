@@ -48,6 +48,8 @@ const Login = () => {
     }
 
     return <>
+        <h2>Вход</h2>
+        
         <Loader loading={isLoading} />
 
         <Alert color={alert.color} isOpen={alert.message ? true : false} toggle={onDismiss}>
