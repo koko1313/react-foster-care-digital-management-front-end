@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { objectIsEmpty } from '../../helpers';
 import WelcomeBanner from './WelcomeBanner';
 import HomepageImage from './HomepageImage';
-import Login from '../../components/Session/Login';
+import LoginComponent from '../../components/Session/Login';
 import CallBanner from './CallBanner';
 import LoggedUserDetails from './LoggedUserDetails';
 
@@ -26,7 +26,7 @@ const HomePage = () => {
             <div className="col-md order-1 order-md-2">
                 <div className="content-container">
                     {/* Guest */}
-                    {objectIsEmpty(loggedUser) && <Login />}
+                    {objectIsEmpty(loggedUser) && <LoginComponent />}
 
                     {/* Logged user */}
                     {!objectIsEmpty(loggedUser) && <LoggedUserDetails user={loggedUser} />}
