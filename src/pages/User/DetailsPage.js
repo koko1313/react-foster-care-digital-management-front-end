@@ -4,9 +4,11 @@ import LoggedUserDetails from '../../components/Session/LoggedUserDetails';
 const DetailsPage = () => {
 
     return <>
-        <div className="row">
-            <div className="col content-container">
-                <LoggedUserDetails />
+        <div className="content-container">
+            <div className="row">
+                <div className="col">
+                    <LoggedUserDetails />
+                </div>
             </div>
         </div>
     </>;
