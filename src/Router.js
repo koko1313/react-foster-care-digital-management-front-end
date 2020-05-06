@@ -17,6 +17,7 @@ import { objectIsEmpty, userHasRole, objectHasRole } from './helpers';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import Logout from './components/Session/Logout';
+import LoggedUserDetailsPage from './pages/User/DetailsPage';
 
 import ChildrenListPage from './pages/Children/ListPage';
 import ChildrenFormPage from './pages/Children/FormPage';
@@ -69,7 +70,7 @@ const Router = () => {
             exact: true,
             roles: [role.LOGGED],
             main: () => <Layout>
-                Тук ще има профил страница
+                <LoggedUserDetailsPage />
             </Layout>
         },
 

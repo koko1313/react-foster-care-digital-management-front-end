@@ -5,7 +5,7 @@ import WelcomeBanner from './WelcomeBanner';
 import HomepageImage from './HomepageImage';
 import LoginComponent from '../../components/Session/Login';
 import CallBanner from './CallBanner';
-import LoggedUserDetails from './LoggedUserDetails';
+import LoggedUserDetails from '../../components/Session/LoggedUserDetails';
 
 const HomePage = () => {
 
@@ -29,7 +29,7 @@ const HomePage = () => {
                     {objectIsEmpty(loggedUser) && <LoginComponent />}
 
                     {/* Logged user */}
-                    {!objectIsEmpty(loggedUser) && <LoggedUserDetails user={loggedUser} />}
+                    {!objectIsEmpty(loggedUser) && <LoggedUserDetails />}
                 </div>
             </div>
         </div>
