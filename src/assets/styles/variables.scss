@@ -6,6 +6,9 @@ $font-family-serif: Georgia, 'Times New Roman', Times, serif;
 $font-family-monospace: Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
 $font-family-base: $font-family-sans-serif;
 
+// Font awesome font path
+$fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
+
 $theme-colors: (
     "primary": #A2C614,
     "primary-dark": rgb(136, 165, 19),

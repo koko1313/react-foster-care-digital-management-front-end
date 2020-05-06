@@ -10,6 +10,11 @@
 // Import custom font from Google
 @import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
 
+// Import font-awesome
+@import "~@fortawesome/fontawesome-free/scss/fontawesome";
+@import "~@fortawesome/fontawesome-free/scss/solid";
+@import "~@fortawesome/fontawesome-free/scss/regular";
+
 // Load Bootstrap
 @import "~bootstrap/scss/bootstrap";
 
@@ -34,4 +39,4 @@
 @import "./homepage/call-banner";
 
 // Import font awesome
-@import "~font-awesome/scss/font-awesome";
+// @import "~font-awesome/scss/font-awesome";
