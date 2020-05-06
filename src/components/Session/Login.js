@@ -61,7 +61,7 @@ const Login = () => {
                 <label htmlFor="email">Email</label>
                 <div className="input-group">
                     <div className="input-group-prepend">
-                        <span className="input-group-text"><i className="fa fa-user"></i></span>
+                        <span className="input-group-text"><i className="fas fa-user"></i></span>
                     </div>
                     <input type="email" className="form-control" id="email" placeholder="Email ..." onChange={(e) => {setEmail(e.target.value)}} />
                 </div>
@@ -71,7 +71,7 @@ const Login = () => {
                 <label htmlFor="password">Парола</label>
                 <div className="input-group">
                     <div className="input-group-prepend">
-                        <span className="input-group-text"><i className="fa fa-lock"></i></span>
+                        <span className="input-group-text"><i className="fas fa-lock"></i></span>
                     </div>
                     <input type="password" className="form-control" id="password" placeholder="Парола ..." onChange={(e) => {setPassword(e.target.value);}} />
                 </div>

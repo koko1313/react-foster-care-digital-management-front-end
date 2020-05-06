@@ -88,8 +88,8 @@ const ListComponent = () => {
                         {employee.region ? employee.region.name : null}
                     </td>
                     <td>
-                        <button type="button" className="btn btn-warning mr-1 mb-1" onClick={() => { editUser(employee) }}><i className="fa fa-edit"></i></button>
-                        <button type="button" className="btn btn-danger mb-1" onClick={() => { deleteUser(employee.id) }}><i className="fa fa-trash"></i></button>
+                        <button type="button" className="btn btn-warning mr-1 mb-1" onClick={() => { editUser(employee) }}><i className="fas fa-edit"></i></button>
+                        <button type="button" className="btn btn-danger mb-1" onClick={() => { deleteUser(employee.id) }}><i className="fas fa-trash"></i></button>
                     </td>
                 </tr>
             );
@@ -102,9 +102,9 @@ const ListComponent = () => {
 
     return <>
         <div className="content-list d-flex flex-column">
-            <div className="content-list-options">
+            <div className="content-list-options d-flex justify-content-between">
                 <button className="btn btn-link" onClick={()=>history.push("/employee-oepg/register")}>Регистрация на потребител</button>
-                <button className="btn btn-info pull-right mb-2" onClick={remountComponent}><i className="fa fa-refresh"></i></button>
+                <button className="btn btn-info mb-2" onClick={remountComponent}><i className="fas fa-sync"></i></button>
             </div>
 
             <div className="content-list-results">

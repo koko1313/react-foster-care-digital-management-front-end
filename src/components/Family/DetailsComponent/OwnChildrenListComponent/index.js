@@ -50,7 +50,7 @@ const OwnChildrenListComponent = () => {
                         onClick = {() => {history.push(`/child/details/${child.id}`)}}>
                             {child.first_name} {child.second_name} {child.last_name}
                     </div>
-                    <div className="col-3 child-remove" onClick={() => {removeChildFromFamily(child.id)}}><i className="fa fa-user-times"></i></div>
+                    <div className="col-3 child-remove" onClick={() => {removeChildFromFamily(child.id)}}><i className="fas fa-user-times"></i></div>
                 </li>
             );
         });
