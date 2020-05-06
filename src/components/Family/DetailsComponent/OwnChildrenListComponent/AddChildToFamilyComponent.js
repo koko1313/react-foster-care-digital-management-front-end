@@ -77,11 +77,9 @@ const AddChildToFamilyComponent = (props) => {
                 {renderChildrenOptions()}
             </Select>
 
-            <div>
-                <div className="pull-right">
-                    <button type="button" className="btn btn-light mx-1" onClick={props.closeFunction}>Отказ</button>
-                    <button type="button" className="btn btn-primary" onClick={addChildToFamily}>Добави дете</button>
-                </div>
+            <div className="d-flex justify-content-end">
+                <button type="button" className="btn btn-light mx-1" onClick={props.closeFunction}>Отказ</button>
+                <button type="button" className="btn btn-primary" onClick={addChildToFamily}>Добави дете</button>
             </div>
         </div>
     </>;

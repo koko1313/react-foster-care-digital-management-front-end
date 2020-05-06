@@ -83,9 +83,13 @@ const FamilyApplication = (props) => {
                 <table className="printable-document">
                         <thead>
                             <tr>
-                                <th>
-                                    <img src={euFlagImege} alt="eu-logo" />
-                                    <img className="pull-right" src={hrLogo} alt="hr-logo" />
+                                <th className="d-flex justify-content-between">
+                                    <div>
+                                        <img src={euFlagImege} alt="eu-logo" />
+                                    </div>
+                                    <div>
+                                        <img src={hrLogo} alt="hr-logo" />
+                                    </div>
                                 </th>
                             </tr>
                         </thead>
@@ -140,11 +144,11 @@ const FamilyApplication = (props) => {
                                     Известно ми е, че за декларираните неверни данни нося наказателна отговорност по чл. 313 от Наказателния кодекс.
                                 </div>
 
-                                <div className="mt-5">
-                                    <div className="d-inline">
+                                <div className="mt-5 d-flex justify-content-between">
+                                    <div>
                                         <strong>Дата:</strong> ...........................................
                                     </div>
-                                    <div className="d-inline pull-right">
+                                    <div>
                                         <strong>Подписи:</strong> <br />
                                         <strong>1.</strong> ........................................... <br />
                                         <strong>2.</strong> ...........................................

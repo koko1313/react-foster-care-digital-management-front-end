@@ -273,7 +273,7 @@ const FormComponent = (props) => {
                 value={warden ? `${warden.first_name} ${warden.second_name} ${warden.last_name}` : ""} 
                 disabled={true} />
 
-            <div className="pull-right">
+            <div className="d-flex justify-content-end">
                 {props.isEditing ?
                     <button type="button" className="btn btn-warning" onClick={update}>Редактирай</button>
                     :

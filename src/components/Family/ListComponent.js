@@ -79,7 +79,7 @@ const ListComponent = () => {
         <div className="content-list d-flex flex-column">
             <div className="content-list-options d-flex justify-content-between">
                 <button className="btn btn-link" onClick={()=>history.push("/family/register")}>Добави семейство</button>
-                <button className="btn btn-info pull-right mb-2" onClick={remountComponent}><i className="fas fa-sync"></i></button>
+                <button className="btn btn-info mb-2" onClick={remountComponent}><i className="fas fa-sync"></i></button>
             </div>
         
             <div className="content-list-results">

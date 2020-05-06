@@ -252,7 +252,7 @@ const FormComponent = () => {
                 isCityInvalid = {!validFields.isCityValid}
             />
 
-            <div className="pull-right">
+            <div className="d-flex justify-content-end">
                 {isEditingUser ?
                     <button type="button" className="btn btn-warning" onClick={updateUser}>Редактирай</button>
                     :

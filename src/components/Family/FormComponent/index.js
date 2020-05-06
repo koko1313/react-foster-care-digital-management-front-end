@@ -551,7 +551,7 @@ const FormComponent = (props) => {
                     disabled={true} />
             </div>
 
-            <div className="pull-right">
+            <div className="d-flex justify-content-end">
                 {props.isEditing ?
                     <button type="button" className="btn btn-warning" onClick={update}>Редактирай</button>
                     :

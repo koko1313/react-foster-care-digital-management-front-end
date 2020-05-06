@@ -127,7 +127,7 @@ const DetailsPage = () => {
 
             <div className="row">
                 <div className="col">
-                    <div className="pull-right mt-4">
+                    <div className="mt-4 d-flex justify-content-end">
                         <button type="button" className="btn btn-warning mr-1" onClick={() => { editFamily(family) }}>Редактирай</button>
                         <button type="button" className="btn btn-danger" onClick={() => { deleteFamily() }}>Изтрий</button>
                         <BackButton />
