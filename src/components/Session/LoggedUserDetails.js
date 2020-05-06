@@ -9,7 +9,7 @@ const LoggedUserDetails = () => {
     const history = useHistory();
 
     return <>
-        <h2>Здравейте, {loggedUser.first_name}</h2>
+        <h2>Здравейте, {loggedUser.first_name}!</h2>
         <hr />
         <p><strong>Email:</strong> {loggedUser.email}</p>
         <p><strong>Роли:</strong> {getUserRolesLabels(loggedUser.roles).join(', ')}</p>
