@@ -7,15 +7,17 @@ import ChildFormComponent from '../../components/Children/FormComponent';
 const FormPage = (props) => {
 
     return <>
-        <div className="row">
-            <div className="col">
-                <h1>Дете</h1>
+        <div className="content-container">
+            <div className="row">
+                <div className="col">
+                    <h1>Дете</h1>
+                </div>
             </div>
-        </div>
 
-        <div className="row">
-            <div className="col">
-                <ChildFormComponent isEditing={props.isEditing} />
+            <div className="row">
+                <div className="col">
+                    <ChildFormComponent isEditing={props.isEditing} />
+                </div>
             </div>
         </div>
     </>;

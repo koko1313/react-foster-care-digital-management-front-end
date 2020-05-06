@@ -4,7 +4,7 @@ import LoginComponent from '../components/Session/Login';
 const LoginPage = () => {
     return <>
         <div className="row">
-            <div className="col">
+            <div className="col content-container">
                 <LoginComponent />
             </div>
         </div>

@@ -4,15 +4,17 @@ import EmployeeOEPGFormComponent from '../../../components/EmployeeOEPG/FormComp
 const FormPage = () => {
 
     return <>
-        <div className="row">
-            <div className="col">
-                <h1>Потребител ОЕПГ</h1>
+        <div className="content-container">
+            <div className="row">
+                <div className="col">
+                    <h1>Потребител ОЕПГ</h1>
+                </div>
             </div>
-        </div>
-        
-        <div className="row">
-            <div className="col">
-                <EmployeeOEPGFormComponent />
+            
+            <div className="row">
+                <div className="col">
+                    <EmployeeOEPGFormComponent />
+                </div>
             </div>
         </div>
     </>;
