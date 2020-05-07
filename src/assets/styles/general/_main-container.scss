@@ -1,4 +1,9 @@
 .main-container {
     margin-top: $grid-gutter-width;
     padding-bottom: 6rem;
+
+    @media print {
+        margin: 0;
+        padding: 0;
+    }
 }
