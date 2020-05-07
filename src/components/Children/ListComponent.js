@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import networkClient from '../../network/network-client';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import actions from "../../redux/actions";
 import Loader from '../base-components/Loader';
@@ -7,41 +6,15 @@ import { useHistory } from 'react-router-dom';
 
 const ListComponent = () => {
 
-    const [isLoading, setIsLoading] = useState(false);
+    const childrenIsLoading = useSelector(state => state.childrenIsLoading);
     const children = useSelector(state => state.children);
 
     const history = useHistory();
     const dispatch = useDispatch();
 
     useEffect(()=> {
-        if(children.length === 0) {
-            setIsLoading(true);
-            
-            networkClient.get('/child/all', null, 
-                (children) => {
-                    setIsLoading(false);
-                    if(children.length === 0) return; // return null when there are no childrens in database, otherwise it will cause infinite loop
-                    dispatch(actions.setChildren(children));
-                },
-                (error) => {
-                    if(error.response) {
-                        switch(error.response.status) {
-                            case 401:
-                                dispatch(actions.setAlert({title: "Грешка!", message: "Сесията ви изтече!"}));
-                                dispatch(actions.deleteLoggedUser());
-                                break;
-                            default:
-                                dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
-                                break;
-                        }
-                    } else {
-                        dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));
-                    }
-                    setIsLoading(false);
-                }
-            );
-        }
-    }, [children, dispatch]);
+        dispatch(actions.loadChildren());
+    }, [dispatch, children]);
 
     const viewDetails = (child) => {
         dispatch(actions.setCurrentChild(child))
@@ -97,7 +70,7 @@ const ListComponent = () => {
                 </div>
             </div>
 
-            <Loader loading={isLoading} />
+            <Loader loading={childrenIsLoading} />
         </div>
     </>;
 
