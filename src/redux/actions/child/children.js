@@ -44,8 +44,8 @@ export function loadChildren() {
                 dispatch(removeChildrenLoading());
             }
         );
-      };
-  }
+    };
+}
 
 export function setChildren (children) {
     return {type: types.SET_CHILDREN, payload: children};
