@@ -1,5 +1,18 @@
 import types from "../../action-types";
 
+export function familiesIsLoading(state = false, action) {
+    switch(action.type) {
+        case types.SET_FAMILIES_LOADING: {
+            return true;
+        }
+        case types.REMOVE_FAMILIES_LOADING: {
+            return false;
+        }
+
+        default: return state;
+    }
+}
+
 export function families(state = [], action) {
     switch(action.type) {
         case types.SET_FAMILIES: {

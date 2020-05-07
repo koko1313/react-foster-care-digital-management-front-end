@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import networkClient from '../../network/network-client';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import actions from "../../redux/actions";
 import Loader from '../base-components/Loader';
@@ -7,41 +6,14 @@ import { useHistory } from 'react-router-dom';
 
 const ListComponent = () => {
 
-    const [isLoading, setIsLoading] = useState(false);
+    const familiesIsLoading = useSelector(state => state.familiesIsLoading);
     const families = useSelector(state => state.families);
 
     const history = useHistory();
     const dispatch = useDispatch();
 
     useEffect(()=> {
-        if(families.length === 0) {
-            setIsLoading(true);
-            
-            networkClient.get('/family/all', null, 
-                (families) => {
-                    setIsLoading(false);
-                    if(families.length === 0) return; // return null when there are no families in database, otherwise it will cause infinite loop
-                    dispatch(actions.setFamilies(families));
-                },
-                (error) => {
-                    if(error.response) {
-                        switch(error.response.status) {
-                            case 401:
-                                dispatch(actions.setAlert({title: "Грешка!", message: "Сесията ви изтече!"}));
-                                dispatch(actions.deleteLoggedUser());
-                                break;
-                            default:
-                                dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
-                                break;
-                        }
-                    } else {
-                        dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));
-                    }
-                    setIsLoading(false);
-                }
-            );
-        }
-
+        dispatch(actions.loadFamilies());
     }, [families, dispatch]);
 
     const viewDetails = (family) => {
@@ -98,7 +70,7 @@ const ListComponent = () => {
                 </div>
             </div>
 
-            <Loader loading={isLoading} />
+            <Loader loading={familiesIsLoading} />
         </div>
     </>;
 
