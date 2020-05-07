@@ -20,6 +20,10 @@ const ListComponent = () => {
         dispatch(actions.setCurrentFamily(family));
         history.push(`/family/details/${family.id}`);
     }
+
+    const remountComponent = () => {
+        dispatch(actions.setFamilies([]));
+    }
     
     const renderFamiliesList = () => {
         if(!families) return null;
@@ -41,10 +45,6 @@ const ListComponent = () => {
                 </tr>
             );
         });
-    }
-
-    const remountComponent = () => {
-        dispatch(actions.setFamilies([]));
     }
 
     return <>

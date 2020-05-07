@@ -20,6 +20,10 @@ const ListComponent = () => {
         dispatch(actions.setCurrentChild(child))
         history.push(`/child/details/${child.id}`);
     }
+
+    const remountComponent = () => {
+        dispatch(actions.setChildren([]));
+    }
     
     const renderChildrenList = () => {
         if(!children) return null;
@@ -40,10 +44,6 @@ const ListComponent = () => {
                 </tr>
             );
         });
-    }
-
-    const remountComponent = () => {
-        dispatch(actions.setChildren([]));
     }
 
     return <>
