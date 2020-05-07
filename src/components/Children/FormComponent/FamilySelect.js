@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Select from "../../base-components/Form/Select/Select";
-import networkClient from "../../../network/network-client";
+import { useSelector, useDispatch } from "react-redux";
+import actions from '../../../redux/actions';
 
 /**
  * @param {string} value
@@ -8,24 +9,14 @@ import networkClient from "../../../network/network-client";
  */
 const FamilySelect = (props) => {
 
-    const [isLoading, setIsLoading] = useState();
-    const [families, setFamilies] = useState();
+    const dispatch = useDispatch();
+
+    const familiesAreLoading = useSelector(state => state.familiesAreLoading);
+    const families = useSelector(state => state.families);
 
     useEffect(() => {
-        setIsLoading(true);
-        
-        networkClient.get('/family/all', null, 
-            (families) => {
-                setFamilies(families);
-                setIsLoading(false);
-            },
-            (error) => {
-                setIsLoading(false);
-            }
-        );
-    
-        // eslint-disable-next-line
-    }, []);
+        dispatch(actions.loadFamilies());
+    }, [dispatch]);
 
     const renderFamiliesOptions = () => {
         if(!families) return;
@@ -48,7 +39,7 @@ const FamilySelect = (props) => {
             placeholder = "Избери семейство ..."
             value = {props.value}
             onChange = {props.onChange}
-            loading = {isLoading}
+            loading = {familiesAreLoading}
             >
             {renderFamiliesOptions()}
         </Select>
