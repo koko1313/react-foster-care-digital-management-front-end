@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 
 const ListComponent = () => {
 
-    const childrenIsLoading = useSelector(state => state.childrenIsLoading);
+    const childrenAreLoading = useSelector(state => state.childrenAreLoading);
     const children = useSelector(state => state.children);
 
     const history = useHistory();
@@ -14,7 +14,7 @@ const ListComponent = () => {
 
     useEffect(()=> {
         dispatch(actions.loadChildren());
-    }, [dispatch, children]);
+    }, [children, dispatch]);
 
     const viewDetails = (child) => {
         dispatch(actions.setCurrentChild(child))
@@ -70,7 +70,7 @@ const ListComponent = () => {
                 </div>
             </div>
 
-            <Loader loading={childrenIsLoading} />
+            <Loader loading={childrenAreLoading} />
         </div>
     </>;
 

@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 
 const ListComponent = () => {
 
-    const familiesIsLoading = useSelector(state => state.familiesIsLoading);
+    const familiesAreLoading = useSelector(state => state.familiesAreLoading);
     const families = useSelector(state => state.families);
 
     const history = useHistory();
@@ -70,7 +70,7 @@ const ListComponent = () => {
                 </div>
             </div>
 
-            <Loader loading={familiesIsLoading} />
+            <Loader loading={familiesAreLoading} />
         </div>
     </>;
 

@@ -1,6 +1,6 @@
 import types from "../../action-types";
 
-export function familiesIsLoading(state = false, action) {
+export function familiesAreLoading(state = false, action) {
     switch(action.type) {
         case types.SET_FAMILIES_LOADING: {
             return true;
