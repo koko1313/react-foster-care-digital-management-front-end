@@ -78,7 +78,7 @@ const Login = () => {
             </div>
 
             <div className="d-flex justify-content-end">
-                <button type="submit" className="btn btn-primary"><i class="fas fa-sign-in-alt"></i> Вход</button>
+                <button type="submit" className="btn btn-primary"><i className="fas fa-sign-in-alt"></i> Вход</button>
             </div>
         </form>
     </>;

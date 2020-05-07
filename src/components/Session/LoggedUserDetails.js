@@ -15,7 +15,7 @@ const LoggedUserDetails = () => {
         <p><strong>Роли:</strong> {getUserRolesLabels(loggedUser.roles).join(', ')}</p>
 
         <div className="d-flex justify-content-end">
-            <button className="btn btn-danger" onClick={() => {history.push("/logout")}}>Изход <i class="fas fa-sign-out-alt"></i></button>
+            <button className="btn btn-danger" onClick={() => {history.push("/logout")}}>Изход <i className="fas fa-sign-out-alt"></i></button>
         </div>
     </>;
 
