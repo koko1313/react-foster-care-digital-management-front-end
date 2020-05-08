@@ -16,19 +16,19 @@ const ListComponent = () => {
         dispatch(actions.loadEmployeesOEPG());
     }, [employeesOEPG, dispatch]);
 
-    const editUser = (employee) => {
-        dispatch(actions.setCurrentEmployeeOEPG(employee));
-        history.push(`/employee-oepg/edit`);
+    const editUser = (employeeOEPG) => {
+        dispatch(actions.setCurrentEmployeeOEPG(employeeOEPG));
+        history.push(`/employee-oepg/edit/${employeeOEPG.id}`);
     }
 
-    const deleteUser = (id) => {
+    const deleteUser = (employeeOEPG) => {
         let confirm = window.confirm("Сигурни ли сте?");
 
         if(!confirm) {
             return null;
         }
 
-        dispatch(actions.deleteEmployeeOEPG(id));
+        dispatch(actions.deleteEmployeeOEPG(employeeOEPG.id));
     }
 
     const remountComponent = () => {
@@ -38,19 +38,19 @@ const ListComponent = () => {
     const renderUsersList = () => {
         if(!employeesOEPG) return null;
 
-        return employeesOEPG.map((employee) => {
+        return employeesOEPG.map((employeeOEPG) => {
             return (
-                <tr key={employee.id}>
-                    <td>{`${employee.first_name} ${employee.second_name} ${employee.last_name}`}</td>
-                    <td>{employee.email}</td>
+                <tr key={employeeOEPG.id}>
+                    <td>{`${employeeOEPG.first_name} ${employeeOEPG.second_name} ${employeeOEPG.last_name}`}</td>
+                    <td>{employeeOEPG.email}</td>
                     <td>
-                        {employee.city ? employee.city.name + ", " : null}
-                        {employee.sub_region ? employee.sub_region.name + ", " : null}
-                        {employee.region ? employee.region.name : null}
+                        {employeeOEPG.city ? employeeOEPG.city.name + ", " : null}
+                        {employeeOEPG.sub_region ? employeeOEPG.sub_region.name + ", " : null}
+                        {employeeOEPG.region ? employeeOEPG.region.name : null}
                     </td>
                     <td>
-                        <button type="button" className="btn btn-warning mr-1 mb-1" onClick={() => { editUser(employee) }}><i className="fas fa-edit"></i></button>
-                        <button type="button" className="btn btn-danger mb-1" onClick={() => { deleteUser(employee.id) }}><i className="fas fa-trash"></i></button>
+                        <button type="button" className="btn btn-warning mr-1 mb-1" onClick={() => { editUser(employeeOEPG) }}><i className="fas fa-edit"></i></button>
+                        <button type="button" className="btn btn-danger mb-1" onClick={() => { deleteUser(employeeOEPG) }}><i className="fas fa-trash"></i></button>
                     </td>
                 </tr>
             );

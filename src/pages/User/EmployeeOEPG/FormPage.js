@@ -1,7 +1,10 @@
 import React from 'react';
 import EmployeeOEPGFormComponent from '../../../components/EmployeeOEPG/FormComponent';
 
-const FormPage = () => {
+/**
+ * @param {boolean} isEditing 
+ */
+const FormPage = (props) => {
 
     return <>
         <div className="content-container">
@@ -13,7 +16,7 @@ const FormPage = () => {
             
             <div className="row">
                 <div className="col">
-                    <EmployeeOEPGFormComponent />
+                    <EmployeeOEPGFormComponent isEditing={props.isEditing} />
                 </div>
             </div>
         </div>

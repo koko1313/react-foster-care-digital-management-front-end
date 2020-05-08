@@ -117,11 +117,11 @@ const Router = () => {
             </Layout>
         },
         {
-            path: '/employee-oepg/edit',
+            path: '/employee-oepg/edit/:id',
             exact: true,
             roles: [role.ADMIN],
             main: () => <Layout>
-                <EmployeeOEPGFormPage />
+                <EmployeeOEPGFormPage isEditing={true} />
             </Layout>
         },
 

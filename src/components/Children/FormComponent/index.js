@@ -15,7 +15,6 @@ import validator from 'validator';
 import FamilySelect from './FamilySelect';
 
 /**
- * 
  * @param {boolean} isEditing 
  */
 const FormComponent = (props) => {

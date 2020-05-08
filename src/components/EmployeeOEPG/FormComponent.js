@@ -4,7 +4,7 @@ import networkClient from '../../network/network-client';
 import { Alert } from 'reactstrap';
 import Input from '../base-components/Form/Input';
 import NamesInput from '../base-components/Form/NamesInput';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import Loader from '../base-components/Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import actions from "../../redux/actions";
@@ -12,12 +12,17 @@ import Validator from 'validator';
 import BackButton from '../base-components/BackButton';
 import AddressInput from '../base-components/Form/AddressInput';
 
-const FormComponent = () => {
+/**
+ * @param {boolean} isEditing 
+ */
+const FormComponent = (props) => {
 
     const [alert, setAlert] = useState({color: null, message: null});
     const onDismiss = () => setAlert({color: null, message: null});
 
     const [isLoading, setIsLoading] = useState(false);
+
+    const { id } = useParams(); // get parameter from url
 
     const [isEditingUser, setIsEditingUser] = useState(false);
 
@@ -117,9 +122,26 @@ const FormComponent = () => {
     }
 
     useEffect(() => {
-        if(!objectIsEmpty(employeeOEPG)) {
+        if(props.isEditing) {
             setIsEditingUser(true);
 
+            if((!objectIsEmpty(employeeOEPG) && Number(employeeOEPG.id) !== Number(id)) || objectIsEmpty(employeeOEPG)) {
+                setIsLoading(true);
+            
+                networkClient.get(`/employee-oepg/${id}`, null, 
+                    (employeeOEPG) => {
+                        dispatch(actions.setCurrentEmployeeOEPG(employeeOEPG));
+                        setIsLoading(false);
+                    },
+                    (error) => {
+                        processErrorMessages(error);
+                        setIsLoading(false);
+                    }
+                );
+            }
+
+            if(objectIsEmpty(employeeOEPG)) return; // when form page is loaded in edit mode and there is no current emploeeOEPG, so we wait for employeeOEPG from server
+        
             setEmail(employeeOEPG.email);
             setFirstName(employeeOEPG.first_name);
             setSecondName(employeeOEPG.second_name);
@@ -129,11 +151,8 @@ const FormComponent = () => {
             setCity(employeeOEPG.city.id);
         }
 
-        // willUnmount
-        return () => {
-            dispatch(actions.setCurrentEmployeeOEPG({}));
-        }        
-    }, [employeeOEPG, dispatch]);
+        // eslint-disable-next-line 
+    }, [employeeOEPG, props]);
     
 
     const registerUser = () => {
