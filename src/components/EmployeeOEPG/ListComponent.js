@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import networkClient from '../../network/network-client';
 import { useDispatch, useSelector } from 'react-redux';
 import actions from "../../redux/actions";
 import Loader from '../base-components/Loader';
@@ -12,22 +11,6 @@ const ListComponent = () => {
 
     const history = useHistory();
     const dispatch = useDispatch();
-
-    const processErrorMessages = (error) => {
-        if(error.response) {
-            switch(error.response.status) {
-                case 401:
-                    dispatch(actions.setAlert({title: "Грешка!", message: "Сесията ви изтече!"}));
-                    dispatch(actions.deleteLoggedUser());
-                    break;
-                default:
-                    dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
-                    break;
-            }
-        } else {
-            dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));
-        }
-    }
 
     useEffect(()=> {
         dispatch(actions.loadEmployeesOEPG());
@@ -45,18 +28,11 @@ const ListComponent = () => {
             return null;
         }
 
-        // setIsLoading(true);
-        
-        networkClient.delete(`/employee-oepg/delete/${id}`, null, 
-            () => { 
-                dispatch(actions.deleteEmployeeOEPG(id));
-                // setIsLoading(false);
-            },
-            (error) => {
-                processErrorMessages(error);
-                // setIsLoading(false);
-            }
-        );
+        dispatch(actions.deleteEmployeeOEPG(id));
+    }
+
+    const remountComponent = () => {
+        dispatch(actions.setEmployeesOEPG([]));
     }
     
     const renderUsersList = () => {
@@ -79,10 +55,6 @@ const ListComponent = () => {
                 </tr>
             );
         });
-    }
-
-    const remountComponent = () => {
-        dispatch(actions.setEmployeesOEPG([]));
     }
 
     return <>

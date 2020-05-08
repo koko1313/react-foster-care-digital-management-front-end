@@ -2,6 +2,22 @@ import types from '../../action-types';
 import networkClient from '../../../network/network-client';
 import actions from '..';
 
+function processErrorMessages(error, dispatch) {
+    if(error.response) {
+        switch(error.response.status) {
+            case 401:
+                dispatch(actions.setAlert({title: "Грешка!", message: "Сесията ви изтече!"}));
+                dispatch(actions.deleteLoggedUser());
+                break;
+            default:
+                dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
+                break;
+        }
+    } else {
+        dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));
+    }
+}
+
 function setEmployeesOEPGLoading() {
     return {type: types.SET_EMPLOYEES_OEPG_LOADING};
 }
@@ -28,19 +44,7 @@ export function loadEmployeesOEPG() {
                 dispatch(setEmployeesOEPG(emploeesOEPG));
             },
             (error) => {
-                if(error.response) {
-                    switch(error.response.status) {
-                        case 401:
-                            dispatch(actions.setAlert({title: "Грешка!", message: "Сесията ви изтече!"}));
-                            dispatch(actions.deleteLoggedUser());
-                            break;
-                        default:
-                            dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
-                            break;
-                    }
-                } else {
-                    dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));
-                }
+                processErrorMessages(error, dispatch);
                 dispatch(removeEmployeesOEPGLoading());
             }
         );
@@ -60,5 +64,22 @@ export function updateEmployeeOEPG(id, updatedEmployee) {
 }
 
 export function deleteEmployeeOEPG(id) {
+    return (dispatch) => {
+        dispatch(setEmployeesOEPGLoading());
+        
+        networkClient.delete(`/employee-oepg/delete/${id}`, null, 
+            () => { 
+                dispatch(deleteEmployeeOEPGFromReducer(id));
+                dispatch(removeEmployeesOEPGLoading());
+            },
+            (error) => {
+                processErrorMessages(error, dispatch);
+                dispatch(removeEmployeesOEPGLoading());
+            }
+        );
+    }
+}
+
+export function deleteEmployeeOEPGFromReducer(id) {
     return {type: types.DELETE_EMPLOYEE_OEPG, payload: id};
 }
