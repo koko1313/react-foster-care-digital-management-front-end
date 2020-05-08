@@ -21,7 +21,7 @@ const FormComponent = () => {
 
     const [isEditingUser, setIsEditingUser] = useState(false);
 
-    const employee = useSelector(state => state.currentEmployeeOEPG);
+    const employeeOEPG = useSelector(state => state.currentEmployeeOEPG);
 
     const dispatch = useDispatch();
     const history = useHistory();
@@ -117,23 +117,23 @@ const FormComponent = () => {
     }
 
     useEffect(() => {
-        if(!objectIsEmpty(employee)) {
+        if(!objectIsEmpty(employeeOEPG)) {
             setIsEditingUser(true);
 
-            setEmail(employee.email);
-            setFirstName(employee.first_name);
-            setSecondName(employee.second_name);
-            setLastName(employee.last_name);
-            setRegion(employee.region.id);
-            setSubRegion(employee.sub_region.id);
-            setCity(employee.city.id);
+            setEmail(employeeOEPG.email);
+            setFirstName(employeeOEPG.first_name);
+            setSecondName(employeeOEPG.second_name);
+            setLastName(employeeOEPG.last_name);
+            setRegion(employeeOEPG.region.id);
+            setSubRegion(employeeOEPG.sub_region.id);
+            setCity(employeeOEPG.city.id);
         }
 
         // willUnmount
         return () => {
             dispatch(actions.setCurrentEmployeeOEPG({}));
         }        
-    }, [dispatch, employee]);
+    }, [employeeOEPG, dispatch]);
     
 
     const registerUser = () => {
@@ -167,11 +167,11 @@ const FormComponent = () => {
 
         setIsLoading(true);
         
-        networkClient.put(`/employee-oepg/update/${employee.id}`, data,
+        networkClient.put(`/employee-oepg/update/${employeeOEPG.id}`, data,
             // success
             (updatedEmployee) => {
                 setAlert({color: "success", message: "Успешно редактиран потребител!"});
-                dispatch(actions.updateEmployeeOEPG(employee.id, updatedEmployee));
+                dispatch(actions.updateEmployeeOEPG(employeeOEPG.id, updatedEmployee));
                 history.push("/employee-oepg/all");
                 setIsLoading(false);
             },
