@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import networkClient from '../../network/network-client';
 import { useDispatch, useSelector } from 'react-redux';
 import actions from "../../redux/actions";
@@ -7,8 +7,8 @@ import { useHistory } from 'react-router-dom';
 
 const ListComponent = () => {
 
-    const [isLoading, setIsLoading] = useState(false);
-    const employees = useSelector(state => state.employeesOEPG);
+    const employeesOEPGAreLoading = useSelector(state => state.employeesOEPGAreLoading);
+    const employeesOEPG = useSelector(state => state.employeesOEPG);
 
     const history = useHistory();
     const dispatch = useDispatch();
@@ -30,23 +30,8 @@ const ListComponent = () => {
     }
 
     useEffect(()=> {
-        if(employees.length === 0) {
-            setIsLoading(true);
-
-            networkClient.get('/employee-oepg/all', null, 
-                (employees) => {
-                    dispatch(actions.setEmployeesOEPG(employees));
-                    setIsLoading(false);
-                },
-                (error) => {
-                    processErrorMessages(error);
-                    setIsLoading(false);
-                }
-            );
-        }
-    
-        // eslint-disable-next-line
-    }, [employees]);
+        dispatch(actions.loadEmployeesOEPG());
+    }, [employeesOEPG, dispatch]);
 
     const editUser = (employee) => {
         dispatch(actions.setCurrentEmployeeOEPG(employee));
@@ -60,24 +45,24 @@ const ListComponent = () => {
             return null;
         }
 
-        setIsLoading(true);
+        // setIsLoading(true);
         
         networkClient.delete(`/employee-oepg/delete/${id}`, null, 
             () => { 
                 dispatch(actions.deleteEmployeeOEPG(id));
-                setIsLoading(false);
+                // setIsLoading(false);
             },
             (error) => {
                 processErrorMessages(error);
-                setIsLoading(false);
+                // setIsLoading(false);
             }
         );
     }
     
     const renderUsersList = () => {
-        if(!employees) return null;
+        if(!employeesOEPG) return null;
 
-        return employees.map((employee) => {
+        return employeesOEPG.map((employee) => {
             return (
                 <tr key={employee.id}>
                     <td>{`${employee.first_name} ${employee.second_name} ${employee.last_name}`}</td>
@@ -125,7 +110,7 @@ const ListComponent = () => {
                 </div>
             </div>
 
-            <Loader loading={isLoading} />
+            <Loader loading={employeesOEPGAreLoading} />
         </div>
     </>;
 
