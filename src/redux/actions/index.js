@@ -1,4 +1,3 @@
-import * as errorActions from './errorActions';
 import * as alertActions from './alertActions';
 import * as regionsActions from './regionsActions';
 import * as subRegionsActions from './subRegionsActions';
@@ -17,7 +16,6 @@ import * as userSessionActions from './userSessionActions';
 
 
 export default Object.assign(
-    errorActions, 
     alertActions,
     regionsActions,
     subRegionsActions,
