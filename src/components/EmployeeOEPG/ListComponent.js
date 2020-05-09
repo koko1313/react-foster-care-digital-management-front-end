@@ -6,11 +6,11 @@ import { useHistory } from 'react-router-dom';
 
 const ListComponent = () => {
 
-    const employeesOEPGAreLoading = useSelector(state => state.employeesOEPGAreLoading);
-    const employeesOEPG = useSelector(state => state.employeesOEPG);
-
     const history = useHistory();
     const dispatch = useDispatch();
+
+    const employeesOEPGAreLoading = useSelector(state => state.employeesOEPGAreLoading);
+    const employeesOEPG = useSelector(state => state.employeesOEPG);
 
     useEffect(()=> {
         dispatch(actions.loadEmployeesOEPG());
