@@ -33,6 +33,8 @@ const ListComponent = () => {
         if(loaded) {
             loaded.catch(error => processErrorMessages(error));
         }
+
+        // eslint-disable-next-line
     }, [employeesOEPG, dispatch]);
 
     const editUser = (employeeOEPG) => {

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { objectIsEmpty } from '../../helpers';
-import networkClient from '../../network/network-client';
 import { Alert } from 'reactstrap';
 import Input from '../base-components/Form/Input';
 import NamesInput from '../base-components/Form/NamesInput';
