@@ -23,11 +23,11 @@ const FormComponent = (props) => {
     const { id } = useParams(); // get parameter from url
 
     const employeeOEPG = useSelector(state => state.currentEmployeeOEPG);
+    const currentEmployeeOEPGIsLoading = useSelector(state => state.currentEmployeeOEPGIsLoading);
+    const employeesOEPGAreLoading = useSelector(state => state.employeesOEPGAreLoading);
 
     const [alert, setAlert] = useState({color: null, message: null});
     const onDismiss = () => setAlert({color: null, message: null});
-
-    const [isLoading, setIsLoading] = useState(false);
 
     const [isEditingUser, setIsEditingUser] = useState(false);
 
@@ -82,20 +82,11 @@ const FormComponent = (props) => {
     useEffect(() => {
         if(props.isEditing) {
             setIsEditingUser(true);
-
-            if((!objectIsEmpty(employeeOEPG) && Number(employeeOEPG.id) !== Number(id)) || objectIsEmpty(employeeOEPG)) {
-                setIsLoading(true);
             
-                networkClient.get(`/employee-oepg/${id}`, null, 
-                    (employeeOEPG) => {
-                        dispatch(actions.setCurrentEmployeeOEPG(employeeOEPG));
-                        setIsLoading(false);
-                    },
-                    (error) => {
-                        processErrorMessages(error);
-                        setIsLoading(false);
-                    }
-                );
+            // Load current employee if it's not loaded
+            if((!objectIsEmpty(employeeOEPG) && Number(employeeOEPG.id) !== Number(id)) || objectIsEmpty(employeeOEPG)) {
+                dispatch(actions.loadCurrentEmployeeOEPG(id))
+                    .catch((error) => processErrorMessages(error));
             }
 
             if(objectIsEmpty(employeeOEPG)) return; // when form page is loaded in edit mode and there is no current emploeeOEPG, so we wait for employeeOEPG from server
@@ -163,43 +154,25 @@ const FormComponent = (props) => {
             return;
         }
 
-        setIsLoading(true);
-
-        networkClient.post("/employee-oepg/register", data,
-            // success
-            (registeredEmployee) => {
-                setAlert({color: "success", message: "Успешно регистриран потребител!"});
-                dispatch(actions.addEmployeeOEPG(registeredEmployee));
+        dispatch(actions.addEmployeeOEPG(data))
+            .then(() => {
                 history.push("/employee-oepg/all");
-            },
-            // error
-            (error) => {
+            })
+            .catch((error) => {
                 processErrorMessages(error);
-
-                setIsLoading(false);
-            }
-        );
+            });
     }
 
     const updateUser = () => {
         if(!validate()) return;
 
-        setIsLoading(true);
-        
-        networkClient.put(`/employee-oepg/update/${employeeOEPG.id}`, data,
-            // success
-            (updatedEmployee) => {
-                setAlert({color: "success", message: "Успешно редактиран потребител!"});
-                dispatch(actions.updateEmployeeOEPG(employeeOEPG.id, updatedEmployee));
+        dispatch(actions.updateEmployeeOEPG(employeeOEPG.id, data))
+            .then(() => {
                 history.push("/employee-oepg/all");
-                setIsLoading(false);
-            },
-            // error
-            (error) => {
+            })
+            .catch((error) => {
                 processErrorMessages(error);
-                setIsLoading(false);
-            }
-        );
+            });
     }
 
     return <>
@@ -281,7 +254,8 @@ const FormComponent = (props) => {
             </div>
         </form>
 
-        <Loader loading={isLoading} fullScreen={true} />
+        {employeesOEPGAreLoading && <Loader loading={employeesOEPGAreLoading} fullScreen={true} />}
+        {currentEmployeeOEPGIsLoading && <Loader loading={currentEmployeeOEPGIsLoading} fullScreen={true} />}
     </>;
 
 }

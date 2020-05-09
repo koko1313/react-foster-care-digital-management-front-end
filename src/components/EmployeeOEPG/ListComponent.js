@@ -12,12 +12,31 @@ const ListComponent = () => {
     const employeesOEPGAreLoading = useSelector(state => state.employeesOEPGAreLoading);
     const employeesOEPG = useSelector(state => state.employeesOEPG);
 
+    const processErrorMessages = (error) => {
+        if(error.response) {
+            switch(error.response.status) {
+                case 401:
+                    dispatch(actions.setAlert({title: "Грешка!", message: "Сесията ви изтече!"}));
+                    dispatch(actions.deleteLoggedUser());
+                    break;
+                default:
+                    dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
+                    break;
+            }
+        } else {
+            dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));
+        }
+    }
+
     useEffect(()=> {
-        dispatch(actions.loadEmployeesOEPG());
+        const loaded = dispatch(actions.loadEmployeesOEPG());
+        if(loaded) {
+            loaded.catch(error => processErrorMessages(error));
+        }
     }, [employeesOEPG, dispatch]);
 
     const editUser = (employeeOEPG) => {
-        dispatch(actions.setCurrentEmployeeOEPG(employeeOEPG));
+        dispatch(actions.setCurrentEmployeeOEPGInRedux(employeeOEPG));
         history.push(`/employee-oepg/edit/${employeeOEPG.id}`);
     }
 
@@ -28,11 +47,12 @@ const ListComponent = () => {
             return null;
         }
 
-        dispatch(actions.deleteEmployeeOEPG(employeeOEPG.id));
+        dispatch(actions.deleteEmployeeOEPG(employeeOEPG.id))
+            .catch(error => processErrorMessages(error));
     }
 
     const remountComponent = () => {
-        dispatch(actions.setEmployeesOEPG([]));
+        dispatch(actions.setEmployeesOEPGInRedux([]));
     }
     
     const renderUsersList = () => {
