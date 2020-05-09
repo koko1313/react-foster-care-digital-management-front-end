@@ -17,19 +17,19 @@ import AddressInput from '../base-components/Form/AddressInput';
  */
 const FormComponent = (props) => {
 
+    const history = useHistory();
+    const dispatch = useDispatch();
+
+    const { id } = useParams(); // get parameter from url
+
+    const employeeOEPG = useSelector(state => state.currentEmployeeOEPG);
+
     const [alert, setAlert] = useState({color: null, message: null});
     const onDismiss = () => setAlert({color: null, message: null});
 
     const [isLoading, setIsLoading] = useState(false);
 
-    const { id } = useParams(); // get parameter from url
-
     const [isEditingUser, setIsEditingUser] = useState(false);
-
-    const employeeOEPG = useSelector(state => state.currentEmployeeOEPG);
-
-    const dispatch = useDispatch();
-    const history = useHistory();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -52,48 +52,6 @@ const FormComponent = (props) => {
         isSubRegionValid: true,
         isCityValid: true,
     });
-
-    const data = {
-        email: email,
-        password: password,
-        firstName: firstName,
-        secondName: secondName,
-        lastName: lastName,
-        regionId: region,
-        subRegionId: subRegion,
-        cityId: city,
-    };
-
-    /**
-     * @returns True when all fields are valid and False when some of the fields is not valid
-     */
-    const validate = () => {
-        const validFields = {
-            isEmailValid: Validator.isEmail(email),
-            isFirstNameValid: !Validator.isEmpty(firstName, {ignore_whitespace: false}),
-            isSecondNameValid: !Validator.isEmpty(secondName, {ignore_whitespace: false}),
-            isLastNameValid: !Validator.isEmpty(lastName, {ignore_whitespace: false}),
-            isRegionValid: !Validator.isEmpty(region + ""),
-            isSubRegionValid: !Validator.isEmpty(subRegion + ""),
-            isCityValid: !Validator.isEmpty(city + ""),
-        }
-
-        // if not editing user, validate the password too
-        if(!isEditingUser) {
-            Object.assign(validFields, {
-                isPasswordValid: !Validator.isEmpty(password),
-                isRePasswordValid: !Validator.isEmpty(rePassword),
-            });
-        }
-
-        setValidFields(validFields);
-
-        for(const field in validFields) {
-            if(validFields[field] === false) return false;
-        }
-
-        return true;
-    }
     
     const processErrorMessages = (error) => {
         if(error.response) {
@@ -154,6 +112,48 @@ const FormComponent = (props) => {
         // eslint-disable-next-line 
     }, [employeeOEPG, props]);
     
+
+    const data = {
+        email: email,
+        password: password,
+        firstName: firstName,
+        secondName: secondName,
+        lastName: lastName,
+        regionId: region,
+        subRegionId: subRegion,
+        cityId: city,
+    };
+
+    /**
+     * @returns True when all fields are valid and False when some of the fields is not valid
+     */
+    const validate = () => {
+        const validFields = {
+            isEmailValid: Validator.isEmail(email),
+            isFirstNameValid: !Validator.isEmpty(firstName, {ignore_whitespace: false}),
+            isSecondNameValid: !Validator.isEmpty(secondName, {ignore_whitespace: false}),
+            isLastNameValid: !Validator.isEmpty(lastName, {ignore_whitespace: false}),
+            isRegionValid: !Validator.isEmpty(region + ""),
+            isSubRegionValid: !Validator.isEmpty(subRegion + ""),
+            isCityValid: !Validator.isEmpty(city + ""),
+        }
+
+        // if not editing user, validate the password too
+        if(!isEditingUser) {
+            Object.assign(validFields, {
+                isPasswordValid: !Validator.isEmpty(password),
+                isRePasswordValid: !Validator.isEmpty(rePassword),
+            });
+        }
+
+        setValidFields(validFields);
+
+        for(const field in validFields) {
+            if(validFields[field] === false) return false;
+        }
+
+        return true;
+    }
 
     const registerUser = () => {
         if(!validate()) return;
