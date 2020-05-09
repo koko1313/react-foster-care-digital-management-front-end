@@ -11,14 +11,7 @@ function removeEmployeesOEPGLoading() {
 
 
 export function loadEmployeesOEPG() {
-    return (dispatch, getState) => {
-        const { employeesOEPG } = getState();
-
-        // if emploeesOEPG are already loaded
-        if (employeesOEPG.length !== 0) {
-            return;
-        }
-
+    return (dispatch) => {
         dispatch(setEmployeesOEPGLoading());
 
         return networkClient.get('/employee-oepg/all', null, 

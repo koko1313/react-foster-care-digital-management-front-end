@@ -29,9 +29,9 @@ const ListComponent = () => {
     }
 
     useEffect(()=> {
-        const loaded = dispatch(actions.loadEmployeesOEPG());
-        if(loaded) {
-            loaded.catch(error => processErrorMessages(error));
+        if(employeesOEPG.length === 0) {
+            dispatch(actions.loadEmployeesOEPG())
+                .catch(error => processErrorMessages(error));
         }
 
         // eslint-disable-next-line
