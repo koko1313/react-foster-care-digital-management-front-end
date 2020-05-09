@@ -6,14 +6,31 @@ import { useHistory } from 'react-router-dom';
 
 const ListComponent = () => {
 
-    const childrenAreLoading = useSelector(state => state.childrenAreLoading);
-    const children = useSelector(state => state.children);
-
     const history = useHistory();
     const dispatch = useDispatch();
 
+    const childrenAreLoading = useSelector(state => state.childrenAreLoading);
+    const children = useSelector(state => state.children);
+
     useEffect(()=> {
-        dispatch(actions.loadChildren());
+        if(children.length === 0) {
+            dispatch(actions.loadChildren())
+                .catch((error) => {
+                    if(error.response) {
+                        switch(error.response.status) {
+                            case 401:
+                                dispatch(actions.setAlert({title: "Грешка!", message: "Сесията ви изтече!"}));
+                                dispatch(actions.deleteLoggedUser());
+                                break;
+                            default:
+                                dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
+                                break;
+                        }
+                    } else {
+                        dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));
+                    }
+                });
+        }
     }, [children, dispatch]);
 
     const viewDetails = (child) => {

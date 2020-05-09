@@ -1,6 +1,5 @@
 import types from '../../action-types';
 import networkClient from '../../../network/network-client';
-import actions from '..';
 
 function setChildrenLoading() {
     return {type: types.SET_CHILDREN_LOADING};
@@ -11,39 +10,17 @@ function removeChildrenLoading() {
 }
 
 export function loadChildren() {
-    return (dispatch, getState) => {
-        const { children } = getState();
-    
-        // if children are already loaded
-        if (children.length !== 0) {
-            return;
-        }
-
+    return (dispatch) => {
         dispatch(setChildrenLoading());
 
-        networkClient.get('/child/all', null, 
+        return networkClient.get('/child/all', null, 
             (children) => {
-                dispatch(removeChildrenLoading());
                 if(children.length === 0) return; // return null when there are no childrens in database, otherwise it will cause infinite loop
                 dispatch(setChildren(children));
-            },
-            (error) => {
-                if(error.response) {
-                    switch(error.response.status) {
-                        case 401:
-                            dispatch(actions.setAlert({title: "Грешка!", message: "Сесията ви изтече!"}));
-                            dispatch(actions.deleteLoggedUser());
-                            break;
-                        default:
-                            dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
-                            break;
-                    }
-                } else {
-                    dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));
-                }
-                dispatch(removeChildrenLoading());
             }
-        );
+        ).finally(() => {
+            dispatch(removeChildrenLoading());
+        });
     };
 }
 
