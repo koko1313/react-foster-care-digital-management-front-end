@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import Loader from '../../base-components/Loader';
 import { objectIsEmpty } from '../../../helpers';
 import euFlagImege from '../../../assets/images/document-images/eu_flag.png';
 import hrLogo from '../../../assets/images/document-images/hr_logo.png';
@@ -15,9 +16,13 @@ const FamilyApplication = (props) => {
     const { id } = useParams(); // get parameter from url
 
     const family = useSelector(state => state.currentFamily);
+    
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         if((!objectIsEmpty(family) && Number(family.id) !== Number(id)) || objectIsEmpty(family)) {
+            setIsLoading(true);
+
             dispatch(actions.loadCurrentFamily(id))
                 .catch((error) => {
                     if(error.response) {
@@ -37,7 +42,8 @@ const FamilyApplication = (props) => {
                     } else {
                         dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));
                     }
-                });
+                })
+                .finally(() => setIsLoading(false));
         }
 
         // eslint-disable-next-line
@@ -164,6 +170,8 @@ const FamilyApplication = (props) => {
         </div>
 
         {renderDocument()}
+
+        <Loader loading={isLoading} />
     </>;
 
 }
