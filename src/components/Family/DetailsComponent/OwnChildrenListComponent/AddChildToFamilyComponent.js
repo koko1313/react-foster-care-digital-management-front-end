@@ -1,67 +1,56 @@
 import React, { useState, useEffect } from 'react';
 import Select from '../../../base-components/Form/Select/Select';
-import networkClient from '../../../../network/network-client';
 import { useDispatch, useSelector } from 'react-redux';
 import actions from '../../../../redux/actions';
+import { objectIsEmpty } from '../../../../helpers';
 
 /**
  * @param {function} closeFunction 
  */
 const AddChildToFamilyComponent = (props) => {
-    const [isLoading, setIsLoading] = useState(false);
-
-    const [children, setChildren] = useState();
-    const [childId, setChildId] = useState();
 
     const dispatch = useDispatch();
 
     const family = useSelector(state => state.currentFamily);
+    const childrenWithoutFamily = useSelector(state => state.children.filter(child => objectIsEmpty(child.family)));
+
+    const [isLoading, setIsLoading] = useState(false);
+
+    const [childId, setChildId] = useState();
 
     useEffect(() => {
-        setIsLoading(true);
-        
-        networkClient.get(`/child/all-free`, null, 
-            (children) => {
-                setChildren(children);
-                setIsLoading(false);
-            },
-            (error) => {
-                //processErrorMessages(error);
-                setIsLoading(false);
-            }
-        );
+        if(childrenWithoutFamily.length === 0) {
+            setIsLoading(true);
 
+            dispatch(actions.loadChildren())
+                .finally(() => setIsLoading(false));
+        }
+        
         //eslint-disable-next-line
     }, []);
 
     const renderChildrenOptions = () => {
-        if(!children) return;
+        if(!childrenWithoutFamily) return;
 
-        return children.map((child) => {
+        return childrenWithoutFamily.map((child) => {
             return <option key={child.id} value={child.id}>{`[${child.egn}] ${child.first_name} ${child.last_name}`}</option>
         });
     }
 
-    const addChildToFamily = () => {
-        setIsLoading(true);
+    const addChildToFamily = (childId) => {
+        props.setIsLoading(true);
 
-        const data = {childId: childId};
-
-        networkClient.post(`/family/${family.id}/add_child`, data,
-            // success
-            (response) => {
-                dispatch(actions.addChildToCurrentFamily(response));
+        dispatch(actions.addChildToFamily(family.id, childId))
+            .then(() => {
                 props.closeFunction();
-                setIsLoading(false);
-            },
-            // error
-            (error) => {
-                props.setAlert({color: "danger", message: "Нещо се обърка!"});
+            })
+            .catch((error) => {
                 // processErrorMessages(error);
-                props.closeFunction();
-                setIsLoading(false);
-            }
-        );
+                props.setAlert({color: "danger", message: "Нещо се обърка!"});
+            })
+            .finally(() => {
+                props.setIsLoading(false);
+            });
     }
 
     return <>
@@ -79,7 +68,7 @@ const AddChildToFamilyComponent = (props) => {
 
             <div className="d-flex justify-content-end">
                 <button type="button" className="btn btn-light mx-1" onClick={props.closeFunction}>Отказ</button>
-                <button type="button" className="btn btn-primary" onClick={addChildToFamily}>Добави дете</button>
+                <button type="button" className="btn btn-primary" onClick={() => addChildToFamily(childId)}>Добави дете</button>
             </div>
         </div>
     </>;

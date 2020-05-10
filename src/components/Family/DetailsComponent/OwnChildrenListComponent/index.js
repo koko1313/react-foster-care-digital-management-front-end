@@ -3,11 +3,14 @@ import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Alert } from 'reactstrap';
 import AddChildToFamilyComponent from './AddChildToFamilyComponent';
-import networkClient from '../../../../network/network-client';
 import actions from '../../../../redux/actions';
 
 const OwnChildrenListComponent = () => {
+
     const history = useHistory();
+    const dispatch = useDispatch();
+
+    const family = useSelector(state => state.currentFamily);
 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -16,26 +19,13 @@ const OwnChildrenListComponent = () => {
 
     // If adding child, this flag will be set to true
     const [isAddingChild, setIsAddingChild] = useState();
-    
-    const family = useSelector(state => state.currentFamily);
-
-    const dispatch = useDispatch();
 
     const removeChildFromFamily = (childId) => {
         setIsLoading(true);
 
-        const data = {childId: childId};
-
-        networkClient.post(`/family/${family.id}/remove_child`, data, 
-            (child) => {
-                dispatch(actions.removeChildFromCurrentFamily(child));
-                setIsLoading(false);
-            },
-            (error) => {
-                //processErrorMessages(error);
-                setIsLoading(false);
-            }
-        );
+        dispatch(actions.removeChildFromFamily(family.id, childId))
+            .catch(/*(error) => processErrorMessages(error)*/)
+            .finally(() => setIsLoading(false));
     }
 
     const renderChildrenList = () => {
@@ -62,6 +52,7 @@ const OwnChildrenListComponent = () => {
                 <li className="child-item child-add-select-item" >
                     <AddChildToFamilyComponent 
                         setAlert = {setAlert}
+                        setIsLoading = {setIsLoading}
                         closeFunction = {() => {setIsAddingChild(false)}} />
                 </li>
             );
@@ -87,6 +78,7 @@ const OwnChildrenListComponent = () => {
             {renderAddChildButton()}
         </ul>
     </>;
+
 }
 
 export default OwnChildrenListComponent;
