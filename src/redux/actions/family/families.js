@@ -10,14 +10,7 @@ function removeFamiliesLoading() {
 }
 
 export function loadFamilies() {
-    return (dispatch, getState) => {
-        const { families } = getState();
-    
-        // if families are already loaded
-        if (families.length !== 0) {
-            return;
-        }
-
+    return (dispatch) => {
         dispatch(setFamiliesLoading());
 
         return networkClient.get('/family/all', null, 
@@ -25,7 +18,7 @@ export function loadFamilies() {
                 if(families.length === 0) return; // return null when there are no families in database, otherwise it will cause infinite loop
                 dispatch(setFamilies(families));
             }
-        ).then(() => {
+        ).finally(() => {
             dispatch(removeFamiliesLoading());
         });
     };

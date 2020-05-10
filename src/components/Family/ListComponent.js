@@ -13,23 +13,23 @@ const ListComponent = () => {
     const families = useSelector(state => state.families);
 
     useEffect(()=> {
-        const loaded = dispatch(actions.loadFamilies());
-        if(loaded) {
-            loaded.catch((error) => {
-                if(error.response) {
-                    switch(error.response.status) {
-                        case 401:
-                            dispatch(actions.setAlert({title: "Грешка!", message: "Сесията ви изтече!"}));
-                            dispatch(actions.deleteLoggedUser());
-                            break;
-                        default:
-                            dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
-                            break;
+        if(families.length === 0) {
+            dispatch(actions.loadFamilies())
+                .catch((error) => {
+                    if(error.response) {
+                        switch(error.response.status) {
+                            case 401:
+                                dispatch(actions.setAlert({title: "Грешка!", message: "Сесията ви изтече!"}));
+                                dispatch(actions.deleteLoggedUser());
+                                break;
+                            default:
+                                dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
+                                break;
+                        }
+                    } else {
+                        dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));
                     }
-                } else {
-                    dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));
-                }
-            });
+                });
         }
     }, [families, dispatch]);
 
