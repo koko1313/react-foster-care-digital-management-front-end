@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import actions from "../../redux/actions";
 import Loader from '../base-components/Loader';
@@ -9,11 +9,14 @@ const ListComponent = () => {
     const history = useHistory();
     const dispatch = useDispatch();
 
-    const familiesAreLoading = useSelector(state => state.familiesAreLoading);
     const families = useSelector(state => state.families);
+
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(()=> {
         if(families.length === 0) {
+            setIsLoading(true);
+
             dispatch(actions.loadFamilies())
                 .catch((error) => {
                     if(error.response) {
@@ -29,7 +32,8 @@ const ListComponent = () => {
                     } else {
                         dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));
                     }
-                });
+                })
+                .finally(() => setIsLoading(false));
         }
     }, [families, dispatch]);
 
@@ -87,7 +91,7 @@ const ListComponent = () => {
                 </div>
             </div>
 
-            <Loader loading={familiesAreLoading} />
+            <Loader loading={isLoading} />
         </div>
     </>;
 

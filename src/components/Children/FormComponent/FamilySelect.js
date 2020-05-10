@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Select from "../../base-components/Form/Select/Select";
 import { useSelector, useDispatch } from "react-redux";
 import actions from '../../../redux/actions';
@@ -11,11 +11,15 @@ const FamilySelect = (props) => {
 
     const dispatch = useDispatch();
 
-    const familiesAreLoading = useSelector(state => state.familiesAreLoading);
     const families = useSelector(state => state.families);
 
+    const [isLoading, setIsLoading] = useState(false);
+
     useEffect(() => {
-        dispatch(actions.loadFamilies());
+        setIsLoading(true);
+
+        dispatch(actions.loadFamilies())
+            .finally(() => setIsLoading(false));
     }, [dispatch]);
 
     const renderFamiliesOptions = () => {
@@ -39,7 +43,7 @@ const FamilySelect = (props) => {
             placeholder = "Избери семейство ..."
             value = {props.value}
             onChange = {props.onChange}
-            loading = {familiesAreLoading}
+            loading = {isLoading}
             >
             {renderFamiliesOptions()}
         </Select>

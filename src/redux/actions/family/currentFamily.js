@@ -1,26 +1,14 @@
 import types from '../../action-types';
 import networkClient from '../../../network/network-client';
 
-function setCurrentFamilyLoading() {
-    return {type: types.SET_CURRENT_FAMILY_LOADING};
-}
-
-function removeCurrentFamilyLoading() {
-    return {type: types.REMOVE_CURRENT_FAMILY_LOADING};
-}
-
 
 export function loadCurrentFamily(id) {
     return (dispatch) => {
-        dispatch(setCurrentFamilyLoading());
-        
         return networkClient.get(`/family/${id}`, null, 
             (family) => {
                 dispatch(setCurrentFamilyInRedux(family));
             }
-        ).finally(() => {
-            dispatch(removeCurrentFamilyLoading());
-        });
+        );
     }
 }
 
