@@ -1,24 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { objectIsEmpty } from '../../helpers';
 import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import actions from '../../redux/actions';
-import networkClient from '../../network/network-client';
 import ChildDetailsComponent from '../../components/Children/DetailsComponent';
 import Loader from '../../components/base-components/Loader';
 import BackButton from '../../components/base-components/BackButton';
 
 const DetailsPage = () => {
-
-    const [isLoading, setIsLoading] = useState(false);
     
-    const child = useSelector(state => state.currentChild);
-
-    const dispatch = useDispatch();
     const history = useHistory();
+    const dispatch = useDispatch();
 
     const { id } = useParams(); // get parameter from url
 
+    const child = useSelector(state => state.currentChild);
+    const currentChildIsLoading = useSelector(state => state.currentChildIsLoading);
+    const childrenAreLoading = useSelector(state => state.childrenAreLoading);
+    
     const processErrorMessages = (error) => {
         if(error.response) {
             switch(error.response.status) {
@@ -41,22 +40,12 @@ const DetailsPage = () => {
 
     useEffect(() => {
         if((!objectIsEmpty(child) && Number(child.id) !== Number(id)) || objectIsEmpty(child)) {
-            setIsLoading(true);
-            
-            networkClient.get(`/child/${id}`, null, 
-                (child) => {
-                    dispatch(actions.setCurrentChildInRedux(child));
-                    setIsLoading(false);
-                },
-                (error) => {
-                    processErrorMessages(error);
-                    setIsLoading(false);
-                }
-            );
+            dispatch(actions.loadCurrentChild(id))
+                .catch(error => processErrorMessages(error));
         }
 
         // eslint-disable-next-line
-    }, [dispatch, child]);
+    }, [child, id, dispatch]);
 
     const editChild = (child) => {
         history.push(`/child/edit/${child.id}`);
@@ -69,19 +58,13 @@ const DetailsPage = () => {
             return null;
         }
 
-        setIsLoading(true);
-        
-        networkClient.delete(`/child/delete/${child.id}`, null, 
-            () => { 
-                dispatch(actions.deleteChild(child.id));
+        dispatch(actions.deleteChild(child.id))
+            .then(() => {
                 history.push("/child/all");
-                setIsLoading(false);
-            },
-            (error) => {
+            })
+            .catch((error) => {
                 processErrorMessages(error);
-                setIsLoading(false);
-            }
-        );
+            });
     }
 
     return <>
@@ -121,7 +104,8 @@ const DetailsPage = () => {
                 </div>
             </div>
 
-            <Loader loading={isLoading} fullScreen={true} />
+            {childrenAreLoading && <Loader loading={childrenAreLoading} fullScreen={true} />}
+            {currentChildIsLoading && <Loader loading={currentChildIsLoading} fullScreen={true} />}
         </div>
     </>;
 }

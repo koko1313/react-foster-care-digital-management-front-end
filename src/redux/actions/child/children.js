@@ -71,5 +71,19 @@ export function updateChildInRedux(id, updatedChild) {
 
 
 export function deleteChild(id) {
+    return (dispatch) => {
+        dispatch(setChildrenLoading());
+        
+        return networkClient.delete(`/child/delete/${id}`, null, 
+            () => { 
+                dispatch(deleteChildFromReducer(id));
+            }
+        ).finally(() => {
+            dispatch(removeChildrenLoading());
+        });
+    }
+}
+
+export function deleteChildFromReducer(id) {
     return {type: types.DELETE_CHILD, payload: id};
 }
