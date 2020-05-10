@@ -25,8 +25,8 @@ const FormComponent = (props) => {
 
     const loggedUser = useSelector(state => state.loggedUser); // get logged user, it have to be EmployeeOEPG
     const child = useSelector(state => state.currentChild);
-    const currentChildIsLoading = useSelector(state => state.currentChildIsLoading);
-    const childrenAreLoading = useSelector(state => state.childrenAreLoading);
+    
+    const [isLoading, setIsLoading] = useState(false);
 
     const [alert, setAlert] = useState({color: null, message: null});
     const onDismiss = () => setAlert({color: null, message: null});
@@ -86,8 +86,11 @@ const FormComponent = (props) => {
     useEffect(() => {
         if(props.isEditing) {
             if((!objectIsEmpty(child) && Number(child.id) !== Number(id)) || objectIsEmpty(child)) {
+                setIsLoading(true);
+
                 dispatch(actions.loadCurrentChild(id))
-                    .catch(error => processErrorMessages(error));
+                    .catch(error => processErrorMessages(error))
+                    .finally(() => setIsLoading(false));
             }
     
             if(objectIsEmpty(child)) return; // when form page is loaded in edit mode and there is no current child, so we wait for child from server
@@ -161,25 +164,23 @@ const FormComponent = (props) => {
     const register = () => {
         if(!validate()) return;
 
+        setIsLoading(true);
+
         dispatch(actions.addChild(data))
-            .then(() => {
-                history.push("/child/all");
-            })
-            .catch((error) => {
-                processErrorMessages(error);
-            });
+            .then(() => history.push("/child/all"))
+            .catch(error => processErrorMessages(error))
+            .finally(() => setIsLoading(false));
     }
 
     const update = () => {
         if(!validate()) return;
 
+        setIsLoading(true);
+
         dispatch(actions.updateChild(child.id, data))
-            .then(() => {
-                history.goBack();
-            })
-            .catch((error) => {
-                processErrorMessages(error);
-            });
+            .then(() => history.goBack())
+            .catch(error => processErrorMessages(error))
+            .finally(() => setIsLoading(false));
     }
 
     return <>
@@ -256,8 +257,7 @@ const FormComponent = (props) => {
             </div>
         </form>
         
-        {childrenAreLoading && <Loader loading={childrenAreLoading} fullScreen={true} />}
-        {currentChildIsLoading && <Loader loading={currentChildIsLoading} fullScreen={true} />}
+        <Loader loading={isLoading} fullScreen={true} />
     </>;
 
 }

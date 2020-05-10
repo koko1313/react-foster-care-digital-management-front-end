@@ -1,18 +1,5 @@
 import types from "../../action-types";
 
-export function childrenAreLoading(state = false, action) {
-    switch(action.type) {
-        case types.SET_CHILDREN_LOADING: {
-            return true;
-        }
-        case types.REMOVE_CHILDREN_LOADING: {
-            return false;
-        }
-
-        default: return state;
-    }
-}
-
 export function children(state = [], action) {
     switch(action.type) {
         case types.SET_CHILDREN: {

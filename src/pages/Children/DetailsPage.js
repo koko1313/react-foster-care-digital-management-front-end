@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { objectIsEmpty } from '../../helpers';
 import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,8 +15,8 @@ const DetailsPage = () => {
     const { id } = useParams(); // get parameter from url
 
     const child = useSelector(state => state.currentChild);
-    const currentChildIsLoading = useSelector(state => state.currentChildIsLoading);
-    const childrenAreLoading = useSelector(state => state.childrenAreLoading);
+    
+    const [isLoading, setIsLoading] = useState(false);
     
     const processErrorMessages = (error) => {
         if(error.response) {
@@ -40,8 +40,11 @@ const DetailsPage = () => {
 
     useEffect(() => {
         if((!objectIsEmpty(child) && Number(child.id) !== Number(id)) || objectIsEmpty(child)) {
+            setIsLoading(true);
+
             dispatch(actions.loadCurrentChild(id))
-                .catch(error => processErrorMessages(error));
+                .catch(error => processErrorMessages(error))
+                .finally(() => setIsLoading(false));
         }
 
         // eslint-disable-next-line
@@ -58,13 +61,12 @@ const DetailsPage = () => {
             return null;
         }
 
+        setIsLoading(true);
+
         dispatch(actions.deleteChild(child.id))
-            .then(() => {
-                history.push("/child/all");
-            })
-            .catch((error) => {
-                processErrorMessages(error);
-            });
+            .then(() => history.push("/child/all"))
+            .catch(error => processErrorMessages(error))
+            .finally(() => setIsLoading(false));
     }
 
     return <>
@@ -104,8 +106,7 @@ const DetailsPage = () => {
                 </div>
             </div>
 
-            {childrenAreLoading && <Loader loading={childrenAreLoading} fullScreen={true} />}
-            {currentChildIsLoading && <Loader loading={currentChildIsLoading} fullScreen={true} />}
+            <Loader loading={isLoading} fullScreen={true} />
         </div>
     </>;
 }

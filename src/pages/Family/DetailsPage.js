@@ -67,7 +67,7 @@ const DetailsPage = () => {
         dispatch(actions.deleteFamily(family.id))
             .then(() => history.push("/family/all"))
             .catch(error => processErrorMessages(error))
-            .finally(setIsLoading(false));
+            .finally(() => setIsLoading(false));
     }
 
     return <>

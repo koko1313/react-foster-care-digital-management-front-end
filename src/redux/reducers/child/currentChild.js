@@ -1,19 +1,6 @@
 import types from "../../action-types";
 import { objectIsEmpty } from '../../../helpers';
 
-export function currentChildIsLoading(state = false, action) {
-    switch(action.type) {
-        case types.SET_CURRENT_CHILD_LOADING: {
-            return true;
-        }
-        case types.REMOVE_CURRENT_CHILD_LOADING: {
-            return false;
-        }
-
-        default: return state;
-    }
-}
-
 export function currentChild(state = {}, action) {
     switch(action.type) {
         case types.SET_CURRENT_CHILD: {

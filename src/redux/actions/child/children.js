@@ -2,27 +2,15 @@ import types from '../../action-types';
 import networkClient from '../../../network/network-client';
 import actions from '..';
 
-function setChildrenLoading() {
-    return {type: types.SET_CHILDREN_LOADING};
-}
-
-function removeChildrenLoading() {
-    return {type: types.REMOVE_CHILDREN_LOADING};
-}
-
 
 export function loadChildren() {
     return (dispatch) => {
-        dispatch(setChildrenLoading());
-
         return networkClient.get('/child/all', null, 
             (children) => {
                 if(children.length === 0) return; // return null when there are no childrens in database, otherwise it will cause infinite loop
                 dispatch(setChildrenInRedux(children));
             }
-        ).finally(() => {
-            dispatch(removeChildrenLoading());
-        });
+        );
     };
 }
 
@@ -33,15 +21,11 @@ export function setChildrenInRedux(children) {
 
 export function addChild(child) {
     return (dispatch) => {
-        dispatch(setChildrenLoading());
-
         return networkClient.post("/child/register", child,
             (registeredChild) => {
                 dispatch(addChildInRedux(registeredChild));
             }
-        ).finally(() => {
-            dispatch(removeChildrenLoading());
-        });
+        );
     };
 }
 
@@ -52,16 +36,12 @@ export function addChildInRedux(child) {
 
 export function updateChild(id, updatedChild) {
     return (dispatch) => {
-        dispatch(setChildrenLoading());
-
         return networkClient.put(`/child/update/${id}`, updatedChild,
             (updatedChild) => {
                 dispatch(updateChildInRedux(id, updatedChild));
                 dispatch(actions.setCurrentChildInRedux(updatedChild)); // update the current child too
             }
-        ).finally(() => {
-            dispatch(removeChildrenLoading());
-        });
+        );
     };
 }
 
@@ -72,15 +52,11 @@ export function updateChildInRedux(id, updatedChild) {
 
 export function deleteChild(id) {
     return (dispatch) => {
-        dispatch(setChildrenLoading());
-        
         return networkClient.delete(`/child/delete/${id}`, null, 
             () => { 
                 dispatch(deleteChildFromReducer(id));
             }
-        ).finally(() => {
-            dispatch(removeChildrenLoading());
-        });
+        );
     }
 }
 
