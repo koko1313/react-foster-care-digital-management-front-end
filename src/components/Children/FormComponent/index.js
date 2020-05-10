@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { objectIsEmpty } from '../../../helpers';
-import networkClient from '../../../network/network-client';
 import { Alert } from 'reactstrap';
 import Input from '../../base-components/Form/Input';
 import { useHistory, useParams } from 'react-router-dom';
@@ -19,10 +18,18 @@ import FamilySelect from './FamilySelect';
  */
 const FormComponent = (props) => {
 
+    const history = useHistory();
+    const dispatch = useDispatch();
+
+    const { id } = useParams(); // get parameter from url
+
+    const loggedUser = useSelector(state => state.loggedUser); // get logged user, it have to be EmployeeOEPG
+    const child = useSelector(state => state.currentChild);
+    const currentChildIsLoading = useSelector(state => state.currentChildIsLoading);
+    const childrenAreLoading = useSelector(state => state.childrenAreLoading);
+
     const [alert, setAlert] = useState({color: null, message: null});
     const onDismiss = () => setAlert({color: null, message: null});
-
-    const [isLoading, setIsLoading] = useState(false);
 
     const [firstName, setFirstName] = useState("");
     const [secondName, setSecondName] = useState("");
@@ -50,12 +57,66 @@ const FormComponent = (props) => {
         isAddressValid: true,
     });
 
-    const { id } = useParams(); // get parameter from url
+    const processErrorMessages = (error) => {
+        if(error.response) {
+            switch(error.response.status) {
+                case 400:
+                    setAlert({color: "danger", message: "Не са попълнени всички полета!"});
+                    break;
+                case 401:
+                    dispatch(actions.setAlert({title: "Грешка!", message: "Сесията ви изтече!"}));
+                    dispatch(actions.deleteLoggedUser());
+                    break;
+                case 404:
+                    dispatch(actions.setAlert({title: "Грешка!", message: "Не е намерено такова дете!"}));
+                    history.goBack();
+                    break;
+                case 409:
+                    dispatch(actions.setAlert({title: "Грешка!", message: "Дете с това ЕГН вече съществува!"}));
+                    break;
+                default:
+                    dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
+                    break;
+            }
+        } else {
+            dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));
+        }
+    }
 
-    const history = useHistory();
-    const dispatch = useDispatch();
-    const loggedUser = useSelector(state => state.loggedUser); // get logged user, it have to be EmployeeOEPG
-    const child = useSelector(state => state.currentChild);
+    useEffect(() => {
+        if(props.isEditing) {
+            if((!objectIsEmpty(child) && Number(child.id) !== Number(id)) || objectIsEmpty(child)) {
+                dispatch(actions.loadCurrentChild(id))
+                    .catch(error => processErrorMessages(error));
+            }
+    
+            if(objectIsEmpty(child)) return; // when form page is loaded in edit mode and there is no current child, so we wait for child from server
+
+            setFirstName(child.first_name);
+            setSecondName(child.second_name);
+            setLastName(child.last_name);
+            setEgn(child.egn);
+            setGender(child.gender);
+            
+            if(child.family) {
+                setFamilyId(child.family.id);
+            }
+
+            setRegion(child.region.id);
+            setSubRegion(child.sub_region.id);
+            setCity(child.city.id);
+            setAddress(child.address);
+
+            setWardenId(child.warden.id);
+
+            setWarden(child.warden); // when editing, warden is family warden
+        } else {
+            setWardenId(loggedUser.id);
+            setWarden(loggedUser); // when registering family, warden is current logged user
+        }
+
+        // eslint-disable-next-line
+    }, [child, loggedUser, props]);
 
     // data that will be send to server
     const data = {
@@ -96,117 +157,30 @@ const FormComponent = (props) => {
 
         return true;
     }
-
-    const processErrorMessages = (error) => {
-        if(error.response) {
-            switch(error.response.status) {
-                case 400:
-                    setAlert({color: "danger", message: "Не са попълнени всички полета!"});
-                    break;
-                case 401:
-                    dispatch(actions.setAlert({title: "Грешка!", message: "Сесията ви изтече!"}));
-                    dispatch(actions.deleteLoggedUser());
-                    break;
-                case 404:
-                    dispatch(actions.setAlert({title: "Грешка!", message: "Не е намерено такова дете!"}));
-                    history.goBack();
-                    break;
-                case 409:
-                    dispatch(actions.setAlert({title: "Грешка!", message: "Дете с това ЕГН вече съществува!"}));
-                    break;
-                default:
-                    dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
-                    break;
-            }
-        } else {
-            dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));
-        }
-    }
-
-    useEffect(() => {
-        if(props.isEditing) {
-            if((!objectIsEmpty(child) && Number(child.id) !== Number(id)) || objectIsEmpty(child)) {
-                setIsLoading(true);
-            
-                networkClient.get(`/child/${id}`, null, 
-                    (child) => {
-                        dispatch(actions.setCurrentChild(child));
-                        setIsLoading(false);
-                    },
-                    (error) => {
-                        processErrorMessages(error);
-                        setIsLoading(false);
-                    }
-                );
-            }
-    
-            if(objectIsEmpty(child)) return; // when form page is loaded in edit mode and there is no current child, so we wait for child from server
-
-            setIsLoading(true);
-
-            setFirstName(child.first_name);
-            setSecondName(child.second_name);
-            setLastName(child.last_name);
-            setEgn(child.egn);
-            setGender(child.gender);
-            
-            if(child.family) {
-                setFamilyId(child.family.id);
-            }
-
-            setRegion(child.region.id);
-            setSubRegion(child.sub_region.id);
-            setCity(child.city.id);
-            setAddress(child.address);
-
-            setWardenId(child.warden.id);
-
-            setWarden(child.warden); // when editing, warden is family warden
-
-            setIsLoading(false);
-        } else {
-            setWardenId(loggedUser.id);
-            setWarden(loggedUser); // when registering family, warden is current logged user
-        }
-
-        // eslint-disable-next-line
-    }, [child, loggedUser, props]);
     
     const register = () => {
         if(!validate()) return;
 
-        setIsLoading(true);
-        networkClient.post("/child/register", data,
-            (registeredChild) => {
-                setAlert({color: "success", message: "Успешно регистрирано дете!"});
-                dispatch(actions.addChild(registeredChild));
+        dispatch(actions.addChild(data))
+            .then(() => {
                 history.push("/child/all");
-            },
-            (error) => {
+            })
+            .catch((error) => {
                 processErrorMessages(error);
-
-                setIsLoading(false);
-            }
-        );
+            });
     }
 
     const update = () => {
         if(!validate()) return;
 
-        setIsLoading(true);
-        networkClient.put(`/child/update/${child.id}`, data,
-            (updatedChild) => {
+        dispatch(actions.updateChild(child.id, data))
+            .then(() => {
                 setAlert({color: "success", message: "Успешно редактирано дете!"});
-                dispatch(actions.setCurrentChild(updatedChild)); // update the current child too
-                dispatch(actions.updateChild(child.id, updatedChild));
                 history.goBack();
-                setIsLoading(false);
-            },
-            (error) => {
+            })
+            .catch((error) => {
                 processErrorMessages(error);
-                setIsLoading(false);
-            }
-        );
+            });
     }
 
     return <>
@@ -282,8 +256,9 @@ const FormComponent = (props) => {
                 <BackButton />
             </div>
         </form>
-
-        <Loader loading={isLoading} fullScreen={true} />
+        
+        {childrenAreLoading && <Loader loading={childrenAreLoading} fullScreen={true} />}
+        {currentChildIsLoading && <Loader loading={currentChildIsLoading} fullScreen={true} />}
     </>;
 
 }

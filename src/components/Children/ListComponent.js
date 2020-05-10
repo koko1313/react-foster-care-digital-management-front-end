@@ -34,12 +34,12 @@ const ListComponent = () => {
     }, [children, dispatch]);
 
     const viewDetails = (child) => {
-        dispatch(actions.setCurrentChild(child))
+        dispatch(actions.setCurrentChildInRedux(child));
         history.push(`/child/details/${child.id}`);
     }
 
     const remountComponent = () => {
-        dispatch(actions.setChildren([]));
+        dispatch(actions.setChildrenInRedux([]));
     }
     
     const renderChildrenList = () => {

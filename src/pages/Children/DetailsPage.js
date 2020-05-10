@@ -45,7 +45,7 @@ const DetailsPage = () => {
             
             networkClient.get(`/child/${id}`, null, 
                 (child) => {
-                    dispatch(actions.setCurrentChild(child));
+                    dispatch(actions.setCurrentChildInRedux(child));
                     setIsLoading(false);
                 },
                 (error) => {
