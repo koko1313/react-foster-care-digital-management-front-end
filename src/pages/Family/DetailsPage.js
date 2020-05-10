@@ -1,24 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { objectIsEmpty } from '../../helpers';
 import actions from '../../redux/actions';
-import networkClient from '../../network/network-client';
 import FamilyDetailsComponent from '../../components/Family/DetailsComponent';
 import Loader from '../../components/base-components/Loader';
 import BackButton from '../../components/base-components/BackButton';
 import OwnChildrenListComponent from '../../components/Family/DetailsComponent/OwnChildrenListComponent';
 
 const DetailsPage = () => {
-
-    const [isLoading, setIsLoading] = useState(false);
-
-    const family = useSelector(state => state.currentFamily);
-
-    const dispatch = useDispatch();
+    
     const history = useHistory();
+    const dispatch = useDispatch();
 
     const { id } = useParams(); // get parameter from url
+
+    const family = useSelector(state => state.currentFamily);
+    const currentFamilyIsLoading = useSelector(state => state.currentFamilyIsLoading);
+    const familiesAreLoading = useSelector(state => state.familiesAreLoading);
 
     const processErrorMessages = (error) => {
         if(error.response) {
@@ -42,22 +41,12 @@ const DetailsPage = () => {
 
     useEffect(() => {
         if((!objectIsEmpty(family) && Number(family.id) !== Number(id)) || objectIsEmpty(family)) {
-            setIsLoading(true);
-        
-            networkClient.get(`/family/${id}`, null, 
-                (family) => {
-                    dispatch(actions.setCurrentFamily(family));
-                    setIsLoading(false);
-                },
-                (error) => {
-                    processErrorMessages(error);
-                    setIsLoading(false);
-                }
-            );
+            dispatch(actions.loadCurrentFamily(id))
+                .catch(error => processErrorMessages(error));
         }
 
         // eslint-disable-next-line
-    }, [dispatch, family, id]);
+    }, [family, id, dispatch]);
 
     const editFamily = (family) => {
         history.push(`/family/edit/${family.id}`);
@@ -69,20 +58,14 @@ const DetailsPage = () => {
         if(!confirm) {
             return null;
         }
-
-        setIsLoading(true);
         
-        networkClient.delete(`/family/delete/${family.id}`, null, 
-            () => { 
-                dispatch(actions.deleteFamily(family.id));
+        dispatch(actions.deleteFamily(family.id))
+            .then(() => {
                 history.push("/family/all");
-                setIsLoading(false);
-            },
-            (error) => {
+            })
+            .catch((error) => {
                 processErrorMessages(error);
-                setIsLoading(false);
-            }
-        );
+            });
     }
 
     return <>
@@ -135,7 +118,8 @@ const DetailsPage = () => {
                 </div>
             </div>
 
-            <Loader loading={isLoading} fullScreen={true} />
+            {familiesAreLoading && <Loader loading={familiesAreLoading} fullScreen={true} />}
+            {currentFamilyIsLoading && <Loader loading={currentFamilyIsLoading} fullScreen={true} />}
         </div>
     </>;
 }

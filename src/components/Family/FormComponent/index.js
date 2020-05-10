@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { objectIsEmpty } from '../../../helpers';
-import networkClient from '../../../network/network-client';
 import { Alert } from 'reactstrap';
 import Input from '../../base-components/Form/Input';
 import { useHistory, useParams } from 'react-router-dom';
@@ -18,10 +17,18 @@ import validator from 'validator';
  */
 const FormComponent = (props) => {
 
+    const history = useHistory();
+    const dispatch = useDispatch();
+    
+    const { id } = useParams(); // get parameter from url
+
+    const loggedUser = useSelector(state => state.loggedUser); // get logged user, it have to be EmployeeOEPG
+    const family = useSelector(state => state.currentFamily);
+    const currentFamilyIsLoading = useSelector(state => state.currentFamilyIsLoading);
+    const familiesAreLoading = useSelector(state => state.familiesAreLoading);
+
     const [alert, setAlert] = useState({color: null, message: null});
     const onDismiss = () => setAlert({color: null, message: null});
-
-    const [isLoading, setIsLoading] = useState(false);
 
     const [titular, setTitular] = useState("");
 
@@ -94,13 +101,93 @@ const FormComponent = (props) => {
         isAddressValid: true,
     });
 
-    const { id } = useParams(); // get parameter from url
+    const processErrorMessages = (error) => {
+        if(error.response) {
+            switch(error.response.status) {
+                case 400:
+                    setAlert({color: "danger", message: "Не са попълнени всички полета!"});
+                    break;
+                case 401:
+                    dispatch(actions.setAlert({title: "Грешка!", message: "Сесията ви изтече!"}));
+                    dispatch(actions.deleteLoggedUser());
+                    break;
+                case 404:
+                    dispatch(actions.setAlert({title: "Грешка!", message: "Не е намерено такова семейство!"}));
+                    history.goBack();
+                    break;
+                default:
+                    dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
+                    break;
+            }
+        } else {
+            dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));
+        }
+    }
 
-    const history = useHistory();
-    const dispatch = useDispatch();
-    const loggedUser = useSelector(state => state.loggedUser); // get logged user, it have to be EmployeeOEPG
-    const family = useSelector(state => state.currentFamily);
+    useEffect(() => {
+        if(props.isEditing) {
+            if((!objectIsEmpty(family) && Number(family.id) !== Number(id)) || objectIsEmpty(family)) {
+                dispatch(actions.loadCurrentFamily(id))
+                    .catch(error => processErrorMessages(error));
+            }
+    
+            if(objectIsEmpty(family)) return; // when form page is loaded in edit mode and there is no current familly, so we wait for family from server
 
+            setTitular(family.titular);
+
+            if(family.woman) {
+                setWomanFirstName(family.woman.first_name);
+                setWomanSecondName(family.woman.second_name);
+                setWomanLastName(family.woman.last_name);
+                setWomanEgn(family.woman.egn);
+                setWomanPhone(family.woman.phone);
+                setWomanEducation(family.woman.education);
+                setWomanWork(family.woman.work);
+                setWomanEmploymentType(family.woman.employment_type);
+                setWomanCitizenship(family.woman.citizenship);
+            }
+
+            if(family.man) {
+                setManFirstName(family.man.first_name);
+                setManSecondName(family.man.second_name);
+                setManLastName(family.man.last_name);
+                setManEgn(family.man.egn);
+                setManPhone(family.man.phone);
+                setManEducation(family.man.education);
+                setManWork(family.man.work);
+                setManEmploymentType(family.man.employment_type);
+                setManCitizenship(family.man.citizenship);
+            }
+
+            setPreferKidGender(family.prefer_kid_gender);
+            setPreferKidMinAge(family.prefer_kid_min_age);
+            setPreferKidMaxAge(family.prefer_kid_max_age);
+
+            if(family.region) setRegion(family.region.id);
+            if(family.sub_region) setSubRegion(family.sub_region.id);
+            if(family.city) setCity(family.city.id);
+            setAddress(family.address);
+
+            setLanguage(family.language);
+            setLevelOfBulgarianLanguage(family.level_of_bulgarian_language);
+            setReligion(family.religion);
+
+            setFamilyType(family.family_type);
+            setAverageMonthlyIncomePerFamilyMember(family.average_monthly_income_per_family_member);
+            setAnotherIncome(family.another_income);
+            setHouseType(family.house_type);
+
+            setWardenId(family.warden.id);
+
+            setWarden(family.warden); // when editing, warden is family warden
+        } else {
+            setWardenId(loggedUser.id);
+            setWarden(loggedUser); // when registering family, warden is current logged user
+        }
+        
+        // eslint-disable-next-line
+    }, [family, loggedUser, props]);
+    
     // data that will be send to server
     const data = {
         titular: titular,
@@ -186,107 +273,6 @@ const FormComponent = (props) => {
         return true;
     }
 
-    const processErrorMessages = (error) => {
-        if(error.response) {
-            switch(error.response.status) {
-                case 400:
-                    setAlert({color: "danger", message: "Не са попълнени всички полета!"});
-                    break;
-                case 401:
-                    dispatch(actions.setAlert({title: "Грешка!", message: "Сесията ви изтече!"}));
-                    dispatch(actions.deleteLoggedUser());
-                    break;
-                case 404:
-                    dispatch(actions.setAlert({title: "Грешка!", message: "Не е намерено такова семейство!"}));
-                    history.goBack();
-                    break;
-                default:
-                    dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
-                    break;
-            }
-        } else {
-            dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));
-        }
-    }
-
-    useEffect(() => {
-        if(props.isEditing) {
-            if((!objectIsEmpty(family) && Number(family.id) !== Number(id)) || objectIsEmpty(family)) {
-                setIsLoading(true);
-            
-                networkClient.get(`/family/${id}`, null, 
-                    (family) => {
-                        dispatch(actions.setCurrentFamily(family));
-                        setIsLoading(false);
-                    },
-                    (error) => {
-                        processErrorMessages(error);
-                        setIsLoading(false);
-                    }
-                );
-            }
-    
-            if(objectIsEmpty(family)) return; // when form page is loaded in edit mode and there is no current familly, so we wait for family from server
-
-            setIsLoading(true);
-
-            setTitular(family.titular);
-
-            if(family.woman) {
-                setWomanFirstName(family.woman.first_name);
-                setWomanSecondName(family.woman.second_name);
-                setWomanLastName(family.woman.last_name);
-                setWomanEgn(family.woman.egn);
-                setWomanPhone(family.woman.phone);
-                setWomanEducation(family.woman.education);
-                setWomanWork(family.woman.work);
-                setWomanEmploymentType(family.woman.employment_type);
-                setWomanCitizenship(family.woman.citizenship);
-            }
-
-            if(family.man) {
-                setManFirstName(family.man.first_name);
-                setManSecondName(family.man.second_name);
-                setManLastName(family.man.last_name);
-                setManEgn(family.man.egn);
-                setManPhone(family.man.phone);
-                setManEducation(family.man.education);
-                setManWork(family.man.work);
-                setManEmploymentType(family.man.employment_type);
-                setManCitizenship(family.man.citizenship);
-            }
-
-            setPreferKidGender(family.prefer_kid_gender);
-            setPreferKidMinAge(family.prefer_kid_min_age);
-            setPreferKidMaxAge(family.prefer_kid_max_age);
-
-            if(family.region) setRegion(family.region.id);
-            if(family.sub_region) setSubRegion(family.sub_region.id);
-            if(family.city) setCity(family.city.id);
-            setAddress(family.address);
-
-            setLanguage(family.language);
-            setLevelOfBulgarianLanguage(family.level_of_bulgarian_language);
-            setReligion(family.religion);
-
-            setFamilyType(family.family_type);
-            setAverageMonthlyIncomePerFamilyMember(family.average_monthly_income_per_family_member);
-            setAnotherIncome(family.another_income);
-            setHouseType(family.house_type);
-
-            setWardenId(family.warden.id);
-
-            setWarden(family.warden); // when editing, warden is family warden
-
-            setIsLoading(false);
-        } else {
-            setWardenId(loggedUser.id);
-            setWarden(loggedUser); // when registering family, warden is current logged user
-        }
-        
-        // eslint-disable-next-line
-    }, [family, loggedUser, props]);
-    
     const register = () => {
         if(!validate()) return;
 
@@ -295,19 +281,13 @@ const FormComponent = (props) => {
             return;
         }
 
-        setIsLoading(true);
-        networkClient.post("/family/register", data,
-            (registeredFamily) => {
-                setAlert({color: "success", message: "Успешно регистрирано семейство!"});
-                dispatch(actions.addFamily(registeredFamily));
+        dispatch(actions.addFamily(data))
+            .then(() => {
                 history.push("/family/all");
-            },
-            (error) => {
+            })
+            .catch((error) => {
                 processErrorMessages(error);
-
-                setIsLoading(false);
-            }
-        );
+            });
     }
 
     const update = () => {
@@ -318,20 +298,13 @@ const FormComponent = (props) => {
             return;
         }
 
-        setIsLoading(true);
-        networkClient.put(`/family/update/${family.id}`, data,
-            (updatedFamily) => {
-                setAlert({color: "success", message: "Успешно редактирано семейство!"});
-                dispatch(actions.setCurrentFamily(updatedFamily)); // update the current family too
-                dispatch(actions.updateFamily(family.id, updatedFamily));
+        dispatch(actions.updateFamily(family.id, data))
+            .then(() => {
                 history.goBack();
-                setIsLoading(false);
-            },
-            (error) => {
+            })
+            .catch((error) => {
                 processErrorMessages(error);
-                setIsLoading(false);
-            }
-        );
+            });
     }
 
     return <>
@@ -562,7 +535,8 @@ const FormComponent = (props) => {
             </div>
         </form>
 
-        <Loader loading={isLoading} fullScreen={true} />
+        {familiesAreLoading && <Loader loading={familiesAreLoading} fullScreen={true} />}
+        {currentFamilyIsLoading && <Loader loading={currentFamilyIsLoading} fullScreen={true} />}
     </>;
 
 }

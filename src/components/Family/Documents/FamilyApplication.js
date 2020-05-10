@@ -1,59 +1,43 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { objectIsEmpty } from '../../../helpers';
 import euFlagImege from '../../../assets/images/document-images/eu_flag.png';
 import hrLogo from '../../../assets/images/document-images/hr_logo.png';
 import { useDispatch, useSelector } from 'react-redux';
-import networkClient from '../../../network/network-client';
 import { useParams, useHistory } from 'react-router-dom';
 import actions from '../../../redux/actions';
-import Loader from '../../base-components/Loader';
 import BackButton from '../../base-components/BackButton';
 
 const FamilyApplication = (props) => {
 
-    const [isLoading, setIsLoading] = useState(false);
-
-    const family = useSelector(state => state.currentFamily);
-
-    const dispatch = useDispatch();
     const history = useHistory();
+    const dispatch = useDispatch();
 
     const { id } = useParams(); // get parameter from url
 
-    const processErrorMessages = (error) => {
-        if(error.response) {
-            switch(error.response.status) {
-                case 401:
-                    dispatch(actions.setAlert({title: "Грешка!", message: "Сесията ви изтече!"}));
-                    dispatch(actions.deleteLoggedUser());
-                    break;
-                case 404:
-                    dispatch(actions.setAlert({title: "Грешка!", message: "Не е намерено такова семейство!"}));
-                    history.goBack();
-                    break;
-                default:
-                    dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
-                    break;
-            }
-        } else {
-            dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));
-        }
-    }
+    const family = useSelector(state => state.currentFamily);
 
     useEffect(() => {
         if((!objectIsEmpty(family) && Number(family.id) !== Number(id)) || objectIsEmpty(family)) {
-            setIsLoading(true);
-            
-            networkClient.get(`/family/${id}`, null, 
-                (family) => {
-                    dispatch(actions.setCurrentFamily(family));
-                    setIsLoading(false);
-                },
-                (error) => {
-                    processErrorMessages(error);
-                    setIsLoading(false);
-                }
-            );
+            dispatch(actions.loadCurrentFamily(id))
+                .catch((error) => {
+                    if(error.response) {
+                        switch(error.response.status) {
+                            case 401:
+                                dispatch(actions.setAlert({title: "Грешка!", message: "Сесията ви изтече!"}));
+                                dispatch(actions.deleteLoggedUser());
+                                break;
+                            case 404:
+                                dispatch(actions.setAlert({title: "Грешка!", message: "Не е намерено такова семейство!"}));
+                                history.goBack();
+                                break;
+                            default:
+                                dispatch(actions.setAlert({title: "Грешка!", message: "Нещо се обърка!"}));
+                                break;
+                        }
+                    } else {
+                        dispatch(actions.setAlert({title: "Грешка!", message: "Няма връзка със сървъра!"}));
+                    }
+                });
         }
 
         // eslint-disable-next-line
@@ -180,7 +164,6 @@ const FamilyApplication = (props) => {
         </div>
 
         {renderDocument()}
-        <Loader loading={isLoading} fullScreen={true} />
     </>;
 
 }

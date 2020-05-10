@@ -22,6 +22,7 @@ export function loadCurrentChild(id) {
         });
     }
 }
+
 export function setCurrentChildInRedux(child) {
     return {type: types.SET_CURRENT_CHILD, payload: child};
 }

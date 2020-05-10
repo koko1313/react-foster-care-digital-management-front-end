@@ -175,7 +175,6 @@ const FormComponent = (props) => {
 
         dispatch(actions.updateChild(child.id, data))
             .then(() => {
-                setAlert({color: "success", message: "Успешно редактирано дете!"});
                 history.goBack();
             })
             .catch((error) => {
