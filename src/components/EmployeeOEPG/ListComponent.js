@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import actions from "../../redux/actions";
 import Loader from '../base-components/Loader';
@@ -9,8 +9,9 @@ const ListComponent = () => {
     const history = useHistory();
     const dispatch = useDispatch();
 
-    const employeesOEPGAreLoading = useSelector(state => state.employeesOEPGAreLoading);
     const employeesOEPG = useSelector(state => state.employeesOEPG);
+
+    const [isLoading, setIsLoading] = useState(false);
 
     const processErrorMessages = (error) => {
         if(error.response) {
@@ -30,8 +31,11 @@ const ListComponent = () => {
 
     useEffect(()=> {
         if(employeesOEPG.length === 0) {
+            setIsLoading(true);
+
             dispatch(actions.loadEmployeesOEPG())
-                .catch(error => processErrorMessages(error));
+                .catch(error => processErrorMessages(error))
+                .finally(() => setIsLoading(false));
         }
 
         // eslint-disable-next-line
@@ -49,8 +53,11 @@ const ListComponent = () => {
             return null;
         }
 
+        setIsLoading(true);
+
         dispatch(actions.deleteEmployeeOEPG(employeeOEPG.id))
-            .catch(error => processErrorMessages(error));
+            .catch(error => processErrorMessages(error))
+            .finally(() => setIsLoading(false));
     }
 
     const remountComponent = () => {
@@ -104,7 +111,7 @@ const ListComponent = () => {
                 </div>
             </div>
 
-            <Loader loading={employeesOEPGAreLoading} />
+            <Loader loading={isLoading} />
         </div>
     </>;
 

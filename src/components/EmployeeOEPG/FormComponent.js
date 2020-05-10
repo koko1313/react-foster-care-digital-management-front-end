@@ -22,8 +22,8 @@ const FormComponent = (props) => {
     const { id } = useParams(); // get parameter from url
 
     const employeeOEPG = useSelector(state => state.currentEmployeeOEPG);
-    const currentEmployeeOEPGIsLoading = useSelector(state => state.currentEmployeeOEPGIsLoading);
-    const employeesOEPGAreLoading = useSelector(state => state.employeesOEPGAreLoading);
+
+    const [isLoading, setIsLoading] = useState(false);
 
     const [alert, setAlert] = useState({color: null, message: null});
     const onDismiss = () => setAlert({color: null, message: null});
@@ -84,8 +84,11 @@ const FormComponent = (props) => {
             
             // Load current employee if it's not loaded
             if((!objectIsEmpty(employeeOEPG) && Number(employeeOEPG.id) !== Number(id)) || objectIsEmpty(employeeOEPG)) {
+                setIsLoading(true);
+
                 dispatch(actions.loadCurrentEmployeeOEPG(id))
-                    .catch((error) => processErrorMessages(error));
+                    .catch((error) => processErrorMessages(error))
+                    .finally(() => setIsLoading(false));
             }
 
             if(objectIsEmpty(employeeOEPG)) return; // when form page is loaded in edit mode and there is no current emploeeOEPG, so we wait for employeeOEPG from server
@@ -153,25 +156,23 @@ const FormComponent = (props) => {
             return;
         }
 
+        setIsLoading(true);
+
         dispatch(actions.addEmployeeOEPG(data))
-            .then(() => {
-                history.push("/employee-oepg/all");
-            })
-            .catch((error) => {
-                processErrorMessages(error);
-            });
+            .then(() => history.push("/employee-oepg/all"))
+            .catch((error) => processErrorMessages(error))
+            .finally(() => setIsLoading(false));
     }
 
     const updateUser = () => {
         if(!validate()) return;
 
+        setIsLoading(true);
+
         dispatch(actions.updateEmployeeOEPG(employeeOEPG.id, data))
-            .then(() => {
-                history.push("/employee-oepg/all");
-            })
-            .catch((error) => {
-                processErrorMessages(error);
-            });
+            .then(() => history.push("/employee-oepg/all"))
+            .catch((error) => processErrorMessages(error))
+            .finally(() => setIsLoading(false));
     }
 
     return <>
@@ -253,8 +254,7 @@ const FormComponent = (props) => {
             </div>
         </form>
 
-        {employeesOEPGAreLoading && <Loader loading={employeesOEPGAreLoading} fullScreen={true} />}
-        {currentEmployeeOEPGIsLoading && <Loader loading={currentEmployeeOEPGIsLoading} fullScreen={true} />}
+        <Loader loading={isLoading} fullScreen={true} />
     </>;
 
 }

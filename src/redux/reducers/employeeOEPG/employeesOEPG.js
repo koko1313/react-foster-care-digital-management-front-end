@@ -1,18 +1,5 @@
 import types from "../../action-types";
 
-export function employeesOEPGAreLoading(state = false, action) {
-    switch(action.type) {
-        case types.SET_EMPLOYEES_OEPG_LOADING: {
-            return true;
-        }
-        case types.REMOVE_EMPLOYEES_OEPG_LOADING: {
-            return false;
-        }
-
-        default: return state;
-    }
-}
-
 export function employeesOEPG(state = [], action) {
     switch(action.type) {
         case types.SET_EMPLOYEES_OEPG: {
