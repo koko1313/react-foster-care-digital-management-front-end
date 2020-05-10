@@ -5,6 +5,7 @@ import actions from '../../../../redux/actions';
 import { objectIsEmpty } from '../../../../helpers';
 
 /**
+ * @param {function} isLoading - the parent isLoading, so we can set it here
  * @param {function} closeFunction 
  */
 const AddChildToFamilyComponent = (props) => {
