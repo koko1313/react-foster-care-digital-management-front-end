@@ -1,12 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, ChangeEventHandler } from 'react';
 import networkClient from '../../../../network/network-client';
 import Select from './Select';
 import { useDispatch, useSelector } from 'react-redux';
 import actions from '../../../../redux/actions';
 
-const CitiesSelect = (props) => {
+interface Props {
+    id: string;
+    label: string;
+    value: string;
+    placeholder: string;
+    onChange: ChangeEventHandler;
+    required: boolean;
+    isInvalid: boolean;
+    loading: boolean;
+}
 
-    const cities = useSelector(state => state.cities);
+const CitiesSelect = (props: Props) => {
+
+    const cities: Array<object> = useSelector((state: any) => state.cities);
 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -18,7 +29,7 @@ const CitiesSelect = (props) => {
         setIsLoading(true);
 
         networkClient.get("/city/all", null, 
-            (cities) => {
+            (cities: any) => {
                 dispatch(actions.setCities(cities));
                 setIsLoading(false);
             },
@@ -26,18 +37,17 @@ const CitiesSelect = (props) => {
                 setIsLoading(false);
             }
         );
+
         // eslint-disable-next-line
     }, []);
 
     const renderCities = () => {
-        if(!cities) return null;
-
-        return cities.map((city) => {
+        return cities.map((city: any) => {
             return <option key={city.id} value={city.id}>{city.name}</option>
         });
     }
 
-    return (
+    return <>
         <Select 
             id = {props.id} 
             label = {props.label} 
@@ -50,7 +60,7 @@ const CitiesSelect = (props) => {
         >
             {renderCities()}
         </Select>
-    );
+    </>;
 
 }
 

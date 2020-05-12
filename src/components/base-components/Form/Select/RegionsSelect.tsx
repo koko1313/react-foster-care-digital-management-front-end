@@ -1,25 +1,36 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, ChangeEventHandler } from 'react';
 import Select from './Select';
 import networkClient from '../../../../network/network-client';
 import { useDispatch, useSelector } from 'react-redux';
 import actions from '../../../../redux/actions';
 
-const SubRegionsSelect = (props) => {
+interface Props {
+    id: string;
+    label: string;
+    value: string;
+    placeholder: string;
+    onChange: ChangeEventHandler;
+    required: boolean;
+    isInvalid: boolean;
+    loading: boolean;
+}
 
-    const subRegions = useSelector(state => state.subRegions);
+const RegionsSelect = (props: Props) => {
+
+    const regions: Array<Object> = useSelector((state: any) => state.regions);
 
     const [isLoading, setIsLoading] = useState(false);
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if(subRegions.length > 0) return; // if sub regions are already loaded from the server
+        if(regions.length > 0) return; // if regions are already loaded from server
 
         setIsLoading(true);
 
-        networkClient.get("/sub-region/all", null, 
-            (subRegions) => {
-                dispatch(actions.setSubRegions(subRegions));
+        networkClient.get("/region/all", null, 
+            (regions: any) => {
+                dispatch(actions.setRegions(regions));
                 setIsLoading(false);
             },
             () => {
@@ -30,15 +41,13 @@ const SubRegionsSelect = (props) => {
         // eslint-disable-next-line
     }, []);
 
-    const renderSubRegions = () => {
-        if(!subRegions) return null;
-
-        return subRegions.map((subRegion) => {
-            return <option key={subRegion.id} value={subRegion.id}>{subRegion.name}</option>
+    const renderRegions = () => {
+        return regions.map((region: any) => {
+            return <option key={region.id} value={region.id}>{region.name}</option>
         });
     }
 
-    return (
+    return <>
         <Select 
             id = {props.id} 
             label = {props.label} 
@@ -49,10 +58,10 @@ const SubRegionsSelect = (props) => {
             value = {props.value}
             isInvalid = {props.isInvalid}
         >
-            {renderSubRegions()}
+            {renderRegions()}
         </Select>
-    );
+    </>;
 
 }
 
-export default SubRegionsSelect;
+export default RegionsSelect;

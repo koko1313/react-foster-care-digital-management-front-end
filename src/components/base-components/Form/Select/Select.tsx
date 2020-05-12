@@ -1,18 +1,19 @@
-import React from 'react';
+import React, { ChangeEventHandler } from 'react';
 
-/**
- * @param {string} id
- * @param {string} label
- * @param {string} value
- * @param {string} placeholder
- * @param {string} invalidMessage
- * @param {function} onChange
- * @param {bool} required
- * 
- * @param {bool} isInvalid
- * @param {bool} loading
- */
-const Select = (props) => {
+interface Props {
+    id: string;
+    label: string;
+    value: string;
+    placeholder: string;
+    invalidMessage?: string;
+    onChange: ChangeEventHandler;
+    required: boolean;
+    isInvalid: boolean;
+    loading: boolean;
+    children: React.ReactNode;
+}
+
+const Select = (props: Props) => {
 
     const ifRequired = () => {
         if(props.required === true) {
@@ -20,7 +21,7 @@ const Select = (props) => {
         }
     }
 
-    return (
+    return <>
         <div className="form-group">
             <label htmlFor={props.id}>
                 {props.label}
@@ -33,10 +34,10 @@ const Select = (props) => {
                 value = {props.value}
             >
                 {props.loading ?
-                        <option defaultValue value="">Зареждане ...</option>
+                        <option value="">Зареждане ...</option>
                     :
                     <>
-                        <option defaultValue value="">{props.placeholder}</option>
+                        <option value="">{props.placeholder}</option>
                         {props.children}
                     </>
                 }
@@ -52,7 +53,7 @@ const Select = (props) => {
                     </div>
                 }
         </div>
-    );
+    </>;
 
 }
 
