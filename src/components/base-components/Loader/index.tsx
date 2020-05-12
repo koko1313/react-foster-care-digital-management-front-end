@@ -2,7 +2,12 @@ import React from 'react';
 import ScaleLoader from "react-spinners/ScaleLoader";
 import { css } from "@emotion/core";
 
-const Loader = (props) => {
+interface Props {
+    loading: boolean;
+    fullScreen?: boolean;
+}
+
+const Loader = (props: Props) => {
 
     const overrideCss = `
         text-align: center;
@@ -23,13 +28,13 @@ const Loader = (props) => {
         ${props.fullScreen ? fullScreenCss : null}
     `;
 
-    return (
+    return <>
         <ScaleLoader 
             loading={props.loading} 
             css={override} 
             color={"#A2C614"} 
         />
-    );
+    </>;
 
 }
 
