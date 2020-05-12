@@ -1,6 +1,5 @@
 import React, { useState, useEffect, ChangeEventHandler } from 'react';
 import Select from './Select';
-import networkClient from '../../../../network/network-client';
 import { useDispatch, useSelector } from 'react-redux';
 import actions from '../../../../redux/actions';
 
@@ -28,18 +27,10 @@ const RegionsSelect = (props: Props) => {
 
         setIsLoading(true);
 
-        networkClient.get("/region/all", null, 
-            (regions: any) => {
-                dispatch(actions.setRegions(regions));
-                setIsLoading(false);
-            },
-            () => {
-                setIsLoading(false);
-            }
-        );
+        dispatch(actions.loadRegions(regions))
+            .finally(() => setIsLoading(false));
 
-        // eslint-disable-next-line
-    }, []);
+    }, [regions, dispatch]);
 
     const renderRegions = () => {
         return regions.map((region: any) => {

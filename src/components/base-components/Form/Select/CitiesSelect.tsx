@@ -1,5 +1,4 @@
 import React, { useEffect, useState, ChangeEventHandler } from 'react';
-import networkClient from '../../../../network/network-client';
 import Select from './Select';
 import { useDispatch, useSelector } from 'react-redux';
 import actions from '../../../../redux/actions';
@@ -28,18 +27,10 @@ const CitiesSelect = (props: Props) => {
 
         setIsLoading(true);
 
-        networkClient.get("/city/all", null, 
-            (cities: any) => {
-                dispatch(actions.setCities(cities));
-                setIsLoading(false);
-            },
-            () => {
-                setIsLoading(false);
-            }
-        );
+        dispatch(actions.loadCities())
+            .finally(() => setIsLoading(false));
 
-        // eslint-disable-next-line
-    }, []);
+    }, [cities, dispatch]);
 
     const renderCities = () => {
         return cities.map((city: any) => {

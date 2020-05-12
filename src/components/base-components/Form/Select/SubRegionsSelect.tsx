@@ -1,6 +1,5 @@
 import React, { useState, useEffect, ChangeEventHandler } from 'react';
 import Select from './Select';
-import networkClient from '../../../../network/network-client';
 import { useDispatch, useSelector } from 'react-redux';
 import actions from '../../../../redux/actions';
 
@@ -28,18 +27,10 @@ const SubRegionsSelect = (props: Props) => {
 
         setIsLoading(true);
 
-        networkClient.get("/sub-region/all", null, 
-            (subRegions: any) => {
-                dispatch(actions.setSubRegions(subRegions));
-                setIsLoading(false);
-            },
-            () => {
-                setIsLoading(false);
-            }
-        );
+        dispatch(actions.loadSubRegions())
+            .finally(() => setIsLoading(false));
 
-        // eslint-disable-next-line
-    }, []);
+    }, [subRegions, dispatch]);
 
     const renderSubRegions = () => {
         return subRegions.map((subRegion: any) => {
