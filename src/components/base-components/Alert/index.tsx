@@ -9,7 +9,7 @@ const Alert = () => {
 
     const [isOpen, setIsOpen] = useState(false);
 
-    const alert = useSelector(state => state.alert);
+    const alert = useSelector((state: any) => state.alert);
 
     useEffect(() => {
         if(alert.title || alert.message) {
