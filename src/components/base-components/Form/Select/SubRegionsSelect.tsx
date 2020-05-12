@@ -11,7 +11,7 @@ interface Props {
     onChange: ChangeEventHandler;
     required: boolean;
     isInvalid: boolean;
-    loading: boolean;
+    loading?: boolean;
 }
 
 const SubRegionsSelect = (props: Props) => {

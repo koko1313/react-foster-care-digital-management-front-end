@@ -1,19 +1,19 @@
-import React from 'react';
+import React, { ChangeEventHandler } from 'react';
 
-/**
- * @param {string} id
- * @param {string} label
- * @param {string} type
- * @param {string} placeholder
- * @param {string} value
- * @param {function} onChange
- * @param {bool} required
- * @param {bool} disabled
- * 
- * @param {bool} isInvalid
- * @param {string} invalidMessage
- */
-const Input = (props) => {
+interface Props {
+    id: string;
+    label: string;
+    type: string;
+    placeholder: string;
+    value: string;
+    onChange: ChangeEventHandler;
+    required: boolean;
+    disabled?: boolean;
+    isInvalid: boolean;
+    invalidMessage?: string;
+}
+
+const Input = (props: Props) => {
 
     const ifRequired = () => {
         if(props.required === true) {

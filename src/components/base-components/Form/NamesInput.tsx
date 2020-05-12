@@ -1,21 +1,21 @@
-import React from 'react';
+import React, { ChangeEventHandler } from 'react';
 
-/**
- * @param {string} label
- * @param {bool} required
- * @param {string} firstName
- * @param {string} secondName
- * @param {string} lastName
- * @param {function} onChangeFirstName
- * @param {function} onChangeSecondName
- * @param {function} onChangeLastName
- * 
- * @param {bool} isFirstNameInvalid
- * @param {bool} isSecondNameInvalid
- * @param {bool} isLastNameInvalid
- * @param {string} invalidMessage
- */
-const NamesInput = (props) => {
+interface Props {
+    label: string;
+    required: boolean;
+    firstName: string;
+    secondName: string;
+    lastName: string;
+    onChangeFirstName: ChangeEventHandler;
+    onChangeSecondName: ChangeEventHandler;
+    onChangeLastName: ChangeEventHandler;
+    isFirstNameInvalid: boolean;
+    isSecondNameInvalid: boolean;
+    isLastNameInvalid: boolean;
+    invalidMessage: string;
+}
+
+const NamesInput = (props: Props) => {
 
     const ifRequired = () => {
         if(props.required === true) {
