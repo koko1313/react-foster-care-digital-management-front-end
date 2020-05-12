@@ -21,7 +21,7 @@ const Input = (props: Props) => {
         }
     }
 
-    return (
+    return <>
         <div className="form-group">
             <label htmlFor={props.id}>
                 {props.label}
@@ -48,7 +48,7 @@ const Input = (props: Props) => {
                 </div>
             }
         </div>
-    );
+    </>;
 
 }
 

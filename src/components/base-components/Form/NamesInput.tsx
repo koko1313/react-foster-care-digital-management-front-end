@@ -23,7 +23,7 @@ const NamesInput = (props: Props) => {
         }
     }
 
-    return (
+    return <>
         <div className="form-group">
             <label>
                 {props.label}
@@ -65,10 +65,8 @@ const NamesInput = (props: Props) => {
                     </div>
                 }
             </div>
-
-            
         </div>
-    );
+    </>;
 
 }
 
