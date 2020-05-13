@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Button, Modal as ReactstrapModal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import actions from '../../../redux/actions';
+import { RootState } from '../../../redux2';
+import { IAlert } from '../../../redux2/alert/types';
 
 const Alert = () => {
 
@@ -9,7 +11,7 @@ const Alert = () => {
 
     const [isOpen, setIsOpen] = useState(false);
 
-    const alert = useSelector((state: any) => state.alert);
+    const alert: IAlert = useSelector((state: RootState) => state.alert);
 
     useEffect(() => {
         if(alert.title || alert.message) {
