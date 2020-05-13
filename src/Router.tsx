@@ -7,7 +7,9 @@ import {
   } from "react-router-dom";
 
 import { useSelector, useDispatch } from 'react-redux';
-import actions from "./redux/actions";
+import { RootState } from './redux2';
+import { setLoggedUser } from './redux2/loggedUser/actions';
+import { ILoggedUser } from './redux2/loggedUser/types';
 import networkClient from './network/network-client';
   
 import Layout from './components/Layout';
@@ -37,13 +39,13 @@ import DocumentPage from './pages/Family/DocumentPage';
 const Router = () => {
 
     const dispatch = useDispatch();
-    const [checkedForLoggedUser, setCheckedForLoggedUser] = useState(false);
+    const [checkedForLoggedUser, setCheckedForLoggedUser] = useState<Boolean>(false);
 
     useEffect(() => {
         // check if there is logged user
         networkClient.get("/user/logged", null, 
-            (loggedUser) => {
-                dispatch(actions.setLoggedUser(loggedUser));
+            (loggedUser: any) => {
+                dispatch(setLoggedUser(loggedUser));
                 setCheckedForLoggedUser(true);
             },
             () => {
@@ -53,7 +55,7 @@ const Router = () => {
         // eslint-disable-next-line
     }, []);
 
-    const loggedUser = useSelector(state => state.loggedUser);
+    const loggedUser: ILoggedUser = useSelector((state: RootState) => state.loggedUser);
 
     const routes = [
         {
