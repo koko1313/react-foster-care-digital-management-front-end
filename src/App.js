@@ -11,12 +11,12 @@ import Router from './Router';
 const store = createStore(reducers, applyMiddleware(thunk));
 
 function App() {
-  return (
+  return <>
     <Provider store={store}>
       <Router />
       <Alert />
     </Provider>
-  );
+  </>;
 }
 
 export default App;

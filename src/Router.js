@@ -37,6 +37,9 @@ import DocumentPage from './pages/Family/DocumentPage';
 const Router = () => {
 
     const dispatch = useDispatch();
+
+    const loggedUser = useSelector(state => state.loggedUser);
+
     const [checkedForLoggedUser, setCheckedForLoggedUser] = useState(false);
 
     useEffect(() => {
@@ -52,8 +55,6 @@ const Router = () => {
         );
         // eslint-disable-next-line
     }, []);
-
-    const loggedUser = useSelector(state => state.loggedUser);
 
     const routes = [
         {
@@ -249,13 +250,13 @@ const Router = () => {
         });
     }
 
-    return (
+    return <>
         <HashRouter>
             <Switch>
                 {getRoutes()}
             </Switch>
         </HashRouter>
-    )
+    </>;
 
 }
 
