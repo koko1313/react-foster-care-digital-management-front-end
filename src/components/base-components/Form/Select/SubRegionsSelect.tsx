@@ -12,6 +12,7 @@ interface Props {
     required: boolean;
     isInvalid: boolean;
     loading?: boolean;
+    selectedRegionId: number;
 }
 
 const SubRegionsSelect = (props: Props) => {
@@ -34,7 +35,10 @@ const SubRegionsSelect = (props: Props) => {
 
     const renderSubRegions = () => {
         return subRegions.map((subRegion: any) => {
-            return <option key={subRegion.id} value={subRegion.id}>{subRegion.name}</option>;
+            if(Number(subRegion.region.id) === Number(props.selectedRegionId)) {
+                return <option key={subRegion.id} value={subRegion.id}>{subRegion.name}</option>;
+            }
+            return null;
         });
     }
 

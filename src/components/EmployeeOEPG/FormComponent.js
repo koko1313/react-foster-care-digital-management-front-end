@@ -242,6 +242,8 @@ const FormComponent = (props) => {
                 isRegionInvalid = {!validFields.isRegionValid}
                 isSubRegionInvalid = {!validFields.isSubRegionValid}
                 isCityInvalid = {!validFields.isCityValid}
+                selectedRegionId = {region}
+                selectedSubRegionId = {subRegion}
             />
 
             <div className="d-flex justify-content-end">

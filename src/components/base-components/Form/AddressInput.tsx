@@ -20,6 +20,8 @@ interface Props {
     isSubRegionInvalid: boolean;
     isCityInvalid: boolean;
     isAddressInvalid: boolean;
+    selectedRegionId: number;
+    selectedSubRegionId: number;
 }
 
 const AddressInput = (props: Props) => {
@@ -47,6 +49,7 @@ const AddressInput = (props: Props) => {
                     value = {props.subRegion} 
                     required = {props.required} 
                     isInvalid = {props.isSubRegionInvalid}
+                    selectedRegionId = {props.selectedRegionId}
                 />
             </div>
 
@@ -59,6 +62,7 @@ const AddressInput = (props: Props) => {
                     value = {props.city} 
                     required = {props.required} 
                     isInvalid = {props.isCityInvalid}
+                    selectedSubRegionId = {props.selectedSubRegionId}
                 />
             </div>
         </div>

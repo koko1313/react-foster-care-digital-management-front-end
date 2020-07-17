@@ -460,6 +460,8 @@ const FormComponent = (props) => {
                     isSubRegionInvalid = {!validFields.isSubRegionValid}
                     isCityInvalid = {!validFields.isCityValid}
                     isAddressInvalid = {!validFields.isAddressValid}
+                    selectedRegionId = {region}
+                    selectedSubRegionId = {subRegion}
                 />
                 
                 <Input 
