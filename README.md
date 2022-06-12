@@ -44,4 +44,4 @@
 ### Instalation guide
 1. `npm instal`
 2. `npm start`
-3. *Important:* use http://127.0.0.1:3000/ insted of http://localhost:3000/
+3. **Important:** use http://127.0.0.1:3000/ insted of http://localhost:3000/
