@@ -40,3 +40,8 @@
 
 ### Notes
 - When we use CORS, if back-end and front-end are on different addresses (localhost != 127.0.0.1), the session cookie will not set.
+
+### Instalation guide
+1. `npm instal`
+2. `npm start`
+3. *Important:* use http://127.0.0.1:3000/ insted of http://localhost:3000/
